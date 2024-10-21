@@ -1,0 +1,9 @@
+node_modules/
+Dockerfile
+.git
+.DS_Store
+cypress/
+cypress.json
+cypress.config.ts
+cypress.config.js
+package-lock.json
