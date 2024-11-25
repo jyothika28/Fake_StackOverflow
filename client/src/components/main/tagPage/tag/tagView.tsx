@@ -22,6 +22,7 @@ const Tag = ({ t, clickTag }: TagProps) => {
     //   <div>{t.qcnt} questions</div>
     // </div>
     <Card
+    className="tagNode"
     sx={{
       cursor: "pointer",
       "&:hover": {
@@ -40,6 +41,7 @@ const Tag = ({ t, clickTag }: TagProps) => {
         variant="h6"
         component="div"
         sx={{ fontWeight: "bold", marginBottom: 1 }}
+        className="tagName"
       >
         {t.name}
       </Typography>

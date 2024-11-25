@@ -83,7 +83,7 @@ const Question = ({ q, clickTag, handleAnswer }: QuestionProps) => {
        <List sx={style} aria-label="question list">
        <ListItem sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 1 }}>
         {/* Post Stats Section (Column 1) */}
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }} className="postStats">
       <div>{q.answers.length || 0} answers</div>
       <div>{q.views} views</div>
     </Box>
@@ -96,6 +96,7 @@ const Question = ({ q, clickTag, handleAnswer }: QuestionProps) => {
           <Button
             key={idx}
             size="small"
+            className="question_tag_button"
             variant="outlined"
             sx={{ margin: 0.5 }}
             onClick={(e) => {

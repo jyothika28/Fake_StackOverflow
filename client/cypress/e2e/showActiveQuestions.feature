@@ -1,7 +1,10 @@
+#upto
 Feature: Show Questions by recent answers
-As a user with read access to fake stack overflow
-I want to see all questions in the database in most recently answered or active order
-So that I can view the questions that were answered most recently
+  As a user with read access to fake stack overflow
+  I want to see all questions in the database in most recently answered or active order
+  So that I can view the questions that were answered most recently
+ 
+ 
 
   Scenario: Show all questions in active order on user request
     Given The user can access the homepage "http://localhost:3000"
@@ -26,10 +29,20 @@ So that I can view the questions that were answered most recently
     And clicks on the "Active" tab
     Then The user should see all questions in the database with the most recently posted answers first
 
-  Scenario: View questions in active order after answering questions
+  Scenario: View questions in Active order after creating a question
+    Given The user is viewing the homepage "http://localhost:3000"
+    And The user is able to see the homepage "All Questions"
+    And The user has created a new question
+    When The user clicks on the "Active" tab
+    Then The user should see all questions in the database with the most recently answers first
+
+   Scenario: View questions in Active order after creating and answering question
     Given The user is viewing the homepage "http://localhost:3000"
     And The user has created a new question
-    And answers the new question
-    And The user answers an existing question from the "Questions" page
-    When The user clicks on the "Active" tab in the "Questions" page
-    Then The user should see all questions in the database in new active order
+    And clicks on the "Answer Question" button filling out the necessary fields like Username, Answer text
+    When The user clicks on the "Questions" tab
+    And clicks on the "Active" tab
+    Then The user should see all questions in the database with most recently posted answers first
+
+
+
