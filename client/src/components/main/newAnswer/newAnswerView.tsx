@@ -38,7 +38,7 @@ const NewAnswer = ({ qid, handleAnswer }: NewAnswerProps) => {
       />
       <div className="btn_indicator_container">
         <button className="form_postBtn" onClick={postAnswer}>
-          Post Your Answer
+          Post Answer
         </button>
         <div className="mandatory_indicator">* indicates mandatory fields</div>
       </div>

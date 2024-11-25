@@ -1,7 +1,7 @@
-import Answers from "../models/answers";
-import { IAnswer, IQuestion } from "../models/types/types";
+import Answers from "./answers";
+import { IAnswer, IQuestion } from "./types/types";
 import Questions from "./questions";
-import Tags from "../models/tags";
+import Tags from "./tags";
 import mongoose from "mongoose";
 
 export type SortOrder = "active" | "newest" | "unanswered";
