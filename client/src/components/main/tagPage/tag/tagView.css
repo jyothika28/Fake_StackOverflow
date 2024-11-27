@@ -1,4 +1,4 @@
-.tagNode {
+/* .tagNode {
     place-self: center;
     border: #000000 1px dashed;
     padding: 5%;
@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
-}
+} */
 
 .tagName {
     color: cornflowerblue;
