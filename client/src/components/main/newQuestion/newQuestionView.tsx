@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 interface NewQuestionProps {
   handleQuestions: VoidFunctionType;
 }
-
 const NewQuestion = ({ handleQuestions }: NewQuestionProps) => {
   const {
     title,

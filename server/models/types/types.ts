@@ -1,4 +1,23 @@
 import { Request, Response } from "express";
+
+
+/**
+ * @typedef IUser - Interface for User
+ * @property {string} firstname.required - First name of the user
+ * @property {string} lastname.required - Last name of the user
+ * @property {string} username.required - Username of the user
+ * @property {string} email.required - Email of the user
+ * @property {string} password.required - Password of the user
+ * @property {Date} dob - Date of birth of the user
+ */
+export interface IUser extends Document {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  password: string;
+  dob?: Date;
+}
 /**
  * @typedef ITag - Interface for Tag
  * @property {string} name.required - Name of the tag

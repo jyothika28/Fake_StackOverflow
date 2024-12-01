@@ -2,12 +2,19 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import express, { type Express } from 'express';
 import { Server } from 'http'; // Import the Server type from Node.js
+import dotenv from 'dotenv';
 
-const MONGO_URL: string = 'mongodb://127.0.0.1:27017/fake_so';
-const CLIENT_URL: string = 'http://localhost:3000';
-const port: number = 8000;
+dotenv.config(); // Load environment variables from .env file
 
-mongoose.connect(MONGO_URL);
+const MONGO_URL: string = process.env.REACT_APP_MONGODB_URI || 'mongodb://127.0.0.1:27017/fake_so';
+const CLIENT_URL: string = process.env.REACT_APP_CLIENT_URL || 'http://localhost:3000';
+const port: number = process.env.PORT ? parseInt(process.env.PORT) : 8000;
+
+mongoose.connect(MONGO_URL).then(() => {
+  console.log('Connected to MongoDB');
+}).catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
 
 const app: Express = express();
 
@@ -35,11 +42,12 @@ app.get('/', (req, res) => {
 import answerController from './controller/answer';
 import questionController from './controller/question';
 import tagController from './controller/tag';
+import userController from './controller/user';
 
 app.use('/question', questionController);
 app.use('/tag', tagController);
 app.use('/answer', answerController);
-
+app.use('/user', userController);
 
 // Start the server and assign it to the 'server' variable
 const server: Server = app.listen(port, () => {

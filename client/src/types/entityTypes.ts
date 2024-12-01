@@ -1,3 +1,26 @@
+interface UserRegistrationData {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  password: string;
+  dob?: string;
+}
+
+interface UserRegistrationResponse {
+  success: boolean;
+  message: string;
+}
+interface UserLoginData {
+  username: string;
+  password: string;
+}
+
+interface UserLoginResponse {
+  success: boolean;
+  message: string;
+}
+
 interface AnswerType {
   text: string;
   ans_by: string;
@@ -52,7 +75,17 @@ interface TagResponseType {
   qcnt: number;
 }
 
+interface RegistrationProps {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+  navigateToLogin: () => void;
+}
+
 export type {
+  RegistrationProps,
+  UserRegistrationData,
+  UserRegistrationResponse,
+  UserLoginData,
+  UserLoginResponse,
   AnswerType,
   QuestionType,
   Question,
