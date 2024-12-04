@@ -72,4 +72,19 @@ const logoutUser = async () => {
   }
 }
 
-export { registerUser, loginUser,logoutUser };
+const getUserDetails = async () => {
+  try {
+    const res = await api.get(`${USER_API_URL}/getUser`);
+    if (res.status !== 200) {
+      throw new Error("Invalid user");
+    }
+    console.log("In client getUserDetails res", res);
+    return res.data;
+  } catch (error) {
+    console.error("Error during user logout:", error);
+    throw error;
+  }
+}
+
+
+export { registerUser, loginUser,logoutUser, getUserDetails };

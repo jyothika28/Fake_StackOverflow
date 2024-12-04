@@ -21,12 +21,12 @@ export const useLoginUser = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
     let isValid = true;
     // Validate username
     if (!username) {
-      setUsernameErr("Username cannot be empty");
+      setUsernameErr("Username cannot be empty.");
       isValid = false;
     }
     // Validate password
     if (!password) {
-      setPasswordErr("Password cannot be empty");
+      setPasswordErr("Password cannot be empty.");
       isValid = false;
     }
     if (!isValid) {

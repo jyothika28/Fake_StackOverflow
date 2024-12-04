@@ -34,11 +34,11 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
     passwordErr,
     confirmPasswordErr,
     handleRegister,
-  } = useNewUser(setIsLoggedIn);
+  } = useNewUser(setIsLoggedIn,navigateToLogin);
 
   return (
     <>
-      <Typography variant="h4" style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }} component="h2" align="center" gutterBottom>
+      <Typography id="RegisterTitle" variant="h4" style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }} component="h2" align="center" gutterBottom>
         Register a New Account
       </Typography>
       <Form>
@@ -49,6 +49,7 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
           setState={setFirstname}
           err={firstnameErr}
         />
+        
         <Input
           title={"Last Name"}
           id={"formLastnameInput"}
@@ -134,6 +135,7 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
 
         <div className="btn_indicator_container">
           <Button
+          id="registerBtn"
             variant="contained"
             onClick={handleRegister}
             sx={{ textTransform: "none" }}

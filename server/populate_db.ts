@@ -87,10 +87,10 @@ const populate = async () => {
     await questionCreate(Q3_DESC, Q3_TXT, [t5, t6], [a6, a7], 'monkeyABC', new Date('2023-02-18T01:02:15'), 200);
     await questionCreate(Q4_DESC, Q4_TXT, [t3, t4, t5], [a8], 'elephantCDE', new Date('2023-03-10T14:28:01'), 103);
 
-    const u1_pwd = await bcrypt.hash('rachel123', 10);
-    const u2_pwd = await bcrypt.hash('ross123', 10);
-    const u3_pwd = await bcrypt.hash('jake123', 10);
-    const u4_pwd = await bcrypt.hash('amy123', 10);
+    const u1_pwd = await bcrypt.hash('Rachelhomie@123', 10);
+    const u2_pwd = await bcrypt.hash('Rosssandwich@123', 10);
+    const u3_pwd = await bcrypt.hash('Jakebrooklyn@334', 10);
+    const u4_pwd = await bcrypt.hash('AmyJamy@1002', 10);
     const u1 = await userCreate('Rachel', 'Green', 'rachelgreen', 'rach@gmail.com', u1_pwd, new Date('1990-01-20'));
     const u2 = await userCreate('Ross', 'Geller', 'rossgeller', 'ross12@gmail.com', u2_pwd, new Date('1989-12-20'));
     const u3 = await userCreate('Jake', 'Peralta', 'jakeperalta', 'jakep@gmail.com ', u3_pwd, new Date('1988-11-20'));

@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from "../main/baseComponents/form/formView";
 import Input from "../main/baseComponents/input/inputView";
-import { Button, Typography, Link,TextField } from "@mui/material";
+import { Button, Typography, Link } from "@mui/material";
 import useLoginUser from '../../hooks/useLoginUser'; 
 import Textarea from '../main/baseComponents/textarea/textAreaView';
 interface LoginProps {
@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, navigateToRegister }) => {
 
   return (
     <>
-      <Typography variant="h4" style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }} component="h2" align="center" gutterBottom>
+      <Typography id="SignInTitle" variant="h4" style={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }} component="h2" align="center" gutterBottom>
         Sign In
       </Typography>
       <Form>
@@ -57,6 +57,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, navigateToRegister }) => {
           <Button
             variant="contained"
             onClick={handleLogin}
+            id="signInBtn"
             sx={{ textTransform: "none" }}
           >
             Sign In
