@@ -1,12 +1,55 @@
 import Answers from "./answers";
-import { IAnswer, IQuestion } from "./types/types";
+import { IAnswer, IQuestion,IUser } from "./types/types";
 import Questions from "./questions";
 import Tags from "./tags";
+import User from "./users";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 export type SortOrder = "active" | "newest" | "unanswered";
 export type ErrorWrapped<T> = { error: string } | T;
 
+
+
+const saveUser = async (userData: IUser) => {
+  const { firstname, lastname, username, email, password, dob } = userData;
+  try{
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    if (existingUser) {
+      const conflictField = existingUser.email === email ? 'email' : 'username';
+      const conflictMessage =
+        conflictField === 'email'
+          ? 'This email is already registered. Please use a different email or log in.'
+          : 'This username is already in use. Please choose a different username.';
+      throw new Error(conflictMessage);
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user instance
+    const newUser = new User({
+      firstname,
+      lastname,
+      username,
+      email,
+      password: hashedPassword,
+      dob,
+    });
+
+    // Save the user to the database
+    await newUser.save();
+
+    return { success: true, message: 'User registered successfully' };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message || 'An error occurred during registration');
+    } else {
+      throw new Error('An error occurred during registration');
+    }
+  }
+};
+  
 /**
  * A function to add a tag to the database
  * @param tname the tag name
@@ -367,6 +410,7 @@ const getTagCountMap = async (): Promise<
 };
 
 export {
+  saveUser,
   addTag,
   getQuestionsByOrder,
   filterQuestionsBySearch,

@@ -3,7 +3,7 @@ import Form from "../main/baseComponents/form/formView";
 import Input from "../main/baseComponents/input/inputView";
 import { Button, Typography, Link,TextField } from "@mui/material";
 import useLoginUser from '../../hooks/useLoginUser'; 
-
+import Textarea from '../main/baseComponents/textarea/textAreaView';
 interface LoginProps {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   navigateToRegister: () => void;
@@ -33,7 +33,15 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, navigateToRegister }) => {
           setState={setUsername}
           err={usernameErr}
         />
-       <TextField
+        <Textarea
+          title={"Password"}
+          id={"formPasswordInput"}
+          val={password}
+          setState={setPassword}
+          err={passwordErr}
+          type="password"
+        />
+       {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -44,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, navigateToRegister }) => {
             autoComplete="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          /> */}
         <div className="btn_indicator_container">
           <Button
             variant="contained"
