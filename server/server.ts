@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 /** 
  * Extend the SessionData interface 
  * to include custom session properties.
