@@ -4,6 +4,7 @@ import Input from "../main/baseComponents/input/inputView";
 import { Button, Typography, Link,TextField } from "@mui/material";
 import useNewUser from '../../hooks/useNewUser'; 
 import { RegistrationProps } from '../../types/entityTypes';
+import Textarea from '../main/baseComponents/textarea/textAreaView';
 
 /**
  * Registration component for user sign-up
@@ -69,7 +70,24 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
           setState={setEmail}
           err={emailErr}
         />
-        <TextField
+        <Textarea
+          title={"Password"}
+          id={"formPasswordInput"}
+          val={password}
+          setState={setPassword}
+          err={passwordErr}
+          type="password"
+        />
+        <Textarea
+          title={"Confirm Password"}
+          id={"formConfirmPasswordInput"}
+          val={confirmPassword}
+          setState={setConfirmPassword}
+          err={confirmPasswordErr}
+          type="password"
+       
+        />
+        {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -92,8 +110,17 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
             autoComplete="new-password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <TextField
+          /> */}
+          <Textarea
+          title={"Date of Birth"}
+          id={"formDobInput"}
+          val={dob}
+          setState={setDob}
+          type="date"
+          shrink={true}
+        
+        />
+          {/* <TextField
             margin="normal"
             fullWidth
             name="dob"
@@ -103,7 +130,7 @@ const Registration: React.FC<RegistrationProps> = ({ setIsLoggedIn, navigateToLo
             InputLabelProps={{ shrink: true }}
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-          />
+          /> */}
 
         <div className="btn_indicator_container">
           <Button

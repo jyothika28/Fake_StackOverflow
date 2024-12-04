@@ -51,7 +51,7 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        setEmailErr("Invalid email format");
+        setEmailErr("Invalid email format. Please enter a valid email address.");
         isValid = false;
       }
     }
@@ -70,7 +70,7 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     }
     // Validate confirm password
     if (password !== confirmPassword) {
-      setConfirmPasswordErr("Passwords do not match");
+      setConfirmPasswordErr("Passwords do not match. Please ensure both password fields match exactly.");
       isValid = false;
     }
     // If validation fails, return
@@ -88,10 +88,22 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     };
     console.log("user", user);
     //Register user
-    const res = await registerUser(user);
-    if (res && res.success) {
-      callback(true);
+    try {
+      const res = await registerUser(user);
+      if (res && res.success) {
+        callback(true);
+      }
+    } catch (error: any) {
+      console.log("error in registerUser", error);  
+      if (error.message.includes("email")) {
+        setEmailErr(error.message);
+      } else if (error.message.includes("username")) {
+        setUsernameErr(error.message);
+      } else {
+        console.error("Unexpected error during registration:", error);
+      }
     }
+    
   };
 
   return {

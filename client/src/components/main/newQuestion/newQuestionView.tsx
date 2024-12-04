@@ -51,6 +51,7 @@ const NewQuestion = ({ handleQuestions }: NewQuestionProps) => {
           val={text}
           setState={setText}
           err={textErr}
+          rows={4}
         />
         <Input
           title={"Tags"}
