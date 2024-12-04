@@ -6,7 +6,9 @@ import { registerUser } from "../services/userService";
  * @param setIsLoggedIn - Function to set the login state
  * @returns Object containing state variables and functions for user registration
  */
-export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
+export 
+const useNewUser = (setIsLoggedIn: (isLoggedIn: boolean) => void, navigateToLogin: () => void) => {
+
   // State variables for form fields
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
@@ -30,23 +32,23 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     let isValid = true;
     // Validate first name
     if (!firstname) {
-      setFirstnameErr("First name cannot be empty");
+      setFirstnameErr("First name cannot be empty.");
       isValid = false;
     }
     // Validate last name
     if (!lastname) {
-      setLastnameErr("Last name cannot be empty");
+      setLastnameErr("Last name cannot be empty.");
       isValid = false;
     }
     // Validate username
     if (!username) {
-      setUsernameErr("Username cannot be empty");
+      setUsernameErr("Username cannot be empty.");
       isValid = false;
     }
 
     // Validate email
     if (!email) {
-      setEmailErr("Email cannot be empty");
+      setEmailErr("Email cannot be empty.");
       isValid = false;
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,7 +59,7 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     }
     // Validate password
     if (!password) {
-      setPasswordErr("Password cannot be empty");
+      setPasswordErr("Password cannot be empty.");
       isValid = false;
     } else {
       const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{8,}$/;
@@ -68,8 +70,12 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
         isValid = false;
       }
     }
+    if(!confirmPassword){
+      setConfirmPasswordErr("Confirm Password cannot be empty.");
+      isValid = false;
+    }
     // Validate confirm password
-    if (password !== confirmPassword) {
+    else if (password !== confirmPassword) {
       setConfirmPasswordErr("Passwords do not match. Please ensure both password fields match exactly.");
       isValid = false;
     }
@@ -91,7 +97,7 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     try {
       const res = await registerUser(user);
       if (res && res.success) {
-        callback(true);
+        navigateToLogin();
       }
     } catch (error: any) {
       console.log("error in registerUser", error);  

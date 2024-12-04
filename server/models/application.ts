@@ -409,7 +409,20 @@ const getTagCountMap = async (): Promise<
   }
 };
 
+const getUserByUsername = async (username: string): Promise<IUser | null> => {
+  try {
+    const user = await User.findOne({
+      username: username,
+    });
+    return user;
+  } catch (error) {
+    console.error("Error fetching user by username:", error);
+    return null;
+  }
+};
+
 export {
+  getUserByUsername,
   saveUser,
   addTag,
   getQuestionsByOrder,

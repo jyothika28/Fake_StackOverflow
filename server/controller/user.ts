@@ -2,6 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 import User from "../models/users";
 import bcrypt from "bcrypt";
+import { getUserByUsername } from "../models/application";
 // import { saveUser } from "../models/application";
 // import {IUser}  from "../models/types/types";
 
@@ -146,4 +147,23 @@ router.post('/login', async (req: Request, res: Response) => {
     }
   }
   );
+
+  router.get('/getUser', async (req: Request, res: Response) => {
+    const username = req.session.user;
+    console.log("username in getUser",username);
+    if (!username) {
+      return res.status(400).json({ error: 'Username is required' });
+    }
+    try {
+      const user = await getUserByUsername(username);
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      res.status(500).json({ error: 'Error fetching user' });
+    }
+  });
 export default router;

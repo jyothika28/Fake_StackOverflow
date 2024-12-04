@@ -6,8 +6,10 @@ import TagPageClass from './main/routing/tag';
 import AnswerPageClass from './main/routing/answer';
 import NewQuestionPageClass from './main/routing/newQuestion';
 import NewAnswerPageClass from './main/routing/newAnswer';
+import UserProfilePageClass from './main/routing/profile';
 import Login from './login/loginView';
 import Registration from './registration/registrationView';
+
 
 const FakeStackOverflow = () => {
   const [search, setSearch] = useState<string>('');
@@ -17,6 +19,32 @@ const FakeStackOverflow = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false); // State to toggle between login and registration
 
+
+  const userProfilePage=(
+    search = '',
+    title = 'User Profile'
+  ): void => {
+    setSearch(search);
+    setMainTitle(title);
+    setPageInstance(
+      new UserProfilePageClass({
+        search,
+        title,
+        setQuestionPage,
+        questionOrder,
+        setQuestionOrder,
+        qid,
+        handleQuestions,
+        handleTags,
+        handleAnswer,
+        clickTag,
+        handleNewQuestion,
+        handleNewAnswer,
+        userProfilePage,
+      })
+    );
+  };
+ 
   const setQuestionPage = (
     search = '',
     title = 'All Questions'
@@ -37,6 +65,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage,
       })
     );
   };
@@ -58,6 +87,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage,
       })
     );
   };
@@ -77,6 +107,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage,
       })
     );
   };
@@ -97,6 +128,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage,
       })
     );
   };
@@ -116,6 +148,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage
       })
     );
   };
@@ -135,6 +168,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage
       })
     );
   };
@@ -156,6 +190,7 @@ const FakeStackOverflow = () => {
         clickTag,
         handleNewQuestion,
         handleNewAnswer,
+        userProfilePage,
       })
     );
   };
@@ -173,6 +208,8 @@ const FakeStackOverflow = () => {
       clickTag,
       handleNewQuestion,
       handleNewAnswer,
+      userProfilePage,
+      
     })
   );
 
@@ -189,7 +226,10 @@ const FakeStackOverflow = () => {
         <>
           <Header 
             search={search} 
-            setQuestionPage={setQuestionPage} />
+            userProfilePage={userProfilePage}
+            setQuestionPage={setQuestionPage}
+            navigateToLogin={() => setIsLoggedIn(false)}
+             username=""/>
           <Main 
             page={pageInstance} 
             handleQuestions={handleQuestions} handleTags={handleTags}
