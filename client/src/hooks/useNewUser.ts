@@ -6,7 +6,9 @@ import { registerUser } from "../services/userService";
  * @param setIsLoggedIn - Function to set the login state
  * @returns Object containing state variables and functions for user registration
  */
-export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
+export 
+const useNewUser = (setIsLoggedIn: (isLoggedIn: boolean) => void, navigateToLogin: () => void) => {
+
   // State variables for form fields
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
@@ -30,34 +32,34 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     let isValid = true;
     // Validate first name
     if (!firstname) {
-      setFirstnameErr("First name cannot be empty");
+      setFirstnameErr("First name cannot be empty.");
       isValid = false;
     }
     // Validate last name
     if (!lastname) {
-      setLastnameErr("Last name cannot be empty");
+      setLastnameErr("Last name cannot be empty.");
       isValid = false;
     }
     // Validate username
     if (!username) {
-      setUsernameErr("Username cannot be empty");
+      setUsernameErr("Username cannot be empty.");
       isValid = false;
     }
 
     // Validate email
     if (!email) {
-      setEmailErr("Email cannot be empty");
+      setEmailErr("Email cannot be empty.");
       isValid = false;
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        setEmailErr("Invalid email format");
+        setEmailErr("Invalid email format. Please enter a valid email address.");
         isValid = false;
       }
     }
     // Validate password
     if (!password) {
-      setPasswordErr("Password cannot be empty");
+      setPasswordErr("Password cannot be empty.");
       isValid = false;
     } else {
       const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{8,}$/;
@@ -68,9 +70,13 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
         isValid = false;
       }
     }
+    if(!confirmPassword){
+      setConfirmPasswordErr("Confirm Password cannot be empty.");
+      isValid = false;
+    }
     // Validate confirm password
-    if (password !== confirmPassword) {
-      setConfirmPasswordErr("Passwords do not match");
+    else if (password !== confirmPassword) {
+      setConfirmPasswordErr("Passwords do not match. Please ensure both password fields match exactly.");
       isValid = false;
     }
     // If validation fails, return
@@ -88,10 +94,22 @@ export const useNewUser = (callback: (isLoggedIn: boolean) => void) => {
     };
     console.log("user", user);
     //Register user
-    const res = await registerUser(user);
-    if (res && res.success) {
-      callback(true);
+    try {
+      const res = await registerUser(user);
+      if (res && res.success) {
+        navigateToLogin();
+      }
+    } catch (error: any) {
+      console.log("error in registerUser", error);  
+      if (error.message.includes("email")) {
+        setEmailErr(error.message);
+      } else if (error.message.includes("username")) {
+        setUsernameErr(error.message);
+      } else {
+        console.error("Unexpected error during registration:", error);
+      }
     }
+    
   };
 
   return {

@@ -3,11 +3,30 @@ import mongoose from 'mongoose';
 import express, { type Express } from 'express';
 import { Server } from 'http'; // Import the Server type from Node.js
 import dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
+/** 
+ * Extend the SessionData interface 
+ * to include custom session properties.
+ * This is an example of module augmentation in TypeScript 
+ * to extend the express-session module with custom properties 
+ * Read more at https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation 
+ **/
+declare module 'express-session' {
+  interface SessionData {
+    user?: string;
+    sensitive?: string;
+  }
+}
+// const MONGO_URL: string =  'mongodb://127.0.0.1:27017/fake_so';
+// const CLIENT_URL: string ='http://localhost:3000';
 
+// USE WHEN DEPLOYING TO RENDER
 const MONGO_URL: string = process.env.REACT_APP_MONGODB_URI || 'mongodb://127.0.0.1:27017/fake_so';
 const CLIENT_URL: string = process.env.REACT_APP_CLIENT_URL || 'http://localhost:3000';
+
 const port: number = process.env.PORT ? parseInt(process.env.PORT) : 8000;
 
 mongoose.connect(MONGO_URL).then(() => {
@@ -34,7 +53,29 @@ app.use(
  */
 app.use(express.json());
 
+app.use(express.urlencoded({ extended: false }));
+
+// middleware to create a session with secure configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'default_secret',
+    store: MongoStore.create({
+      mongoUrl: MONGO_URL,
+      collectionName: 'MySessions'
+    }),
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Set secure to true in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Set sameSite to 'none' in production
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
 app.get('/', (req, res) => {
+  console.log(req.session);
   res.send('REST Service for Fake SO');
   res.end();
 });

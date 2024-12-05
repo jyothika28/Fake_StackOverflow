@@ -1,13 +1,12 @@
 import "./sideBarNavView.css";
 import { VoidFunctionType } from "../../../types/functionTypes";
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Drawer } from "@mui/material";
+import { Drawer, Typography } from "@mui/material";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import LabelIcon from '@mui/icons-material/Label';
 
@@ -38,7 +37,22 @@ const SideBarNav = ({
       variant="permanent"
       anchor="left"
     >
-      <Toolbar />
+      {/* <Toolbar /> */}
+      <Typography
+          
+          component="div"
+          sx={{
+            fontWeight: "bold",
+            fontSize: "1.2rem",
+            color: "black",
+            textAlign: "center",
+            margin:"2px",
+            padding: "16px",
+          }}
+        >
+          Fake Stack Overflow
+        </Typography>
+      
       <Divider />
       <List>
         {/* Questions Menu Item */}

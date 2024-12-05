@@ -21,30 +21,41 @@ export const useLoginUser = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
     let isValid = true;
     // Validate username
     if (!username) {
-      setUsernameErr("Username cannot be empty");
+      setUsernameErr("Username cannot be empty.");
       isValid = false;
     }
     // Validate password
     if (!password) {
-      setPasswordErr("Password cannot be empty");
+      setPasswordErr("Password cannot be empty.");
       isValid = false;
     }
-    // If validation fails, return early
     if (!isValid) {
       return;
     }
-    // Create user object
-    const user = {
-      username,
-      password,
-    };
-    // Login user
-    const res = await loginUser(user);
-    if (res && res.success) {
-      setIsLoggedIn(true);
-    } else {
-      setUsernameErr("Invalid username or password");
-      setPasswordErr("Invalid username or password");
+
+    try {
+      // Create user object
+      const user = {
+        username,
+        password,
+      };
+  
+      const res = await loginUser(user);
+  
+      if (res && res.success) {
+        setIsLoggedIn(true);
+      }
+    } catch (error: any) {
+      console.error("Error during login:", error);
+  
+      if (error.message.includes("No account found")) {
+        setUsernameErr("No account found with this username. Please register or try again.");
+      } else if (error.message.includes("Invalid credentials")) {
+        setPasswordErr("Invalid credentials. Please try again.");
+      } 
+      else {
+        setUsernameErr("An unexpected error occurred during login");
+      }
     }
   };
 

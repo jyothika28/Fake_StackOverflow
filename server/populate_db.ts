@@ -7,7 +7,8 @@ import mongoose from 'mongoose';
 import Answer from './models/answers';
 import Question from './models/questions';
 import Tag from './models/tags';
-import { ITag, IAnswer, IQuestion } from './models/types/types'
+import User from './models/users';
+import { ITag, IAnswer, IQuestion, IUser } from './models/types/types'
 import {
   Q1_DESC, Q1_TXT,
   Q2_DESC, Q2_TXT,
@@ -18,6 +19,7 @@ import {
   A5_TXT, A6_TXT,
   A7_TXT, A8_TXT
 } from './data/posts_strings';
+import bcrypt from 'bcrypt';
 
 const userArgs = process.argv.slice(2);
 
@@ -54,6 +56,14 @@ function questionCreate(title: string, text: string, tags: ITag[], answers: IAns
   return qstn.save();
 }
 
+
+function userCreate(firstname: string, lastname: string, username: string, email: string, password: string, dob: Date): Promise<IUser> {
+  const userDetail: IUser = { firstname, lastname, username, email, password, dob };
+
+  const user = new User(userDetail);
+  return user.save();
+}
+
 const populate = async () => {
   try {
     const t1 = await tagCreate('react');
@@ -77,6 +87,15 @@ const populate = async () => {
     await questionCreate(Q3_DESC, Q3_TXT, [t5, t6], [a6, a7], 'monkeyABC', new Date('2023-02-18T01:02:15'), 200);
     await questionCreate(Q4_DESC, Q4_TXT, [t3, t4, t5], [a8], 'elephantCDE', new Date('2023-03-10T14:28:01'), 103);
 
+    const u1_pwd = await bcrypt.hash('Rachelhomie@123', 10);
+    const u2_pwd = await bcrypt.hash('Rosssandwich@123', 10);
+    const u3_pwd = await bcrypt.hash('Jakebrooklyn@334', 10);
+    const u4_pwd = await bcrypt.hash('AmyJamy@1002', 10);
+    const u1 = await userCreate('Rachel', 'Green', 'rachelgreen', 'rach@gmail.com', u1_pwd, new Date('1990-01-20'));
+    const u2 = await userCreate('Ross', 'Geller', 'rossgeller', 'ross12@gmail.com', u2_pwd, new Date('1989-12-20'));
+    const u3 = await userCreate('Jake', 'Peralta', 'jakeperalta', 'jakep@gmail.com ', u3_pwd, new Date('1988-11-20'));
+    const u4 = await userCreate('Amy', 'Santiago', 'amysantiago', 'amsan@gmail.com', u4_pwd, new Date('1987-10-20'));
+    console.log('Users:', u1, u2, u3, u4);
     console.log('done');
   } catch (err) {
     console.error('ERROR:', err);

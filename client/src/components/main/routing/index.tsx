@@ -18,6 +18,7 @@ export interface PageClassProps {
   clickTag: ClickTagFunctionType;
   handleNewQuestion: VoidFunctionType;
   handleNewAnswer: VoidFunctionType;
+  userProfilePage: VoidFunctionType;
 }
 
 class PageClass {
@@ -33,6 +34,7 @@ class PageClass {
   clickTag: ClickTagFunctionType;
   handleNewQuestion: VoidFunctionType;
   handleNewAnswer: VoidFunctionType;
+  userProfilePage: VoidFunctionType;
 
   constructor(props: PageClassProps) {
     this.search = props.search;
@@ -47,6 +49,7 @@ class PageClass {
     this.clickTag = props.clickTag;
     this.handleNewQuestion = props.handleNewQuestion;
     this.handleNewAnswer = props.handleNewAnswer;
+    this.userProfilePage = props.userProfilePage;
   }
 
   getContent(): React.ReactNode {

@@ -6,6 +6,7 @@ import {
   UserRegistrationResponse,
 } from "../types/entityTypes";
 
+
 const USER_API_URL = `${REACT_APP_API_URL}/user`;
 
 /**
@@ -20,12 +21,16 @@ const loginUser = async (
     const res = await api.post(`${USER_API_URL}/login`, userData);
 
     if (res.status !== 200) {
-      throw new Error("Error during user login");
+      throw new Error(res.data?.message || "Error during user login");
     }
     return res.data;
-  } catch (error) {
+  }  catch (error: any) {
     console.error("Error during user login:", error);
-    throw error;
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message); 
+    } else {
+      throw new Error("An unexpected error occurred during login");
+    }
   }
 };
 
@@ -38,16 +43,48 @@ const registerUser = async (
   userData: UserRegistrationData
 ): Promise<UserRegistrationResponse> => {
   try {
-    console.log("USERAPI", USER_API_URL);
     const res = await api.post(`${USER_API_URL}/register`, userData);
     if (res.status !== 201) {
       throw new Error("Error during user registration");
     }
     return res.data;
-  } catch (error) {
-    console.error("Error during user registration:", error);
+  } catch (error: any) {
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data.message);
+    }
     throw error;
   }
 };
 
-export { registerUser, loginUser };
+const logoutUser = async () => {
+  
+  try {
+    console.log("In client logoutUser");
+    const res = await api.post(`${USER_API_URL}/logout`);
+    if (res.status !== 200) {
+      throw new Error("Error during user logout");
+    }
+    console.log("In client logoutUser res", res);
+    return res.data;
+  } catch (error) {
+    console.error("Error during user logout:", error);
+    throw error;
+  }
+}
+
+const getUserDetails = async () => {
+  try {
+    const res = await api.get(`${USER_API_URL}/getUser`);
+    if (res.status !== 200) {
+      throw new Error("Invalid user");
+    }
+    console.log("In client getUserDetails res", res);
+    return res.data;
+  } catch (error) {
+    console.error("Error during user logout:", error);
+    throw error;
+  }
+}
+
+
+export { registerUser, loginUser,logoutUser, getUserDetails };

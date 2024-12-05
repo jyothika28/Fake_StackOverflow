@@ -10,7 +10,7 @@ import { Request, Response } from "express";
  * @property {string} password.required - Password of the user
  * @property {Date} dob - Date of birth of the user
  */
-export interface IUser extends Document {
+export interface IUser {
   firstname: string;
   lastname: string;
   username: string;
