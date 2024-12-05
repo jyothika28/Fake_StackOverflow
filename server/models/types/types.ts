@@ -40,6 +40,7 @@ export interface IAnswer {
   text: string;
   ans_by: string;
   ans_date_time: Date;
+  flagged?: boolean;
 }
 
 /**
@@ -62,7 +63,27 @@ export interface IQuestion {
   asked_by?: string;
   ask_date_time: Date;
   views: number;
+  flagged?: boolean;
 }
+
+export interface IComment {
+  text: string;
+  commented_by: string;
+  comment_date_time: Date;
+  upvotes: number;
+  downvotes: number;
+}
+
+export interface AddCommentRequest extends Request {
+  params: {
+    answerId: string;
+  };
+  body: {
+    text: string;
+    commented_by: string;
+  };
+}
+
 
 /**
  * @typedef HTTP Request parameter for adding an answer

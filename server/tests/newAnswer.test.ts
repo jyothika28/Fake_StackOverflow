@@ -2,6 +2,7 @@ import supertest from 'supertest';
 import mongoose from 'mongoose';
 import { saveAnswer, addAnswerToQuestion } from '../models/application';
 import { Server } from 'http';
+import Answer from "../models/answers";
 
 jest.mock('../models/application', () => ({
   saveAnswer: jest.fn(),
@@ -190,5 +191,69 @@ describe("POST /addAnswer", () => {
 
     // Asserting the response
     expect(response.status).toBe(500);
+  });
+});
+
+describe("POST /flagAnswer/:aid", () => {
+  beforeEach(() => {
+    server = require("../server");
+  });
+
+  afterEach(async () => {
+    server.close();
+    await mongoose.disconnect();
+  });
+
+  it("should flag an existing answer", async () => {
+    // Mocking the answer
+    const mockAnswer = {
+      _id: "dummyAnswerId",
+      text: "This is a test answer",
+      ans_by: "dummyUserId",
+      ans_date_time: "2024-06-03",
+      flagged: true,
+    };
+
+    // Mock findByIdAndUpdate to return the flagged answer
+    (Answer.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(mockAnswer);
+
+    // Making the request
+    const response = await supertest(server)
+        .post("/answer/flagAnswer/dummyAnswerId");
+
+    // Asserting the response
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      message: "This answer has been flagged for review.",
+      flaggedAnswer: mockAnswer,
+    });
+  });
+
+  it("should return 404 if the answer does not exist", async () => {
+    // Mock findByIdAndUpdate to return null (not found)
+    (Answer.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(null);
+
+    // Making the request
+    const response = await supertest(server)
+        .post("/answer/flagAnswer/nonexistentAnswerId");
+
+    // Asserting the response
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: "Answer not found" });
+  });
+
+  it("should return 500 if there is a database error", async () => {
+    // Mock findByIdAndUpdate to throw an error
+    (Answer.findByIdAndUpdate as jest.Mock).mockImplementationOnce(() => {
+      throw new Error("Database error");
+    });
+
+    // Making the request
+    const response = await supertest(server)
+        .post("/answer/flagAnswer/dummyAnswerId");
+
+    // Asserting the response
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Error flagging answer" });
   });
 });

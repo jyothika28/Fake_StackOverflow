@@ -5,6 +5,7 @@ import {
   AddAnswerRequest,
   AddAnswerResponse,
 } from "../models/types/types";
+import Answer from "../models/answers";
 
 const router = express.Router();
 
@@ -49,5 +50,27 @@ router.post("/addAnswer", async (req: AddAnswerRequest, res: Response) => {
     return res.status(500).json({ error: "An unexpected error occurred" });
   }
 });
+
+router.post("/flagAnswer/:aid", async (req, res) => {
+    try {
+      const { aid } = req.params;
+
+      const flaggedAnswer = await Answer.findByIdAndUpdate(
+               aid,
+               { flagged: true },
+               { new: true }
+      );
+
+      if (!flaggedAnswer) {
+             return res.status(404).json({ error: "Answer not found" });
+           }
+
+      res.status(200).json({ message: "This answer has been flagged for review.", flaggedAnswer });
+      } catch (error) {
+         console.error("Error flagging answer:", error);
+         return res.status(500).json({ error: "Error flagging answer" });
+       }
+  });
+
 
 export default router;

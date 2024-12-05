@@ -26,6 +26,7 @@ const QuestionSchema = new mongoose.Schema(
     },
     answers: [AnswerSchema],
     tags: [TagSchema],
+    flagged: { type: Boolean, default: false },
   },
   { collection: "Question" }
 );
