@@ -102,27 +102,6 @@ router.post("/addQuestion", async (req: AddQuestionRequest, res) => {
   ) {
     return res.status(400).send("Invalid question body");
   }
-
-  router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
-    try {
-      const { qid } = req.params;
-
-      // Flag the question
-      const flaggedQuestion = await flagQuestionById(qid);
-
-      return res
-          .status(200)
-          .json({ message: "This post has been flagged for review.", flaggedQuestion });
-    } catch (error) {
-      console.error("Error flagging question:", error);
-      if (error.message === "Question not found") {
-        return res.status(404).json({ error: "Question not found" });
-      }
-      return res.status(500).json({ error: "Error flagging question" });
-    }
-  });
-
-
   // Save question to the database
   try {
     const question: IQuestion = {
@@ -144,5 +123,31 @@ router.post("/addQuestion", async (req: AddQuestionRequest, res) => {
     return res.status(500).json({ error: "Database error" });
   }
 });
+
+router.post("/flagQuestion/:qid", async (req: AddQuestionRequest, res) => {
+  console.log("Endpoint hit with QID:", req.params.qid);
+
+  try {
+    const { qid } = req.params;
+    const flaggedQuestion = await flagQuestionById(qid);
+
+    console.log("Flagged Question:", flaggedQuestion);
+    return res
+        .status(200)
+        .json({ message: "This post has been flagged for review.", flaggedQuestion });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error in flagging:", error.message);
+      if (error.message === "Question not found") {
+        return res.status(404).json({ error: error.message });
+      }
+    } else {
+      console.error("Unknown error in flagging:", error);
+    }
+    return res.status(500).json({ error: "Error flagging question" });
+  }
+});
+
+
 
 export default router;
