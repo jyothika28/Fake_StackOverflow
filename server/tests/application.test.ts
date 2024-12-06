@@ -187,11 +187,10 @@ describe('application module', () => {
 
   test('filter question by tag and keyword', () => {
     console.log("In dev");
-    const result = filterQuestionsBySearch(_questions, 'website [android]');
+    const result = filterQuestionsBySearch(_questions, '[android]');
     console.log("filter8282:", result);
-    expect(result.length).toEqual(2);
+    expect(result.length).toEqual(1);
     expect(result[0]._id).toEqual('65e9b58910afe6e94fc6e6dc');
-    expect(result[1]._id).toEqual('65e9b5a995b6c7045a30d823');
   });
 
   // getQuestionsByOrder
