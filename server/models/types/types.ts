@@ -36,7 +36,7 @@ export interface ITag {
  * @property {string} _id - Unique identifier of the answer
  * @property {Date} ans_date_time.required - Date and time of the answer
  */
-export interface IAnswer extends mongoose.Document {
+export interface IAnswer {
   _id?: string;
   text: string;
   ans_by: string;
