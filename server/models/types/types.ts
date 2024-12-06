@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 
 /**
@@ -35,7 +36,7 @@ export interface ITag {
  * @property {string} _id - Unique identifier of the answer
  * @property {Date} ans_date_time.required - Date and time of the answer
  */
-export interface IAnswer {
+export interface IAnswer extends mongoose.Document {
   _id?: string;
   text: string;
   ans_by: string;

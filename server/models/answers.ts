@@ -25,13 +25,10 @@ const flagAnswerById = async (answerId: string): Promise<IAnswer | null> => {
 
         // Update the flagged status
         console.log(`Answer found. Updating flagged status for answer ID: ${answerId}`);
-        answer.flagged = true;
+        // Set the `flagged` field to `true`
+        answer.set("flagged", true);
 
-        // Save the updated answer
-        const updatedAnswer = await answer.save();
-        console.log(`Answer successfully flagged:`, updatedAnswer);
-
-        return updatedAnswer;
+        return answer;
     } catch (error) {
         // Log detailed error information
         if (error instanceof Error) {

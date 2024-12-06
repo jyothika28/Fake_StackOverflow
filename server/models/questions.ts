@@ -21,8 +21,7 @@ const flagQuestionById = async (questionId: string) => {
 
     console.log("Question found:", question);
 
-    question.flagged = true;
-    await question.save();
+    question.set("flagged", true);
 
     console.log("Question flagged and saved:", question);
     return question;
