@@ -2,6 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 import { getUserByUsername,insertNewUser,authenticateUser,logoutUser } from "../models/application";
 import { LoginRequest,RegisterRequest } from "../models/types/types";
+import { validateRegisterRequest,validateLoginRequest } from "../validators/userValidator";
 // import { saveUser } from "../models/application";
 // import {IUser}  from "../models/types/types";
 
@@ -59,6 +60,10 @@ const router: express.Router = express.Router();
 //Refactored code for register
 router.post('/register', async (req: RegisterRequest, res: Response) => {
   const { firstname, lastname, username, email, password, dob } = req.body;
+  const { isValid, errors } = validateRegisterRequest(req);
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
   console.log('req.body', req.body);
   try {
     // Insert the new user into the database
@@ -123,7 +128,10 @@ router.post('/register', async (req: RegisterRequest, res: Response) => {
 router.post('/login', async (req: LoginRequest, res: Response) => {
   console.log("req.body in login", req.body);
   const { username, password } = req.body;
-
+  const { isValid, errors } = validateLoginRequest(req);
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
   try {
     // Authenticate the user
     const user = await authenticateUser(username, password);
