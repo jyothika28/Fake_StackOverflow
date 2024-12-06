@@ -96,12 +96,16 @@ describe("POST /flagQuestion/:qid", () => {
         console.log("Running test for question not found");
 
         // Mock `findById` to return null (simulate question not found)
-        (Question.findById as jest.Mock).mockResolvedValueOnce(null);
+        (Question.findById as jest.Mock).mockResolvedValue(null);
+        (flagQuestionById as jest.Mock).mockImplementation(() => {
+            throw new Error("Question not found");
+        });
+
         console.log("Mock setup for findById returning null");
 
         // Make the POST request with a non-existent question ID
         const response = await supertest(server)
-            .post(`/question/flagQuestion/2`)
+            .post(`/question/flagQuestion/abc`)
             .send();
 
         console.log("Response status:", response.status);
@@ -112,17 +116,24 @@ describe("POST /flagQuestion/:qid", () => {
         expect(response.body.error).toBe("Question not found");
     });
 
+
     it("should return 500 if an error occurs during flagging", async () => {
         console.log("Running test for server error during flagging");
 
-        // Mock `findById` to throw an error (e.g., database issue)
+        // Mock `findById` to throw an error (simulate database issue)
         (Question.findById as jest.Mock).mockRejectedValue(new Error("Database error"));
+
+        // Mock `flagQuestionById` to propagate the error
+        (flagQuestionById as jest.Mock).mockImplementation(() => {
+            throw new Error("Database error");
+        });
+
         console.log("Mock setup for findById throwing an error");
 
         // Make the POST request
-        const response = await supertest(server).post(
-            `/question/flagQuestion/65e9b58910afe6e94fc6e6fe`
-        );
+        const response = await supertest(server)
+            .post(`/question/flagQuestion/65e9b58910afe6e94fc6e6fe`)
+            .send();
 
         console.log("Response status:", response.status);
         console.log("Response body:", response.body);
@@ -131,4 +142,5 @@ describe("POST /flagQuestion/:qid", () => {
         expect(response.status).toBe(500);
         expect(response.body.error).toBe("Error flagging question");
     });
+
 });
