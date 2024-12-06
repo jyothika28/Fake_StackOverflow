@@ -1,5 +1,5 @@
 const mockingoose = require('mockingoose');
-import { addTag, getQuestionsByOrder, filterQuestionsBySearch, fetchAndIncrementQuestionViewsById, saveQuestion, getTagIds, saveAnswer, getTagCountMap } from '../models/application';
+import { insertNewUser,authenticateUser,addTag, getQuestionsByOrder, filterQuestionsBySearch, fetchAndIncrementQuestionViewsById, saveQuestion, getTagIds, saveAnswer, getTagCountMap } from '../models/application';
 import { IAnswer, IQuestion, ITag } from '../models/types/types';
 import Questions from '../models/questions';
 import Tags from '../models/tags';
@@ -95,6 +95,20 @@ describe('application module', () => {
     mockingoose.resetAll();
 
   });
+  test('insertNewUser should return user object', async () => {
+    const user = {
+      firstname: 'New',
+      lastname: 'User',
+      username: 'new_user',
+      email: 'new_user@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+    mockingoose(Questions).toReturn(user, 'create');
+    const result = await insertNewUser(user);
+    expect(result).toEqual(user);
+  }
+  );
 
   // addTag
   test('addTag return tag id if the tag already exists', async () => {
@@ -324,23 +338,6 @@ describe('application module', () => {
     expect(result.length).toEqual(2);
   });
 
-  // getTagCountMap
-  // test('getTagCountMap should return tag count map', async () => {
-  //   mockingoose(Tags).toReturn([_tag1, _tag2, _tag3], 'find');
-
-  //   const result = await getTagCountMap();
-  //   console.log("Result8282:", result);
-  //   if (result && !(result instanceof Map) && 'error' in result) {
-  //     fail(`Expected a Map but got an error: ${result.error}`);
-  //   } else if (result instanceof Map) {
-  //     expect(result.get('react')).toBeDefined();
-  //     expect(result.get('javascript')).toBeDefined();
-  //     expect(result.get('android')).toBeDefined();
-  //   } else {
-  //     fail('Expected a Map but got null');
-  //   }
-  // });
-  // getTagCountMap
   test('getTagCountMap should return tag count map', async () => {
     mockingoose(Tags).toReturn([_tag1, _tag2, _tag3], 'find');
     const result = await getTagCountMap();
@@ -372,4 +369,7 @@ describe('application module', () => {
       fail('Expected a Map but got null');
     }
   });
+
+
+
 });
