@@ -124,7 +124,7 @@ router.post("/addQuestion", async (req: AddQuestionRequest, res) => {
   }
 });
 
-router.post("/flagQuestion/:qid", async (req: AddQuestionRequest, res) => {
+router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
   console.log("Endpoint hit with QID:", req.params.qid);
 
   try {
