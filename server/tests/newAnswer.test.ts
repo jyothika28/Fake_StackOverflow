@@ -299,3 +299,30 @@ describe("POST /flagAnswer/:aid", () => {
     expect(response.body).toEqual({ error: "Error flagging answer" });
   });
 });
+
+describe("flagAnswerById", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should successfully flag an existing answer", async () => {
+    const mockAnswer = {
+      _id: "12345",
+      flagged: false,
+      set: jest.fn(),
+      save: jest.fn().mockResolvedValue(true),
+    };
+
+    // Mock findById to return the mock answer
+    const findByIdMock = (Answer.findById as jest.Mock).mockResolvedValue(mockAnswer);
+    console.log("findById Mock (before function call):", Answer.findById);
+
+    // Call the function
+    const result = await Answer.findById("12345");
+
+    // Assertions
+    expect(Answer.findById).toHaveBeenCalledTimes(1);
+    expect(Answer.findById).toHaveBeenCalledWith("12345");
+    expect(result).toEqual(mockAnswer);
+  });
+});

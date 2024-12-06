@@ -13,24 +13,14 @@ const Answer = mongoose.model<IAnswer>("Answer", AnswerSchema);
  */
 const flagAnswerById = async (answerId: string): Promise<IAnswer | null> => {
     try {
-        console.log(`Attempting to flag answer with ID: ${answerId}`);
-
-        // Find the answer by ID
         const answer = await Answer.findById(answerId);
-
         if (!answer) {
             console.warn(`Answer with ID ${answerId} not found`);
             throw new Error("Answer not found");
         }
-
-        // Update the flagged status
-        console.log(`Answer found. Updating flagged status for answer ID: ${answerId}`);
-        // Set the `flagged` field to `true`
         answer.set("flagged", true);
-
         return answer;
     } catch (error) {
-        // Log detailed error information
         if (error instanceof Error) {
             console.error(`Error in flagAnswerById: ${error.message}`);
         } else {
