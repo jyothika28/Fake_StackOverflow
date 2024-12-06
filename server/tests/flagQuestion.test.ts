@@ -2,10 +2,13 @@ import supertest from "supertest";
 import mongoose from "mongoose";
 import { Server } from "http";
 import Question from "../models/questions";
+import { flagQuestionById } from "../models/questions";
 
 jest.mock("../models/questions", () => ({
+    flagQuestionById: jest.fn(),
     findById: jest.fn(),
 }));
+
 
 let server: Server;
 
@@ -51,11 +54,21 @@ describe("POST /flagQuestion/:qid", () => {
 
         console.log("MockQuestion before request:", mockQuestion);
 
+        // Mock the `save` method to simulate the flagged update
+        mockQuestion.save.mockImplementation(function (this: typeof mockQuestion) {
+            this.flagged = true; // Simulate flagged update
+            return Promise.resolve(this);
+        });
+
+        // Mock the flagQuestionById function
+        const mockFlaggedQuestion = { ...mockQuestion, flagged: true };
+        console.log("MockFlaggedQuestion:", mockFlaggedQuestion);
         // Mock the `findById` call to return the mocked question
         (Question.findById as jest.Mock).mockImplementation((id) => {
             console.log("Mock findById called with ID:", id);
             return mockQuestion; // or `null` based on test case
         });
+        (flagQuestionById as jest.Mock).mockResolvedValue(mockFlaggedQuestion);
 
         console.log("Mock setup for findById completed");
 
@@ -65,33 +78,31 @@ describe("POST /flagQuestion/:qid", () => {
             .post(`/question/flagQuestion/${mockQuestion._id}`)
             .send();
 
-
-
-
         console.log("Response status:", response.status);
         console.log("Response body:", response.body);
 
         // Assert response
+        console.log("Asserting response", response.status);
         expect(response.status).toBe(200);
+        console.log("Response body message:", response.body.message);
         expect(response.body.message).toBe("This post has been flagged for review.");
 
         // Assert that the question's `flagged` field was updated
         console.log("MockQuestion after request:", mockQuestion);
-        expect(mockQuestion.flagged).toBe(true);
-        expect(mockQuestion.save).toHaveBeenCalled();
+        expect(response.body.flaggedQuestion.flagged).toBe(true);
     });
 
     it("should return 404 if the question is not found", async () => {
         console.log("Running test for question not found");
 
-        // Mock `findById` to return null (question not found)
-        (Question.findById as jest.Mock).mockResolvedValue(null);
+        // Mock `findById` to return null (simulate question not found)
+        (Question.findById as jest.Mock).mockResolvedValueOnce(null);
         console.log("Mock setup for findById returning null");
 
         // Make the POST request with a non-existent question ID
-        const response = await supertest(server).post(
-            `/question/flagQuestion/65e9b58910afe6e94fc6e6fe`
-        );
+        const response = await supertest(server)
+            .post(`/question/flagQuestion/2`)
+            .send();
 
         console.log("Response status:", response.status);
         console.log("Response body:", response.body);
