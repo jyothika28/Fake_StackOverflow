@@ -2,6 +2,41 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 
+
+/**
+ * @typedef LoginRequest - Interface for Login
+ * @property {string} username.required - Email of the user
+ * @property {string} password.required - Password of the user
+ */
+
+export interface LoginRequest extends Request {
+  body: {
+  username: string;
+  password: string;
+  };
+}
+
+/**
+ * @typedef RegisterRequest - Interface for Register
+ * @property {string} firstname.required - First name of the user
+ * @property {string} lastname.required - Last name of the user
+ * @property {string} username.required - Username of the user
+ * @property {string} email.required - Email of the user
+ * @property {string} password.required - Password of the user
+ * @property {Date} dob - Date of birth of the user
+ * 
+ */
+export interface RegisterRequest extends Request {
+  body: {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  password: string;
+  dob?: Date;
+  };
+}
+
 /**
  * @typedef IUser - Interface for User
  * @property {string} firstname.required - First name of the user
@@ -155,6 +190,8 @@ export interface GetQuestionsByFilterRequest extends Request {
     search?: string;
   };
 }
+
+
 
 /**
  * @typedef HTTP Request parameter for getting questions by question id
