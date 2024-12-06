@@ -52,24 +52,43 @@ router.post("/addAnswer", async (req: AddAnswerRequest, res: Response) => {
 });
 
 router.post("/flagAnswer/:aid", async (req, res) => {
-    try {
-      const { aid } = req.params;
+  console.log("Endpoint hit with AID:", req.params.aid);
 
-      const flaggedAnswer = await Answer.findByIdAndUpdate(
-               aid,
-               { flagged: true },
-               { new: true }
-      );
+  try {
+    const { aid } = req.params;
 
-      if (!flaggedAnswer) {
-             return res.status(404).json({ error: "Answer not found" });
-           }
+    console.log(`Attempting to flag answer with ID: ${aid}`);
 
-      res.status(200).json({ message: "This answer has been flagged for review.", flaggedAnswer });
-      } catch (error) {
-         console.error("Error flagging answer:", error);
-         return res.status(500).json({ error: "Error flagging answer" });
-       }
+    // Update the answer's flagged status in the database
+    const flaggedAnswer = await Answer.findByIdAndUpdate(
+        aid,
+        { flagged: true },
+        { new: true } // Return the updated document
+    );
+
+    // Handle case where the answer does not exist
+    if (!flaggedAnswer) {
+      console.warn(`Answer with ID ${aid} not found`);
+      return res.status(404).json({ error: "Answer not found" });
+    }
+
+    // Success response
+    console.log("Answer successfully flagged:", flaggedAnswer);
+    return res.status(200).json({
+      message: "This answer has been flagged for review.",
+      flaggedAnswer,
+    });
+  } catch (error) {
+    // Improved error logging
+    if (error instanceof Error) {
+      console.error("Error flagging answer:", error.message);
+    } else {
+      console.error("Unexpected error occurred during flagging:", error);
+    }
+
+    // Internal server error response
+    return res.status(500).json({ error: "Error flagging answer" });
+  }
 });
 
 

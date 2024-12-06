@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="" />
+    <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/answer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/answer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/answers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/answers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,9 +18,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/client/package.json" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2ozm3P9bhdwMm1kaPqQeXWfpLAE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -20,16 +31,91 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
+    "Jest.flagQuestion.test.ts.executor": "Run",
+    "Jest.newAnswer.test.ts.executor": "Run",
+    "Jest.newQuestion.test.ts.executor": "Run",
+    "Jest.question.test.ts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "postmod",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/jest",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preference.NewCodeQlHomeConfigurable",
+    "ts.external.directory.path": "/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager" selected="Jest.POST /flagAnswer/:aid">
+    <configuration name="POST /addAnswer.should return database error in response if update question method throws an error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/newAnswer.test.ts" />
+      <test-names>
+        <test-name value="POST /addAnswer" />
+        <test-name value="should return database error in response if update question method throws an error" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="POST /flagAnswer/:aid" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/server/tests/newAnswer.test.ts" />
+      <test-names>
+        <test-name value="POST /flagAnswer/:aid" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="POST /flagAnswer/:aid.should flag an existing answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/newAnswer.test.ts" />
+      <test-names>
+        <test-name value="POST /flagAnswer/:aid" />
+        <test-name value="should flag an existing answer" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="POST /flagQuestion/:qid.should return 500 if an error occurs during flagging" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
+      <test-names>
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should return 500 if an error occurs during flagging" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.POST /flagAnswer/:aid" />
+        <item itemvalue="Jest.POST /flagAnswer/:aid.should flag an existing answer" />
+        <item itemvalue="Jest.POST /addAnswer.should return database error in response if update question method throws an error" />
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -47,10 +133,16 @@
       <option name="presentableId" value="Default" />
       <updated>1731880579593</updated>
       <workItem from="1731880580758" duration="273000" />
+      <workItem from="1733444573378" duration="5218000" />
+      <workItem from="1733451453515" duration="16422000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

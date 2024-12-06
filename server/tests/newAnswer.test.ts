@@ -3,10 +3,23 @@ import mongoose from 'mongoose';
 import { saveAnswer, addAnswerToQuestion } from '../models/application';
 import { Server } from 'http';
 import Answer from "../models/answers";
+import {flagAnswerById} from "../models/answers";
 
 jest.mock('../models/application', () => ({
   saveAnswer: jest.fn(),
-  addAnswerToQuestion: jest.fn()
+  addAnswerToQuestion: jest.fn(),
+  findById: jest.fn(),
+  flagAnswerById: jest.fn()
+}));
+
+
+jest.mock("../models/answers", () => ({
+  __esModule: true,
+  default: {
+    findById: jest.fn(),
+    findByIdAndUpdate: jest.fn(),
+  },
+  flagAnswerById: jest.fn(),
 }));
 
 let server: Server;
@@ -182,8 +195,9 @@ describe("POST /addAnswer", () => {
     };
 
     (saveAnswer as jest.Mock).mockResolvedValueOnce(mockAnswer);
-    (addAnswerToQuestion as jest.Mock).mockResolvedValueOnce({ error: "Database error" });
-
+    (addAnswerToQuestion as jest.Mock).mockImplementation(() => {
+      throw new Error("Database error");
+    });
     // Making the request
     const response = await supertest(server)
       .post("/answer/addAnswer")
@@ -205,29 +219,57 @@ describe("POST /flagAnswer/:aid", () => {
   });
 
   it("should flag an existing answer", async () => {
+    console.log("Running test for successful flagging of an answer");
+
     // Mocking the answer
     const mockAnswer = {
-      _id: "dummyAnswerId",
-      text: "This is a test answer",
-      ans_by: "dummyUserId",
-      ans_date_time: "2024-06-03",
-      flagged: true,
+      _id: '65e9b58910afe6e94fc6e6dc',
+      text: 'ans1',
+      ans_by: 'ans_by1',
+      ans_date_time: new Date('2023-11-18T09:24:00'),
+      flagged: false,
+      save: jest.fn(),
     };
 
-    // Mock findByIdAndUpdate to return the flagged answer
-    (Answer.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(mockAnswer);
+    // Mock the `save` method to simulate the flagged update
+    mockAnswer.save.mockImplementation(function (this: typeof mockAnswer) {
+      this.flagged = true; // Simulate flagged update
+      return Promise.resolve(this);
+    });
+
+    // Mock `findById` to return the mocked answer
+    (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
+
+    // Mock `findByIdAndUpdate` to return the flagged answer
+    (Answer.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce({
+      ...mockAnswer,
+      flagged: true,
+      ans_date_time: mockAnswer.ans_date_time.toISOString(), // Ensure string format for date
+    });
 
     // Making the request
     const response = await supertest(server)
-        .post("/answer/flagAnswer/dummyAnswerId");
+        .post(`/answer/flagAnswer/${mockAnswer._id}`)
+        .send();
 
-    // Asserting the response
+    // Logging
+    console.log("Response status:", response.status);
+    console.log("Response body:", response.body);
+
+    // Assert response
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
       message: "This answer has been flagged for review.",
-      flaggedAnswer: mockAnswer,
+      flaggedAnswer: {
+        _id: mockAnswer._id,
+        text: mockAnswer.text,
+        ans_by: mockAnswer.ans_by,
+        ans_date_time: mockAnswer.ans_date_time.toISOString(), // Match the expected string format
+        flagged: true,
+      },
     });
   });
+
 
   it("should return 404 if the answer does not exist", async () => {
     // Mock findByIdAndUpdate to return null (not found)
