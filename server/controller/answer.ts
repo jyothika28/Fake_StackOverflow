@@ -70,7 +70,7 @@ router.post("/flagAnswer/:aid", async (req, res) => {
          console.error("Error flagging answer:", error);
          return res.status(500).json({ error: "Error flagging answer" });
        }
-  });
+});
 
 
 export default router;

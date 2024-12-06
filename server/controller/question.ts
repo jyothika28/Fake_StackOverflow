@@ -131,6 +131,10 @@ router.post("/flagQuestion/:qid", async (req: AddQuestionRequest, res) => {
     const { qid } = req.params;
     const flaggedQuestion = await flagQuestionById(qid);
 
+    if (!flaggedQuestion) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+
     console.log("Flagged Question:", flaggedQuestion);
     return res
         .status(200)
