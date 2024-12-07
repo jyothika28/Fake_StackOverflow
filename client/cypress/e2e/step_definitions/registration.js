@@ -78,7 +78,7 @@ function fillRegistrationForm(user) {
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up" button
 // When the user fills out the required fields first name, last name, username, email, password, and optional date of birth
-// And clicks on "Register" button
+// And clicks on Register button
 // Then the user is Successfully redirected to the login page to login with the newly created account
 
 
@@ -91,8 +91,8 @@ And('clicks on {string}', (link) => {
 When('the user fills out the required fields first name, last name, username, email, password, and optional date of birth', () => {
     fillRegistrationForm(user1);
 });
-And('clicks on {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('the user is Successfully redirected to the Sign in page to login with the newly created account', () => {
     cy.contains("Sign in").should('be.visible');
@@ -102,7 +102,7 @@ Then('the user is Successfully redirected to the Sign in page to login with the 
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When the user fills out the necessary fields with existing email
-// And clicks on "Register" button
+// And clicks on Register button
 // Then the user should see an error message stating, "This email is already registered. Please use a different email or log in."
 
 Given('The user has access to {string}', (url) => {
@@ -114,8 +114,8 @@ And('clicks on {string}', (link) => {
 When('the user fills out the necessary fields with existing email', () => {
     fillRegistrationForm(existingEmail);
 });
-And('clicks on {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('the user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -125,7 +125,7 @@ Then('the user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When the user enters an email address in an invalid format with missing @ or domain
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Invalid email format. Please enter a valid email address."
 
 Given('The user has access to {string}', (url) => {
@@ -139,8 +139,8 @@ When('the user enters an email address in an invalid format with missing @ or do
     cy.get('#formEmailInput').clear().type('john123d.com');
    
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -151,7 +151,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user attempts to register using a username that is already taken
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "This username is already in use. Please choose a different username."
 
 Given('The user has access to {string}', (url) => {
@@ -163,8 +163,8 @@ And('clicks on {string}', (link) => {
 When('The user attempts to register using a username that is already taken', () => {
     fillRegistrationForm(exisitingUsername);
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -175,7 +175,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user enters a password that does not meet the required strength criteria  
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Password is too weak. Please ensure your password has at least 8 characters, one uppercase letter, and one special character."
 
 Given('The user has access to {string}', (url) => {
@@ -187,8 +187,8 @@ And('clicks on {string}', (link) => {
 When('The user enters a password that does not meet the required strength criteria', () => {
     fillRegistrationForm(weakPassword);
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -199,7 +199,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user enters a password in the "Password" field and a different password in the "Confirm Password" field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Passwords do not match. Please ensure both password fields match exactly."
 
 Given('The user has access to {string}', (url) => {
@@ -212,8 +212,8 @@ When('The user enters a password in the "Password" field and a different passwor
     fillRegistrationForm(user1);
     cy.get('#formConfirmPasswordInput').clear().type('Password@200');
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -225,7 +225,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the email field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Email cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -238,8 +238,8 @@ When('The user fills out the necessary fields except the email field', () => {
     fillRegistrationForm(user1);
     cy.get('#formEmailInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -250,7 +250,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the first name field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "First name cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -263,8 +263,8 @@ When('The user fills out the necessary fields except the first name field', () =
     fillRegistrationForm(user1);
     cy.get('#formFirstnameInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -275,7 +275,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the last name field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Last name cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -288,8 +288,8 @@ When('The user fills out the necessary fields except the last name field', () =>
     fillRegistrationForm(user1);
     cy.get('#formLastnameInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -299,7 +299,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the username field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Username cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -312,8 +312,8 @@ When('The user fills out the necessary fields except the username field', () => 
     fillRegistrationForm(user1);
     cy.get('#formUsernameInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -323,7 +323,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the password field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Password cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -336,8 +336,8 @@ When('The user fills out the necessary fields except the password field', () => 
     fillRegistrationForm(user1);
     cy.get('#formPasswordInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');
@@ -347,7 +347,7 @@ Then('The user should see an error message stating, {string}', (errorMessage) =>
 // Given The user has access to "http://localhost:3000"
 // And clicks on "Don't have an account? Sign up"
 // When The user fills out the necessary fields except the confirm password field
-// And clicks on the "Register" button
+// And clicks on the Register button
 // Then The user should see an error message stating, "Confirm Password cannot be empty."
 
 Given('The user has access to {string}', (url) => {
@@ -360,8 +360,8 @@ When('The user fills out the necessary fields except the confirm password field'
     fillRegistrationForm(user1);
     cy.get('#formConfirmPasswordInput').clear();
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get("#registerBtn").contains(buttonName).click();
+And('clicks on Register button', () => {
+    cy.get("#registerBtn").contains("Register").click();
 });
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage).should('be.visible');

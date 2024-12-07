@@ -20,11 +20,13 @@ export type ErrorWrapped<T> = { error: string } | T;
  */
 const insertNewUser = async (userData: IUser) => {
   const { firstname, lastname, username, email, password, dob } = userData;
-
+  console.log("userData", userData);
   // Check if the email or username already exists
   const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+  console.log("existingUser", existingUser);
   if (existingUser) {
     const conflictField = existingUser.email === email ? 'email' : 'username';
+    console.log("conflictField", conflictField);
     const conflictMessage =
       conflictField === 'email'
         ? 'This email is already registered. Please use a different email or log in.'

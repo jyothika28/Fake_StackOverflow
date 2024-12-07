@@ -1,8 +1,12 @@
 const mockingoose = require('mockingoose');
-import { insertNewUser,authenticateUser,addTag, getQuestionsByOrder, filterQuestionsBySearch, fetchAndIncrementQuestionViewsById, saveQuestion, getTagIds, saveAnswer, getTagCountMap } from '../models/application';
-import { IAnswer, IQuestion, ITag } from '../models/types/types';
+import { insertNewUser,
+  //authenticateUser,
+  addTag, getQuestionsByOrder, filterQuestionsBySearch, fetchAndIncrementQuestionViewsById, saveQuestion, getTagIds, saveAnswer, getTagCountMap } from '../models/application';
+import { IAnswer, IUser,IQuestion, ITag } from '../models/types/types';
 import Questions from '../models/questions';
 import Tags from '../models/tags';
+import User from '../models/users';
+import bcrypt from 'bcrypt';
 
 Questions.schema.path('answers', Array);
 Questions.schema.path('tags', Array);
@@ -95,21 +99,8 @@ describe('application module', () => {
     mockingoose.resetAll();
 
   });
-  test('insertNewUser should return user object', async () => {
-    const user = {
-      firstname: 'New',
-      lastname: 'User',
-      username: 'new_user',
-      email: 'new_user@gmail.com',
-      password: 'Password@100',
-      dob: new Date('2024-06-06'),
-    };
-    mockingoose(Questions).toReturn(user, 'create');
-    const result = await insertNewUser(user);
-    expect(result).toEqual(user);
-  }
-  );
-
+ 
+  
   // addTag
   test('addTag return tag id if the tag already exists', async () => {
     mockingoose(Tags).toReturn(_tag1, 'findOne');
@@ -368,6 +359,97 @@ describe('application module', () => {
       fail('Expected a Map but got null');
     }
   });
+
+  // insertNewUser
+
+  // look into this
+  test('should return user object', async () => {
+    const user: IUser = {
+      firstname: 'Newone',
+      lastname: 'User',
+      username: 'new_user12',
+      email: 'new_user1230@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+
+    const savedUser = {
+      ...user,
+      _id: '675391d5f9dd11fc09b19106',
+      createdAt: new Date('2024-12-07T00:07:49.290Z'),
+      updatedAt: new Date('2024-12-07T00:07:49.290Z'),
+      password: await bcrypt.hash(user.password, 10),
+    };
+
+    mockingoose(User).toReturn(null, 'findOne'); // No existing user
+    mockingoose(User).toReturn(savedUser, 'save'); // Mock save
+
+    const result = await insertNewUser(user);
+    expect(result).toMatchObject(user);
+    expect(result.password).not.toBe('Password@100');
+    expect(result.password).toBe(savedUser.password);
+  });
+
+  test('should throw an error if email already exists', async () => {
+    const user: IUser = {
+      firstname: 'Newtwo',
+      lastname: 'User',
+      username: 'new_user',
+      email: 'existing_user@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+
+    mockingoose(User).toReturn(user, 'findOne'); // Existing user with same email
+
+    await expect(insertNewUser(user)).rejects.toThrow(
+      'This email is already registered. Please use a different email or log in.'
+    );
+  });
+  // look into this
+  test('should throw an error if username already exists', async () => {
+    const user1: IUser = {
+      firstname: 'Newthreep',
+      lastname: 'User',
+      username: 'new_user',
+      email: 'new_user890678@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+    const user2: IUser = {
+      firstname: 'Newthreep',
+      lastname: 'User',
+      username: 'new_user',
+      email: 'new_user890678@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+
+    mockingoose(User).toReturn(user1, 'findOne'); // Existing user with same username
+
+    await expect(insertNewUser(user2)).rejects.toThrow(
+      'This username is already in use. Please choose a different username.'
+    );
+  });
+
+  test('should hash the password before saving the user', async () => {
+    const user: IUser = {
+      firstname: 'Newfour',
+      lastname: 'User',
+      username: 'new_user',
+      email: 'new_user@gmail.com',
+      password: 'Password@100',
+      dob: new Date('2024-06-06'),
+    };
+
+    mockingoose(User).toReturn(null, 'findOne'); // No existing user
+    mockingoose(User).toReturn(user, 'save'); // Mock save
+
+    const result = await insertNewUser(user);
+    const isPasswordHashed = await bcrypt.compare(user.password, result.password);
+    expect(isPasswordHashed).toBe(true);
+  });
+
 
 
 

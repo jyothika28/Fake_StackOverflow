@@ -70,6 +70,7 @@ const Header = ({ search, userProfilePage, setQuestionPage,navigateToLogin }: He
           type="text"
           placeholder="Search..."
           value={val}
+          id="searchBar"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           className="search-bar"
@@ -104,8 +105,12 @@ const Header = ({ search, userProfilePage, setQuestionPage,navigateToLogin }: He
             horizontal: "right",
           }}
         >
-          <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-          <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+          <MenuItem 
+          id="profileButton"
+          onClick={handleProfileClick}>Profile</MenuItem>
+          <MenuItem onClick={handleLogoutClick}
+          id="logoutBtn"
+          >Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

@@ -5,7 +5,9 @@ Feature: Post a new Answer
   So that I can help the community
 
   Scenario: Post an answer successfully
-    Given The user has write access to the application "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+    When The user enters the correct username and password
+    And clicks on the Sign In button
     And The user is viewing a question
     And clicks the "Answer Question" button
     And fills out the necessary fields like Username, Answer text
@@ -13,7 +15,9 @@ Feature: Post a new Answer
     Then The user should see the new answer in the question page with the metadata information
 
   Scenario: Post an answer with missing Username
-    Given The user has write access to the application "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+    When The user enters the correct username and password
+    And clicks on the Sign In button
     And The user is viewing a question
     And clicks the "Answer Question" button
     And fills out the necessary fields leaving Username field empty
@@ -21,7 +25,9 @@ Feature: Post a new Answer
     Then The user should see an error message "Username cannot be empty"
 
   Scenario: Post an answer with missing Answer text
-    Given The user has write access to the application "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+    When The user enters the correct username and password
+    And clicks on the Sign In button
     And The user is viewing a question
     And clicks the "Answer Question" button
     And fills out the necessary fields leaving Answer text field empty

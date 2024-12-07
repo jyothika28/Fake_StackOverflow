@@ -7,13 +7,18 @@ Feature: Show Questions by recent answers
  
 
   Scenario: Show all questions in active order on user request
-    Given The user can access the homepage "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+When The user enters the correct username and password
+And clicks on the Sign In button
     And can see the homepage "All Questions"
     When The user clicks on the "Active" tab
     Then The user should see all questions in the database with the most recently posted answers first
 
   Scenario Outline: Return to the Active tab after viewing questions in another order
-    Given The user is viewing questions in "<currentOrder>"
+    Given It is a registered user on the login page "http://localhost:3000"
+When The user enters the correct username and password
+And clicks on the Sign In button
+    And The user is viewing questions in "<currentOrder>"
     When The user clicks on the "Active" order
     Then The user should see all questions in the database with the most recently posted answers first
 
@@ -23,21 +28,27 @@ Feature: Show Questions by recent answers
       | Unanswered   |
 
   Scenario: Return to Active after viewing Tags
-    Given The user is viewing the homepage "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+When The user enters the correct username and password
+And clicks on the Sign In button
     When The user clicks on the "Tags" menu item
     And clicks on the "Questions" menu item
     And clicks on the "Active" tab
     Then The user should see all questions in the database with the most recently posted answers first
 
   Scenario: View questions in Active order after creating a question
-    Given The user is viewing the homepage "http://localhost:3000"
+   Given It is a registered user on the login page "http://localhost:3000"
+When The user enters the correct username and password
+And clicks on the Sign In button
     And The user is able to see the homepage "All Questions"
     And The user has created a new question
     When The user clicks on the "Active" tab
     Then The user should see all questions in the database with the most recently answers first
 
    Scenario: View questions in Active order after creating and answering question
-    Given The user is viewing the homepage "http://localhost:3000"
+    Given It is a registered user on the login page "http://localhost:3000"
+When The user enters the correct username and password
+And clicks on the Sign In button
     And The user has created a new question
     And clicks on the "Answer Question" button filling out the necessary fields like Username, Answer text
     When The user clicks on the "Questions" tab

@@ -1,5 +1,6 @@
 import { Given, When, Then, And} from 'cypress-cucumber-preprocessor/steps';
 import '../../support/hooks';
+import { fillSignInForm,existingUser } from "./login";
 
 const newAnswer = {
     username: "elephantCDE",
@@ -20,9 +21,16 @@ const emptyTextAnswer = {
 //     And fills out the necessary fields like Username, Answer text
 //     And clicks the "Post Answer" button
 //     Then The user should see the new answer in the question page with the metadata information
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 And('The user is viewing a question', () => {
     cy.contains("Quick question about storage on android").click();
 });
@@ -50,9 +58,16 @@ Then('The user should see the new answer in the question page with the metadata 
 //     And clicks the "Post Answer" button
 //     Then The user should see an error message "Username cannot be empty"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 And('The user is viewing a question', () => {
     cy.contains("Quick question about storage on android").click();
 });
@@ -76,9 +91,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
     // And fills out the necessary fields leaving Answer text field empty
     // And clicks the "Post Answer" button
     // Then The user should see an error message "Answer text cannot be empty"
-Given('The user has write access to the application {string}', (url) => {
-    cy.visit(url);
-});
+    Given('It is a registered user on the login page {string}', (url) => {
+        cy.visit(url);
+    });
+    
+    When('The user enters the correct username and password', () => {
+        fillSignInForm(existingUser.username, existingUser.password);
+    });
+    And('clicks on the Sign In button', () => {
+        cy.get('#signInBtn').contains("Sign In").click();
+    }); 
 And('The user is viewing a question', () => {
     cy.contains("Quick question about storage on android").click();
 });
