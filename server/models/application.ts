@@ -5,49 +5,90 @@ import Tags from "./tags";
 import User from "./users";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import { Session } from "express-session";
+
 
 export type SortOrder = "active" | "newest" | "unanswered";
 export type ErrorWrapped<T> = { error: string } | T;
 
 
 
-const saveUser = async (userData: IUser) => {
+/**
+ * Function to insert a new user into the MongoDB database
+ * @param userData - The user data to insert
+ * @returns The inserted user
+ */
+const insertNewUser = async (userData: IUser) => {
   const { firstname, lastname, username, email, password, dob } = userData;
-  try{
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      const conflictField = existingUser.email === email ? 'email' : 'username';
-      const conflictMessage =
-        conflictField === 'email'
-          ? 'This email is already registered. Please use a different email or log in.'
-          : 'This username is already in use. Please choose a different username.';
-      throw new Error(conflictMessage);
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user instance
-    const newUser = new User({
-      firstname,
-      lastname,
-      username,
-      email,
-      password: hashedPassword,
-      dob,
-    });
-
-    // Save the user to the database
-    await newUser.save();
-
-    return { success: true, message: 'User registered successfully' };
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message || 'An error occurred during registration');
-    } else {
-      throw new Error('An error occurred during registration');
-    }
+  console.log("userData", userData);
+  // Check if the email or username already exists
+  const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+  console.log("existingUser", existingUser);
+  if (existingUser) {
+    const conflictField = existingUser.email === email ? 'email' : 'username';
+    console.log("conflictField", conflictField);
+    const conflictMessage =
+      conflictField === 'email'
+        ? 'This email is already registered. Please use a different email or log in.'
+        : 'This username is already in use. Please choose a different username.';
+    throw new Error(conflictMessage);
   }
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Create a new user
+  const newUser = new User({
+    firstname,
+    lastname,
+    username,
+    email,
+    password: hashedPassword,
+    dob,
+  });
+
+  // Save the user to the database
+  await newUser.save();
+
+  return newUser;
+};
+
+
+/**
+ * Function to authenticate a user
+ * @param username - The username of the user
+ * @param password - The password of the user
+ * @returns The authenticated user
+ */
+const authenticateUser = async (username: string, password: string) => {
+  const user = await User.findOne({ username });
+  if (!user) {
+    throw new Error('No account found with this username. Please register or try again.');
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error('Invalid credentials. Please try again.');
+  }
+
+  return user;
+};
+
+/**
+ * Function to destroy the user session
+ * @param session - The session object
+ * @returns A promise that resolves when the session is destroyed
+ */
+const logoutUser = (session: Session) => {
+  return new Promise<void>((resolve, reject) => {
+    session.destroy((error: Error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
 };
   
 /**
@@ -423,7 +464,9 @@ const getUserByUsername = async (username: string): Promise<IUser | null> => {
 
 export {
   getUserByUsername,
-  saveUser,
+  insertNewUser,
+  authenticateUser,
+  logoutUser,
   addTag,
   getQuestionsByOrder,
   filterQuestionsBySearch,

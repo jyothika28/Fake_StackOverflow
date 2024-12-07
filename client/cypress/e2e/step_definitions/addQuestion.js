@@ -1,5 +1,6 @@
 import { Given, When, Then, And} from 'cypress-cucumber-preprocessor/steps';
 import '../../support/hooks';
+import { fillSignInForm,existingUser } from "./login";
 
 const newQuestion = {
     title: "How to add a question to the database?",
@@ -60,10 +61,16 @@ function fillForm(q) {
 //     And clicks the "Post Question" button
 //     Then The user should see the new question in the All Questions page with the metadata information
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -91,10 +98,16 @@ Then('The user should see the new question in the All Questions page with the me
 //     And clicks the "Post Question" button
 //     Then The user should see an error message "Title cannot be empty"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -115,9 +128,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
 //     And clicks the "Post Question" button
 //     Then The user should see an error message "Question text cannot be empty"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -138,9 +158,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
 // And clicks the "Post Question" button
 // Then The user should see an error message "Should have at least 1 tag"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -161,9 +188,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
 //     And clicks the "Post Question" button
 //     Then The user should see an error message "Username cannot be empty"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -185,9 +219,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
 // Then The user should see an error message "Title cannot be more than 100 characters"
 
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });
@@ -211,9 +252,16 @@ Then('The user should see an error message {string}', (errorMessage) => {
 // And The user should see an error message "Should have at least 1 tag"
 // And The user should see an error message "Username cannot be empty"
 
-Given('The user has write access to the application {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+}); 
 When('The user clicks the {string} button', (buttonName) => {
     cy.contains(buttonName).click();
 });

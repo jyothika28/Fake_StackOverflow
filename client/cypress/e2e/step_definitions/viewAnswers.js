@@ -1,6 +1,7 @@
 
 import { Given, When, Then, And} from "cypress-cucumber-preprocessor/steps";
 import '../../support/hooks';
+import { fillSignInForm,existingUser } from "./login";
 const AnswerData={
     title: "android studio save string shared preference, start activity and load the saved string",
     username: "saltyPeter",
@@ -48,9 +49,16 @@ cy.contains("Answer Question").click();
 //         Then The user should see a list of answers associated with the question
 //         And The answers should display the username and timestamp of the person who answered
 
-Given('The user is on the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('The user can see {string}', (pageName) => {
     cy.contains(pageName);
 });
@@ -58,10 +66,7 @@ When('The user clicks on a question that has answers', () => {
     //get the first question with class name postTitle and click on it
     cy.get(".postTitle").contains("Quick question about storage on android").click();
 });
-{/* <div className="answerAuthor">
-        <div className="answer_author">{ansBy}</div>
-        <div className="answer_question_meta">{meta}</div>
-      </div> */}
+
 Then('The user should see a list of answers associated with the question', () => {
     cy.get(".answer").should("have.length", 1);
 });
@@ -76,9 +81,16 @@ And('The answers should display the username and timestamp of the person who ans
 // And Creates a new answer
 // Then The user should see the new answer displayed with the username and timestamp
 
-Given('The user is on the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('The user has created a New Question', () => {
     createQuestion("Test Question", "abc", "Test", "rachel");
 });
@@ -100,9 +112,23 @@ Then('The user should see the new answer displayed with the username and timesta
 //         When The user clicks on the "Active" tab
 //         Then The user should see the new question displayed with the username and metadata
 
-Given('The user is on the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('creates a new answer', () => {
     createAnswer("android studio save string shared preference, start activity and load the saved string", "Ross", "A new answer to the shared preference question");
 });

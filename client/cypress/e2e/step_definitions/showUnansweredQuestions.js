@@ -1,5 +1,6 @@
 import { Given, When, Then, And} from "cypress-cucumber-preprocessor/steps";
 import '../../support/hooks';
+import { fillSignInForm,existingUser } from "./login";
 function createQuestion(title, text, tag, username) {
     cy.contains("Ask a Question").click();
     cy.get("#formTitleInput").type(title);
@@ -13,9 +14,16 @@ function createQuestion(title, text, tag, username) {
 //     And can see the homepage "All Questions"
 //     When The user clicks on the "Unanswered" tab
 //     Then The user should see only unanswered questions in the database
-Given('The user can access the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
 });
@@ -23,7 +31,7 @@ When('The user clicks on the {string} tab', (tabName) => {
     cy.contains(tabName).click();
 });
 Then('The user should see only unanswered questions in the database', () => {
-    cy.contains("0 questions"); 
+    cy.contains("4 questions"); 
 });
 
 // Scenario: View unanswered questions after creating a question
@@ -31,9 +39,16 @@ Then('The user should see only unanswered questions in the database', () => {
 // And The user has created a new Question
 // When The user clicks on the "Unanswered" tab
 // Then The user should see Unanswered questions in the database
-Given('The user is viewing the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('The user has created a new Question', () => {
     createQuestion("Test Question", "abc", "Test", "rachel");
 });
@@ -61,9 +76,16 @@ Then('The user should see Unanswered questions in the database', () => {
 //   | Newest       |
 //   | Active       |
 
-Given('The user is viewing the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 When('The user is viewing questions in {string}', (currentOrder) => {
     cy.contains(currentOrder).click();
 });
