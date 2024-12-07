@@ -64,7 +64,18 @@ describe("POST /answer/:answerId/comment", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Comment added successfully");
-        expect(response.body.comment).toEqual(expect.objectContaining(mockComment));
+
+        expect(response.body.comment).toEqual(
+            expect.objectContaining({
+                ...mockComment,
+                comment_date_time: expect.any(String), // Check that it's a serialized date string
+            })
+        );
+
+        // Further validate the date format
+        const commentDate = new Date(response.body.comment.comment_date_time);
+        expect(commentDate.toISOString()).toBe(response.body.comment.comment_date_time);
+
     });
 
     it("should return 400 if the comment body is invalid", async () => {
