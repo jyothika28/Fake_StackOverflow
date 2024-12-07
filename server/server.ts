@@ -20,12 +20,12 @@ declare module 'express-session' {
     sensitive?: string;
   }
 }
-// const MONGO_URL: string =  'mongodb://127.0.0.1:27017/fake_so';
-// const CLIENT_URL: string ='http://localhost:3000';
+const MONGO_URL: string =  'mongodb://127.0.0.1:27017/fake_so';
+const CLIENT_URL: string ='http://localhost:3000';
 
 // USE WHEN DEPLOYING TO RENDER
-const MONGO_URL: string = process.env.REACT_APP_MONGODB_URI || 'mongodb://127.0.0.1:27017/fake_so';
-const CLIENT_URL: string = process.env.REACT_APP_CLIENT_URL || 'http://localhost:3000';
+// const MONGO_URL: string = process.env.REACT_APP_MONGODB_URI || 'mongodb://127.0.0.1:27017/fake_so';
+// const CLIENT_URL: string = process.env.REACT_APP_CLIENT_URL || 'http://localhost:3000';
 
 const port: number = process.env.PORT ? parseInt(process.env.PORT) : 8000;
 

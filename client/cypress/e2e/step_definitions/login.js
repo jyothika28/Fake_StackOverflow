@@ -1,12 +1,12 @@
 import { Given, When, Then, And} from 'cypress-cucumber-preprocessor/steps';
 import '../../support/hooks';
 
-const existingUser = {
+export const existingUser = {
     username: 'rachelgreen',
     password: 'Rachelhomie@123'
 }
 
-const fillSignUpForm = (username, password) => {
+export const fillSignInForm = (username, password) => {
     if(username)
     cy.get('#formUsernameInput').type(username);
     if(password)
@@ -23,10 +23,10 @@ Given('It is a registered user on the login page {string}', (url) => {
 });
 
 When('The user enters the correct username and password', () => {
-    fillSignUpForm(existingUser.username, existingUser.password);
+    fillSignInForm(existingUser.username, existingUser.password);
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get('#signInBtn').contains(buttonName).click();
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
 });  
 Then('The user should be redirected to the homepage and see personalized content', () => {
     cy.contains('All Questions');
@@ -42,10 +42,10 @@ Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 When('the user enters a blank username field and a password', () => {
-    fillSignUpForm('', existingUser.password);
+    fillSignInForm('', existingUser.password);
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get('#signInBtn').contains(buttonName).click();
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
 }); 
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage);
@@ -61,10 +61,10 @@ Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 When('the user enters a username and leaves the password field blank', () => {
-    fillSignUpForm(existingUser.username, '');
+    fillSignInForm(existingUser.username, '');
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get('#signInBtn').contains(buttonName).click();
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
 }); 
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage);
@@ -80,10 +80,10 @@ Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 When('the user enters a username that is not associated with any account', () => {
-    fillSignUpForm('rossnroll', existingUser.password);
+    fillSignInForm('rossnroll', existingUser.password);
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get('#signInBtn').contains(buttonName).click();
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
 }); 
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage);
@@ -99,10 +99,10 @@ Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
 When('the user enters a incorrect password', () => {
-    fillSignUpForm(existingUser.username, 'Ross@123');
+    fillSignInForm(existingUser.username, 'Ross@123');
 });
-And('clicks on the {string} button', (buttonName) => {
-    cy.get('#signInBtn').contains(buttonName).click();
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
 }); 
 Then('The user should see an error message stating, {string}', (errorMessage) => {
     cy.contains(errorMessage);

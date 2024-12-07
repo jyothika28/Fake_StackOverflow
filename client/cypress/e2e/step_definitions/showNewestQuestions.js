@@ -1,5 +1,5 @@
 import { Given, When, Then, And} from "cypress-cucumber-preprocessor/steps";
-
+import { fillSignInForm,existingUser } from "./login";
 import '../../support/hooks';
 
 
@@ -59,9 +59,16 @@ function createQuestion(title, text, tag, username) {
 // When The user clicks on the "Newest" tab
 // Then The user should see all questions in the database sorted by newest creation time first
 
-Given('The user can access the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
@@ -89,7 +96,17 @@ Then('The user should see all questions in the database sorted by newest creatio
 //   | Active       |
 //   | Unanswered   |
 
-Given('The user is viewing questions in {string}', (currentOrder) => {
+Given('It is a registered user on the login page {string}', (url) => {
+    cy.visit(url);
+});
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
+And('The user is viewing questions in {string}', (currentOrder) => {
     cy.visit("http://localhost:3000");
     cy.contains(currentOrder).click();
 });
@@ -110,9 +127,16 @@ Then('The user should see all questions in the database sorted by newest creatio
 //     Then The user should see all questions in the database sorted by newest creation time first
 
 
-Given('The user is viewing the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 
 When('The user clicks on the {string} menu item', (menuItem) => {
     cy.contains(menuItem).click();
@@ -139,9 +163,16 @@ Then('The user should see all questions in the database sorted by newest creatio
 // And clicks on the "Newest" tab
 // Then The user should see all questions in the database sorted by newest creation time, first
 
-Given('The user is viewing the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('The user has created a new question', () => {
     createQuestion(Q5_TITLE, "Test Question A Text", "javascript", "cookie");
 });

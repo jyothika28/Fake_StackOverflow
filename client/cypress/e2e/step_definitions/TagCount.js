@@ -5,7 +5,7 @@ import {
 And
 } from "cypress-cucumber-preprocessor/steps";
 import '../../support/hooks';
-
+import { fillSignInForm,existingUser } from "./login";
 const tags = [
   { name: "react", count: 1 },
   { name: "javascript", count: 2 },
@@ -38,9 +38,16 @@ function createQuestion(title, text, tag, username) {
 // Then The user should see a list of all tags in the system
 // And The user should see the number of questions associated with each tag
 
-Given("The user can access the homepage {string}", (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
   cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+  fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+  cy.get('#signInBtn').contains("Sign In").click();
+});  
 
 When("The user clicks on the {string} tab", (tabName) => {
   cy.contains(tabName).click();
@@ -75,8 +82,17 @@ And(
 //   | Newest       |
 //   | Active       |
 //   | Unanswered   |
+Given('It is a registered user on the login page {string}', (url) => {
+  cy.visit(url);
+});
 
-Given("The user is viewing questions in {string}", (currentOrder) => {
+When('The user enters the correct username and password', () => {
+  fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+  cy.get('#signInBtn').contains("Sign In").click();
+});  
+And("The user is viewing questions in {string}", (currentOrder) => {
   cy.contains(currentOrder).click();
 });
 
@@ -108,9 +124,16 @@ And(
 // And The user clicks on the "Tags" tab
 // Then The user should see a list of all tags in the system with the updated count for the "react" tag
 
-Given("The user can access the homepage {string}", (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
   cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+  fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+  cy.get('#signInBtn').contains("Sign In").click();
+});  
 When("The user creates a question with the tag {string}", (tag) => {
   createQuestion("New Question", "New Question Text", tag, "New User");
 });

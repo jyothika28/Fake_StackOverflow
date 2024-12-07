@@ -1,6 +1,8 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
-
+import { fillSignInForm,existingUser } from "./login";
 import '../../support/hooks';
+
+
 // Scenario: Search questions by search string
 // Given The user can access the homepage "http://localhost:3000"
 // And can see the homepage "All Questions"
@@ -8,9 +10,17 @@ import '../../support/hooks';
 // And clicks enter
 // Then The user should see only questions that contain the search string in the title or text
 
-Given('The user can access the homepage {string}', (url) => {
+
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
 });
@@ -30,9 +40,16 @@ Then('The user should see only questions that contain the search string in the t
 //     And can see the homepage "All Questions"
 //     When The user clicks on a tagname
 //     Then The user should see only questions that contain the tagname in the tags
-Given('The user can access the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
 });
@@ -52,9 +69,16 @@ Then('The user should see only questions that contain the tagname in the tags', 
 //     And clicks enter
 //     Then The user should see a message "No Questions Found"
 
-Given('The user can access the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
 });
@@ -75,9 +99,16 @@ Then('The user should see a message {string}', (message) => {
 //     And clicks on a tagname
 //     Then The user should see the questions that contain the tagname and the metadata information
 
-Given('The user can access the homepage {string}', (url) => {
+Given('It is a registered user on the login page {string}', (url) => {
     cy.visit(url);
 });
+
+When('The user enters the correct username and password', () => {
+    fillSignInForm(existingUser.username, existingUser.password);
+});
+And('clicks on the Sign In button', () => {
+    cy.get('#signInBtn').contains("Sign In").click();
+});  
 And('can see the homepage {string}', (pageName) => {
     cy.contains(pageName);
 });
