@@ -107,8 +107,8 @@ describe('GET /getQuestion', () => {
   it('should return the result of filterQuestionsBySearch as response for an order and search criteria in the request parameters', async () => {
     // Mock request query parameters
     const mockReqQuery = {
-      order: 'dummyOrder',
-      search: 'dummySearch',
+      order: 'newest',
+      search: 'Question',
     };
     (getQuestionsByOrder as jest.Mock).mockResolvedValueOnce(mockQuestions);
     (filterQuestionsBySearch as jest.Mock).mockReturnValueOnce(mockQuestions);
