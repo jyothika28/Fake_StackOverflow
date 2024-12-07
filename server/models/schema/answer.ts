@@ -16,7 +16,10 @@ const AnswerSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-      comments: [CommentSchema], // Array of comments
+      comments: {
+          type: [CommentSchema],
+          default: [], // Ensures comments is always an array
+      },
       upvotes: {
           type: Number,
           default: 0,

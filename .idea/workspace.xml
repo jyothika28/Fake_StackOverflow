@@ -6,9 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/answer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/answer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/comment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/comment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/vote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/vote.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/models/answers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/answers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/models/questions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/questions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/schema/answer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/schema/answer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/models/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +39,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor": "Run",
+    "Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor": "Run",
     "Jest.POST /flagAnswer/:aid.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
+    "Jest.comment.test.ts.executor": "Run",
     "Jest.flagQuestion.test.ts.executor": "Run",
     "Jest.newAnswer.test.ts.executor": "Run",
     "Jest.newQuestion.test.ts.executor": "Run",
@@ -55,7 +64,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Jest.POST /flagAnswer/:aid">
+  <component name="RunManager" selected="Jest.POST /answer/:answerId/comment.should add a comment to an existing answer">
     <configuration name="POST /addAnswer.should return database error in response if update question method throws an error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
@@ -66,6 +75,19 @@
       <test-names>
         <test-name value="POST /addAnswer" />
         <test-name value="should return database error in response if update question method throws an error" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="POST /answer/:answerId/comment.should add a comment to an existing answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/comment.test.ts" />
+      <test-names>
+        <test-name value="POST /answer/:answerId/comment" />
+        <test-name value="should add a comment to an existing answer" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -109,6 +131,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.POST /answer/:answerId/comment.should add a comment to an existing answer" />
         <item itemvalue="Jest.POST /flagAnswer/:aid" />
         <item itemvalue="Jest.POST /flagAnswer/:aid.should flag an existing answer" />
         <item itemvalue="Jest.POST /addAnswer.should return database error in response if update question method throws an error" />

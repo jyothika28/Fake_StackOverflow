@@ -52,7 +52,6 @@ router.post("/addAnswer", async (req: AddAnswerRequest, res: Response) => {
 });
 
 router.post("/flagAnswer/:aid", async (req, res) => {
-  console.log("Endpoint hit with AID:", req.params.aid);
 
   try {
     const { aid } = req.params;

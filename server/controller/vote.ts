@@ -22,6 +22,10 @@ router.post("/answer/:answerId/vote", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
+        // Ensure upvotes and downvotes are initialized
+        answer.upvotes = answer.upvotes || 0;
+        answer.downvotes = answer.downvotes || 0;
+
         if (vote === "upvote") {
             answer.upvotes++;
         } else if (vote === "downvote") {
@@ -36,6 +40,7 @@ router.post("/answer/:answerId/vote", async (req, res) => {
         res.status(500).json({ error: "Error voting on answer" });
     }
 });
+
 
 /**
  * POST /answer/:answerId/comment/:commentId/vote
@@ -55,7 +60,7 @@ router.post("/answer/:answerId/comment/:commentId/vote", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }
@@ -89,6 +94,10 @@ router.post("/answer/:answerId/undo-vote", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
+        // Ensure upvotes and downvotes are initialized
+        answer.upvotes = answer.upvotes || 0;
+        answer.downvotes = answer.downvotes || 0;
+
         if (vote === "upvote" && answer.upvotes > 0) {
             answer.upvotes--;
         } else if (vote === "downvote" && answer.downvotes > 0) {
@@ -121,7 +130,7 @@ router.post("/answer/:answerId/comment/:commentId/undo-vote", async (req, res) =
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }

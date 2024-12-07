@@ -73,6 +73,9 @@ export interface IAnswer {
   text: string;
   ans_by: string;
   ans_date_time: Date;
+  comments?: IComment[];
+  upvotes?: number;
+  downvotes?: number;
   flagged?: boolean;
 }
 
@@ -100,11 +103,31 @@ export interface IQuestion {
 }
 
 export interface IComment {
+  _id?: string;
   text: string;
   commented_by: string;
   comment_date_time: Date;
   upvotes: number;
   downvotes: number;
+  replies: IComment[];
+  flagged?: boolean;
+}
+
+export interface GetCommentsRequest extends Request {
+  params: {
+    answerId: string;
+  };
+}
+
+export interface GetCommentRequest extends Request {
+  params: {
+    answerId: string;
+    commentId: string;
+  };
+  body: {
+    text: string;
+    commented_by: string;
+  };
 }
 
 export interface AddCommentRequest extends Request {
@@ -117,6 +140,15 @@ export interface AddCommentRequest extends Request {
   };
 }
 
+export interface DeleteCommentRequest extends Request {
+  params: {
+    answerId: string;
+    commentId: string;
+  };
+  body: {
+    commented_by: string;
+  };
+}
 
 /**
  * @typedef HTTP Request parameter for adding an answer
