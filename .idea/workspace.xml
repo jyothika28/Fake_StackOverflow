@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +18,7 @@
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/client/package.json" />
+    <dismissed value="$PROJECT_DIR$/server/package.json" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -30,14 +32,18 @@
   &quot;keyToString&quot;: {
     &quot;Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor&quot;: &quot;Run&quot;,
     &quot;Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined.executor&quot;: &quot;Run&quot;,
     &quot;Jest.POST /flagAnswer/:aid.executor&quot;: &quot;Run&quot;,
     &quot;Jest.POST /flagAnswer/:aid.should flag an existing answer.executor&quot;: &quot;Run&quot;,
     &quot;Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor&quot;: &quot;Run&quot;,
     &quot;Jest.application.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.comment.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.flagQuestion.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.loginUser.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.logoutUser.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.newAnswer.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.newQuestion.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.newUser.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.question.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.questions.test.ts.executor&quot;: &quot;Run&quot;,
     &quot;Jest.tags.test.ts.executor&quot;: &quot;Run&quot;,
@@ -58,7 +64,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Jest.POST /addAnswer.should return database error in response if update question method throws an error">
+  <component name="RunManager" selected="Jest.POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined">
     <configuration name="POST /addAnswer.should return database error in response if update question method throws an error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
@@ -82,6 +88,19 @@
       <test-names>
         <test-name value="POST /answer/:answerId/comment" />
         <test-name value="should add a comment to an existing answer" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/comment.test.ts" />
+      <test-names>
+        <test-name value="POST /comment/answer/:answerId/comment" />
+        <test-name value="should initialize comments array if it is undefined" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -110,26 +129,13 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /flagQuestion/:qid.should return 500 if an error occurs during flagging" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
-      <test-names>
-        <test-name value="POST /flagQuestion/:qid" />
-        <test-name value="should return 500 if an error occurs during flagging" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined" />
         <item itemvalue="Jest.POST /answer/:answerId/comment.should add a comment to an existing answer" />
         <item itemvalue="Jest.POST /flagAnswer/:aid" />
         <item itemvalue="Jest.POST /flagAnswer/:aid.should flag an existing answer" />
         <item itemvalue="Jest.POST /addAnswer.should return database error in response if update question method throws an error" />
-        <item itemvalue="Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging" />
       </list>
     </recent_temporary>
   </component>
@@ -153,6 +159,7 @@
       <workItem from="1733444573378" duration="5218000" />
       <workItem from="1733451453515" duration="18348000" />
       <workItem from="1733539300971" duration="3028000" />
+      <workItem from="1733599246725" duration="4517000" />
     </task>
     <servers />
   </component>
