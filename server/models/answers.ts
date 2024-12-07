@@ -18,7 +18,8 @@ const flagAnswerById = async (answerId: string): Promise<IAnswer | null> => {
             console.warn(`Answer with ID ${answerId} not found`);
             throw new Error("Answer not found");
         }
-        answer.set("flagged", true);
+        answer.flagged = true;
+        await answer.save();
         return answer;
     } catch (error) {
         if (error instanceof Error) {

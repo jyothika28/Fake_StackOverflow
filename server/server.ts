@@ -84,11 +84,15 @@ import answerController from './controller/answer';
 import questionController from './controller/question';
 import tagController from './controller/tag';
 import userController from './controller/user';
+import commentController from './controller/comment';
+import vote from "./controller/vote";
 
 app.use('/question', questionController);
 app.use('/tag', tagController);
 app.use('/answer', answerController);
 app.use('/user', userController);
+app.use('/comment', commentController);
+app.use('/vote', vote);
 
 // Start the server and assign it to the 'server' variable
 const server: Server = app.listen(port, () => {

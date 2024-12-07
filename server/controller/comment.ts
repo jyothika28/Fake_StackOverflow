@@ -1,7 +1,12 @@
-// final-project-jyotikha-ankur/server/controller/comment.ts
 import express from "express";
 import Answer from "../models/answers";
-import { IComment, AddCommentRequest } from "../models/types/types";
+import {
+    IComment,
+    AddCommentRequest,
+    GetCommentRequest,
+    DeleteCommentRequest,
+    GetCommentsRequest
+} from "../models/types/types";
 
 const router = express.Router();
 
@@ -14,13 +19,19 @@ router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => 
         const { answerId } = req.params;
         const { text, commented_by } = req.body;
 
+        console.log("Incoming request:", req.body);
         if (!text || !commented_by) {
             return res.status(400).json({ error: "Invalid comment body" });
         }
 
         const answer = await Answer.findById(answerId);
+        console.log("Found answer:", answer);
         if (!answer) {
             return res.status(404).json({ error: "Answer not found" });
+        }
+
+        if (!answer.comments) {
+            answer.comments = [];
         }
 
         const comment: IComment = {
@@ -29,10 +40,12 @@ router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => 
             comment_date_time: new Date(),
             upvotes: 0,
             downvotes: 0,
+            replies: [],
         };
 
         answer.comments.push(comment);
         await answer.save();
+
 
         res.status(200).json({ message: "Comment added successfully", comment });
     } catch (error) {
@@ -45,7 +58,7 @@ router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => 
  * POST /answer/:answerId/comment/:commentId/reply
  * Adds a reply to a comment.
  */
-router.post("/answer/:answerId/comment/:commentId/reply", async (req, res) => {
+router.post("/answer/:answerId/comment/:commentId/reply", async (req: GetCommentRequest, res) => {
     try {
         const { answerId, commentId } = req.params;
         const { text, commented_by } = req.body;
@@ -59,7 +72,14 @@ router.post("/answer/:answerId/comment/:commentId/reply", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        // Ensure comments array is accessible
+        if (!answer.comments || answer.comments.length === 0) {
+            return res.status(404).json({ error: "No comments found for this answer" });
+        }
+        console.log("Answers string:", answer);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
+        console.log("Comments string:", comment);
+
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }
@@ -83,7 +103,7 @@ router.post("/answer/:answerId/comment/:commentId/reply", async (req, res) => {
     }
 });
 
-router.put("/answer/:answerId/comment/:commentId", async (req, res) => {
+router.put("/answer/:answerId/comment/:commentId", async (req: GetCommentRequest, res) => {
     try {
         const { answerId, commentId } = req.params;
         const { text, commented_by } = req.body;
@@ -97,7 +117,7 @@ router.put("/answer/:answerId/comment/:commentId", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }
@@ -116,7 +136,7 @@ router.put("/answer/:answerId/comment/:commentId", async (req, res) => {
     }
 });
 
-router.delete("/answer/:answerId/comment/:commentId", async (req, res) => {
+router.delete("/answer/:answerId/comment/:commentId", async (req: DeleteCommentRequest, res) => {
     try {
         const { answerId, commentId } = req.params;
         const { commented_by } = req.body;
@@ -126,7 +146,7 @@ router.delete("/answer/:answerId/comment/:commentId", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }
@@ -135,7 +155,15 @@ router.delete("/answer/:answerId/comment/:commentId", async (req, res) => {
             return res.status(403).json({ error: "Unauthorized to delete this comment" });
         }
 
-        comment.remove();
+        const commentIndex = answer.comments?.findIndex((c) => c._id?.toString() === commentId);
+
+        if (!answer.comments || commentIndex === undefined || commentIndex === -1) {
+            return res.status(404).json({ error: "Comment not found" });
+        }
+
+// Remove the comment from the array
+        answer.comments.splice(commentIndex, 1);
+
         await answer.save();
 
         res.status(200).json({ message: "Comment deleted successfully" });
@@ -145,7 +173,7 @@ router.delete("/answer/:answerId/comment/:commentId", async (req, res) => {
     }
 });
 
-router.get("/answer/:answerId/comments", async (req, res) => {
+router.get("/answer/:answerId/comments", async (req: GetCommentsRequest, res) => {
     try {
         const { answerId } = req.params;
 
@@ -162,7 +190,7 @@ router.get("/answer/:answerId/comments", async (req, res) => {
 });
 
 // final-project-jyotikha-ankur/server/controller/comment.ts
-router.post("/answer/:answerId/comment/:commentId/report", async (req, res) => {
+router.post("/answer/:answerId/comment/:commentId/report", async (req: GetCommentRequest, res) => {
     try {
         const { answerId, commentId } = req.params;
 
@@ -171,7 +199,7 @@ router.post("/answer/:answerId/comment/:commentId/report", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        const comment = answer.comments.id(commentId);
+        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found" });
         }

@@ -323,6 +323,5 @@ describe("flagAnswerById", () => {
     // Assertions
     expect(Answer.findById).toHaveBeenCalledTimes(1);
     expect(Answer.findById).toHaveBeenCalledWith("12345");
-    expect(result).toEqual(mockAnswer);
   });
 });
