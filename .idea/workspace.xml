@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,34 +27,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor": "Run",
-    "Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor": "Run",
-    "Jest.POST /flagAnswer/:aid.executor": "Run",
-    "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
-    "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
-    "Jest.comment.test.ts.executor": "Run",
-    "Jest.flagQuestion.test.ts.executor": "Run",
-    "Jest.newAnswer.test.ts.executor": "Run",
-    "Jest.newQuestion.test.ts.executor": "Run",
-    "Jest.question.test.ts.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "postmod",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preference.NewCodeQlHomeConfigurable",
-    "ts.external.directory.path": "/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.POST /flagAnswer/:aid.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.POST /flagAnswer/:aid.should flag an existing answer.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.comment.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.flagQuestion.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.newAnswer.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.newQuestion.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.question.test.ts.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;postmod&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preference.NewCodeQlHomeConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="POST /addAnswer.should return database error in response if update question method throws an error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
@@ -149,6 +149,7 @@
       <workItem from="1731880580758" duration="273000" />
       <workItem from="1733444573378" duration="5218000" />
       <workItem from="1733451453515" duration="18348000" />
+      <workItem from="1733539300971" duration="298000" />
     </task>
     <servers />
   </component>
