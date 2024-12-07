@@ -7,7 +7,7 @@ jest.mock("../models/answers");
 
 let server: Server;
 
-describe("POST /answer/:answerId/comment/:commentId/vote", () => {
+describe("POST /vote/answer/:answerId/comment/:commentId/vote", () => {
     beforeEach(() => {
         server = require("../server");
     });
@@ -24,7 +24,7 @@ describe("POST /answer/:answerId/comment/:commentId/vote", () => {
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
 
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment/dummyCommentId/vote")
+            .post("/vote/answer/dummyAnswerId/comment/dummyCommentId/vote")
             .send({ vote: "upvote" });
 
         expect(response.status).toBe(200);
@@ -38,7 +38,7 @@ describe("POST /answer/:answerId/comment/:commentId/vote", () => {
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
 
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment/nonExistentCommentId/vote")
+            .post("/vote/answer/dummyAnswerId/comment/nonExistentCommentId/vote")
             .send({ vote: "upvote" });
 
         expect(response.status).toBe(404);
@@ -49,7 +49,7 @@ describe("POST /answer/:answerId/comment/:commentId/vote", () => {
         (Answer.findById as jest.Mock).mockResolvedValueOnce(null);
 
         const response = await supertest(server)
-            .post("/answer/nonExistentAnswerId/comment/dummyCommentId/vote")
+            .post("/vote/answer/nonExistentAnswerId/comment/dummyCommentId/vote")
             .send({ vote: "upvote" });
 
         expect(response.status).toBe(404);
@@ -58,7 +58,7 @@ describe("POST /answer/:answerId/comment/:commentId/vote", () => {
 
     it("should return 400 if the vote action is invalid", async () => {
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment/dummyCommentId/vote")
+            .post("/vote/answer/dummyAnswerId/comment/dummyCommentId/vote")
             .send({ vote: "invalidVote" });
 
         expect(response.status).toBe(400);
@@ -71,7 +71,7 @@ describe("POST /answer/:answerId/comment/:commentId/vote", () => {
         });
 
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment/dummyCommentId/vote")
+            .post("/vote/answer/dummyAnswerId/comment/dummyCommentId/vote")
             .send({ vote: "upvote" });
 
         expect(response.status).toBe(500);

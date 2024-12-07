@@ -11,7 +11,7 @@ jest.mock("../models/answers", () => ({
 
 let server: Server;
 
-describe("POST /answer/:answerId/comment", () => {
+describe("POST /comment/answer/:answerId/comment", () => {
     beforeEach(() => {
         server = require("../server");
     });
@@ -53,7 +53,7 @@ describe("POST /answer/:answerId/comment", () => {
         console.log("Mocked Answer.findById:", Answer.findById);
 
         const response = await supertest(server)
-            .post("/answer/65e9b58910afe6e94fc6e6dc/comment")
+            .post("/comment/answer/65e9b58910afe6e94fc6e6dc/comment")
             .send({
                 text: mockComment.text,
                 commented_by: mockComment.commented_by,
@@ -80,7 +80,7 @@ describe("POST /answer/:answerId/comment", () => {
 
     it("should return 400 if the comment body is invalid", async () => {
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment")
+            .post("/comment/answer/dummyAnswerId/comment")
             .send({ text: "" }); // Missing `commented_by`
 
         expect(response.status).toBe(400);
@@ -91,7 +91,7 @@ describe("POST /answer/:answerId/comment", () => {
         (Answer.findById as jest.Mock).mockResolvedValueOnce(null);
 
         const response = await supertest(server)
-            .post("/answer/nonExistentAnswerId/comment")
+            .post("/comment/answer/nonExistentAnswerId/comment")
             .send({
                 text: "This is a test comment",
                 commented_by: "dummyUserId",
@@ -107,7 +107,7 @@ describe("POST /answer/:answerId/comment", () => {
         });
 
         const response = await supertest(server)
-            .post("/answer/dummyAnswerId/comment")
+            .post("/comment/answer/dummyAnswerId/comment")
             .send({
                 text: "This is a test comment",
                 commented_by: "dummyUserId",
