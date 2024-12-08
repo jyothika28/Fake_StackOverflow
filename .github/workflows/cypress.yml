@@ -1,0 +1,35 @@
+name: Fake Stack Cypress
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  
+  "run-cypress-tests":
+  runs-on: cs5500-self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Install Dependencies in server
+        working-directory: server
+        run: npm install
+        
+      - name: Start Server
+        working-directory: server
+        run: npm start
+      - name: Install Dependencies in client
+        working-directory: client
+        run: npm --force install
+        
+      - name: Start client
+        working-directory: client
+        run: npm start
+
+      - name: Run Cypress Tests
+        working-directory: client
+        run: npx cypress run --spec "cypress/e2e/**/*.cy.js"
+      
+        
