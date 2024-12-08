@@ -66,7 +66,7 @@ router.get("/answer/:answerId/comments", async (req: GetCommentsRequest, res) =>
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        res.status(200).json({ comments: answer.comments });
+        res.status(200).json({ comments: answer.comments || [] });
     } catch (error) {
         console.error("Error retrieving comments:", error);
         res.status(500).json({ error: "Error retrieving comments" });

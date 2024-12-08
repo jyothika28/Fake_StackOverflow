@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import CommentForm from "./commentFormView";
 import { addComment } from "../../../services/answerService";
+import {getCommentsForAnswer} from "../../../services/commentService";
 
 interface Comment {
     _id: string;
@@ -18,6 +19,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                                                            comments: initialComments,
                                                        }) => {
     const [comments, setComments] = useState<Comment[]>(initialComments);
+
+    // Fetch comments when the component loads
+    useEffect(() => {
+        const fetchComments = async () => {
+            try {
+                const fetchedComments = await getCommentsForAnswer(answerId);
+                setComments(fetchedComments);
+            } catch (error) {
+                console.error("Error fetching comments:", error);
+            }
+        };
+
+        fetchComments();
+    }, [answerId]);
 
     const handleAddComment = async (text: string, commentedBy: string) => {
         try {
