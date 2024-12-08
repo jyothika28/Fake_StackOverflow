@@ -20,17 +20,30 @@ interface UserLoginResponse {
   success: boolean;
   message: string;
 }
+interface CommentType {
+  _id: string;
+  text: string;
+  commented_by: string;
+  comment_date_time: Date;
+  upvotes: number;
+  downvotes: number;
+  replies: CommentType[];
+}
 
 interface AnswerType {
+  _id?: string;
   text: string;
   ans_by: string;
   ans_date_time: Date;
+  comments?: CommentType[]; // Add `comments`
 }
+
 interface AnswerResponseType {
+  _id: string; // Add `_id`
+  text: string;
   ans_by: string;
   ans_date_time: string;
-  text: string;
-  _id: string;
+  comments?: CommentType[]; // Add `comments`
 }
 
 interface QuestionType {
@@ -93,4 +106,5 @@ export type {
   AnswerResponseType,
   QuestionResponseType,
   TagResponseType,
+  CommentType,
 };

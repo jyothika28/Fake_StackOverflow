@@ -9,7 +9,6 @@ import {
   IdFunctionType,
   OrderFunctionType,
 } from "../../../types/functionTypes";
-import { Margin } from "@mui/icons-material";
 
 export interface QuestionPageProps {
   title_text?: string;

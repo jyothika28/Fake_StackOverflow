@@ -36,7 +36,7 @@ describe("POST /register", () => {
     const response = await supertest(server)
       .post("/user/register")
       .send(mockUser);
-    console.log("response", response.status);
+
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
       success: true,
@@ -249,7 +249,7 @@ describe("POST /register", () => {
     const response = await supertest(server)
       .post("/user/register")
       .send(mockUser);
-    console.log("response", response.status);
+
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
       success: true,

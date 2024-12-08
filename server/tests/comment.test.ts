@@ -19,7 +19,7 @@ describe("POST /comment/answer/:answerId/comment", () => {
     afterEach(async () => {
         jest.clearAllMocks();
         server.close();
-        mongoose.disconnect();
+        await mongoose.disconnect();
     });
 
     it("should add a comment to an existing answer", async () => {
@@ -48,9 +48,7 @@ describe("POST /comment/answer/:answerId/comment", () => {
             downvotes: 0,
         };
 
-        console.log("Mocked Answer.findById:", Answer.findById as jest.Mock);
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
-        console.log("Mocked Answer.findById:", Answer.findById);
 
         const response = await supertest(server)
             .post("/comment/answer/65e9b58910afe6e94fc6e6dc/comment")
@@ -58,9 +56,6 @@ describe("POST /comment/answer/:answerId/comment", () => {
                 text: mockComment.text,
                 commented_by: mockComment.commented_by,
             });
-
-        console.log("Response body:", response.body);
-        console.log("Response status:", response.status);
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Comment added successfully");

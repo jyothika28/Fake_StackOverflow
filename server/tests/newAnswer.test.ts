@@ -219,7 +219,6 @@ describe("POST /flagAnswer/:aid", () => {
   });
 
   it("should flag an existing answer", async () => {
-    console.log("Running test for successful flagging of an answer");
 
     // Mocking the answer
     const mockAnswer = {
@@ -251,10 +250,6 @@ describe("POST /flagAnswer/:aid", () => {
     const response = await supertest(server)
         .post(`/answer/flagAnswer/${mockAnswer._id}`)
         .send();
-
-    // Logging
-    console.log("Response status:", response.status);
-    console.log("Response body:", response.body);
 
     // Assert response
     expect(response.status).toBe(200);
@@ -303,6 +298,7 @@ describe("POST /flagAnswer/:aid", () => {
 describe("flagAnswerById", () => {
   afterEach(() => {
     jest.clearAllMocks();
+    await mongoose.disconnect();
   });
 
   it("should successfully flag an existing answer", async () => {
@@ -315,7 +311,6 @@ describe("flagAnswerById", () => {
 
     // Mock findById to return the mock answer
     const findByIdMock = (Answer.findById as jest.Mock).mockResolvedValue(mockAnswer);
-    console.log("findById Mock (before function call):", Answer.findById);
 
     // Call the function
     const result = await Answer.findById("12345");
