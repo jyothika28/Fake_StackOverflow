@@ -27,7 +27,6 @@ interface CommentType {
   comment_date_time: Date;
   upvotes: number;
   downvotes: number;
-  replies: CommentType[];
 }
 
 interface AnswerType {

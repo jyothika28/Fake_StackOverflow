@@ -38,23 +38,6 @@ const addComment = async (
   }
 };
 
-const addReply = async (
-    answerId: string,
-    commentId: string,
-    reply: { text: string; commented_by: string }
-) => {
-  try {
-    const res = await api.post(`${COMMENT_API_URL}/answer/${answerId}/comment/${commentId}/reply`, reply);
-    if (res.status !== 200) {
-      throw new Error("Error while creating a new reply");
-    }
-    return res.data;
-  } catch (error) {
-    console.error("Error adding reply:", error);
-    throw error;
-  }
-};
 
 
-
-export { addAnswer, addComment, addReply };
+export { addAnswer, addComment };
