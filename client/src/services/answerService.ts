@@ -39,6 +39,24 @@ const addComment = async (
   }
 };
 
+const flagAnswer = async (
+    qid: string,
+    answerId: string
+): Promise<AnswerResponseType> => {
+  const data = { qid: qid };
 
 
-export { addAnswer, addComment };
+  try {
+    const response = await api.post(`${ANSWER_API_URL}/flagAnswer/${answerId}`, data);
+    if (response.status !== 200) {
+      throw new Error("Error while flagging an answer");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error flagging answer:", error);
+    throw error;
+  }
+};
+
+
+export { addAnswer, addComment, flagAnswer };

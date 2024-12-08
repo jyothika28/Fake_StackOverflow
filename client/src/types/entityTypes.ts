@@ -36,6 +36,9 @@ interface AnswerType {
   ans_by: string;
   ans_date_time: Date;
   comments?: CommentType[]; // Add `comments`
+  upvotes: number;
+  downvotes: number;
+  flagged: boolean;
 }
 
 interface AnswerResponseType {
@@ -44,6 +47,9 @@ interface AnswerResponseType {
   ans_by: string;
   ans_date_time: string;
   comments?: CommentType[]; // Add `comments`
+  upvotes: number;
+  downvotes: number;
+  flagged: boolean;
 }
 
 interface QuestionType {

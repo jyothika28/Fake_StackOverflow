@@ -6,6 +6,7 @@ import {
   AddAnswerResponse,
 } from "../models/types/types";
 import Answer from "../models/answers";
+import Questions from "../models/questions";
 
 const router = express.Router();
 
@@ -55,6 +56,7 @@ router.post("/flagAnswer/:aid", async (req, res) => {
 
   try {
     const { aid } = req.params;
+    const { qid } = req.body;
 
     console.log(`Attempting to flag answer with ID: ${aid}`);
 
@@ -71,6 +73,19 @@ router.post("/flagAnswer/:aid", async (req, res) => {
       return res.status(404).json({ error: "Answer not found" });
     }
 
+    const question = await Questions.findById(qid);
+    if (!question) return null;
+
+    const updatedAnswers = question.answers.map((answer) => {
+        if (answer._id.toString() === aid) {
+            answer.flagged = true;
+        }
+        return answer;
+    }
+    );
+
+    question.answers = updatedAnswers;
+    await question.save();
     // Success response
     console.log("Answer successfully flagged:", flaggedAnswer);
     return res.status(200).json({

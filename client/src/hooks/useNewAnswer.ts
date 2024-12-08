@@ -41,6 +41,9 @@ export const useNewAnswer = (
       ans_by: usrn,
       ans_date_time: new Date(),
       comments: [] as CommentType[],
+      upvotes: 0,
+      downvotes: 0,
+      flagged: false
     };
 
     const res = await addAnswer(qid, answer);

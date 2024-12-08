@@ -10,6 +10,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import CommentSection from "../comment/CommentSection";
 import {flagComment} from "../../../services/commentService";
 import {flagQuestion} from "../../../services/questionService";
+import {flagAnswer} from "../../../services/answerService";
 
 interface AnswerPageProps {
     qid: string;
@@ -48,6 +49,16 @@ const AnswerPage = ({
         }
     };
 
+    const handleFlagAnswer = async (questionId: string, answerId: string) => {
+        try {
+            console.log(`Flagging answer with ID: ${answerId}`);
+            await flagAnswer(questionId, answerId); // API call to flag the question
+            console.log(`Answer ${answerId} flagged successfully.`);
+        } catch (error) {
+            console.error(`Error flagging answer ${answerId}:`, error);
+        }
+    };
+
     return (
         <>
             <AnswerHeader
@@ -72,6 +83,10 @@ const AnswerPage = ({
                         text={a.text}
                         ansBy={a.ans_by}
                         meta={getMetaData(new Date(a.ans_date_time))}
+                        questionId={qid}
+                        answerId={a._id!}
+                        isFlagged={a.flagged}
+                        onFlag={() => handleFlagAnswer(qid, a._id!)}
                     />
                     {/* Render the comments section for each answer */}
                     <CommentSection

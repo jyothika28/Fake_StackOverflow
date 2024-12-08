@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/questionBody/questionBodyView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/questionBody/questionBodyView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/main/routing/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/routing/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/hooks/useNewQuestion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/hooks/useNewQuestion.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/commentService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/commentService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/questionService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/questionService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/hooks/useNewAnswer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/hooks/useNewAnswer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/answerService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/answerService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/types/entityTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/entityTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controller/comment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/comment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controller/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/question.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/questions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/questions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/schema/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/schema/question.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/types/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/answer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/answer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
