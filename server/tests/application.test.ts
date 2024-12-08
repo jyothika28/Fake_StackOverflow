@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const mockingoose = require('mockingoose');
 import { insertNewUser,
   //authenticateUser,
@@ -7,6 +9,7 @@ import Questions from '../models/questions';
 import Tags from '../models/tags';
 import User from '../models/users';
 import bcrypt from 'bcrypt';
+import {Server} from "http";
 
 Questions.schema.path('answers', Array);
 Questions.schema.path('tags', Array);
@@ -93,13 +96,21 @@ const _questions: IQuestion[] = [
   },
 ];
 
+let server: Server;
+
 describe('application module', () => {
 
   beforeEach(() => {
     mockingoose.resetAll();
+    server = require("../server");
 
   });
- 
+
+  afterEach(async () => {
+    jest.clearAllMocks();
+    server.close();
+    await mongoose.disconnect();
+  });
   
   // addTag
   test('addTag return tag id if the tag already exists', async () => {
@@ -156,7 +167,7 @@ describe('application module', () => {
 
   test('filter question by one tag', () => {
     const result = filterQuestionsBySearch(_questions, '[android]');
-    console.log("Result in filter android:", result);
+
     expect(result.length).toEqual(1);
     expect(result[0]._id).toEqual('65e9b58910afe6e94fc6e6dc');
   });
@@ -177,9 +188,9 @@ describe('application module', () => {
   });
 
   test('filter question by tag and keyword', () => {
-    console.log("In dev");
+
     const result = filterQuestionsBySearch(_questions, '[android]');
-    console.log("filter8282:", result);
+
     expect(result.length).toEqual(1);
     expect(result[0]._id).toEqual('65e9b58910afe6e94fc6e6dc');
   });
@@ -189,7 +200,6 @@ describe('application module', () => {
     mockingoose(Questions).toReturn(_questions.slice(0, 3), 'find');
 
     const result = await getQuestionsByOrder('active');
-    console.log("Result in getQuestionsByOrder:", result);
 
     expect(result.length).toEqual(3);
     expect(result[0]._id?.toString()).toEqual('65e9b5a995b6c7045a30d823');
@@ -243,7 +253,6 @@ describe('application module', () => {
     mockingoose(Questions).toReturn(questions, 'find');
 
     const result = await getQuestionsByOrder('newest');
-    console.log("newest8282:", result);
 
     expect(result.length).toEqual(3);
     expect(result[0]._id?.toString()).toEqual('65e9b716ff0e892116b2de01');
@@ -255,7 +264,6 @@ describe('application module', () => {
     mockingoose(Questions).toReturn([_questions[2], _questions[3]], 'find');
 
     const result = await getQuestionsByOrder('unanswered');
-    console.log("Result in unanswered8282:", result);
     expect(result.length).toEqual(2);
     expect(result[1]._id?.toString()).toEqual('65e9b9b44c052f0a08ecade0');
     expect(result[0]._id?.toString()).toEqual('65e9b716ff0e892116b2de09');
@@ -276,7 +284,6 @@ describe('application module', () => {
     mockingoose(Questions).toReturn(questionWithUpdatedViews, 'findOneAndUpdate');
 
     const result = await fetchAndIncrementQuestionViewsById('65e9b58910afe6e94fc6e6dc');
-    console.log("Result in fetchAndIncrementQuestionViewsById:", result);
     expect((result as IQuestion)._id?.toString()).toEqual('65e9b58910afe6e94fc6e6dc');
     expect((result as IQuestion).views).toEqual(49);
 
@@ -322,8 +329,6 @@ describe('application module', () => {
     mockingoose(Tags).toReturn(_tag2, 'findOne');
 
     const result = await getTagIds(['react', 'javascript']);
-    console.log("Result:", result);
-
 
     expect(result.length).toEqual(2);
   });
@@ -347,7 +352,6 @@ describe('application module', () => {
     mockingoose(Tags).toReturn([_tag1, _tag2, _tag3], 'find');
     mockingoose(Questions).toReturn(_questions, 'find');
     const result = await getTagCountMap();
-    console.log("result in getTagCountMap:", result);
 
     if (result && !(result instanceof Map) && 'error' in result) {
       fail(`Expected a Map but got an error: ${result.error}`);
@@ -449,8 +453,5 @@ describe('application module', () => {
     const isPasswordHashed = await bcrypt.compare(user.password, result.password);
     expect(isPasswordHashed).toBe(true);
   });
-
-
-
 
 });

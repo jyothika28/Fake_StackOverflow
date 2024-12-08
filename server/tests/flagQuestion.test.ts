@@ -23,22 +23,15 @@ const tag2 = {
 
 describe("POST /flagQuestion/:qid", () => {
     beforeEach(() => {
-        console.log("Starting server before test");
         server = require("../server");
-        console.log("Server started successfully");
     });
 
     afterEach(async () => {
-        console.log("Closing server after test");
         server.close();
-        console.log("Server closed");
-        console.log("Disconnecting from MongoDB");
         await mongoose.disconnect();
-        console.log("Disconnected from MongoDB");
     });
 
     it("should flag the question and return a success message", async () => {
-        console.log("Running test for successful flagging of a question");
 
         // Mocked question document
         const mockQuestion = {
@@ -52,8 +45,6 @@ describe("POST /flagQuestion/:qid", () => {
             save: jest.fn(),
         };
 
-        console.log("MockQuestion before request:", mockQuestion);
-
         // Mock the `save` method to simulate the flagged update
         mockQuestion.save.mockImplementation(function (this: typeof mockQuestion) {
             this.flagged = true; // Simulate flagged update
@@ -62,38 +53,24 @@ describe("POST /flagQuestion/:qid", () => {
 
         // Mock the flagQuestionById function
         const mockFlaggedQuestion = { ...mockQuestion, flagged: true };
-        console.log("MockFlaggedQuestion:", mockFlaggedQuestion);
         // Mock the `findById` call to return the mocked question
         (Question.findById as jest.Mock).mockImplementation((id) => {
-            console.log("Mock findById called with ID:", id);
             return mockQuestion; // or `null` based on test case
         });
         (flagQuestionById as jest.Mock).mockResolvedValue(mockFlaggedQuestion);
-
-        console.log("Mock setup for findById completed");
-
 
         // Making the request
         const response = await supertest(server)
             .post(`/question/flagQuestion/${mockQuestion._id}`)
             .send();
 
-        console.log("Response status:", response.status);
-        console.log("Response body:", response.body);
-
-        // Assert response
-        console.log("Asserting response", response.status);
         expect(response.status).toBe(200);
-        console.log("Response body message:", response.body.message);
         expect(response.body.message).toBe("This post has been flagged for review.");
 
-        // Assert that the question's `flagged` field was updated
-        console.log("MockQuestion after request:", mockQuestion);
         expect(response.body.flaggedQuestion.flagged).toBe(true);
     });
 
     it("should return 404 if the question is not found", async () => {
-        console.log("Running test for question not found");
 
         // Mock `findById` to return null (simulate question not found)
         (Question.findById as jest.Mock).mockResolvedValue(null);
@@ -101,15 +78,10 @@ describe("POST /flagQuestion/:qid", () => {
             throw new Error("Question not found");
         });
 
-        console.log("Mock setup for findById returning null");
-
         // Make the POST request with a non-existent question ID
         const response = await supertest(server)
             .post(`/question/flagQuestion/abc`)
             .send();
-
-        console.log("Response status:", response.status);
-        console.log("Response body:", response.body);
 
         // Assert response
         expect(response.status).toBe(404);
@@ -118,7 +90,6 @@ describe("POST /flagQuestion/:qid", () => {
 
 
     it("should return 500 if an error occurs during flagging", async () => {
-        console.log("Running test for server error during flagging");
 
         // Mock `findById` to throw an error (simulate database issue)
         (Question.findById as jest.Mock).mockRejectedValue(new Error("Database error"));
@@ -128,15 +99,10 @@ describe("POST /flagQuestion/:qid", () => {
             throw new Error("Database error");
         });
 
-        console.log("Mock setup for findById throwing an error");
-
         // Make the POST request
         const response = await supertest(server)
             .post(`/question/flagQuestion/65e9b58910afe6e94fc6e6fe`)
             .send();
-
-        console.log("Response status:", response.status);
-        console.log("Response body:", response.body);
 
         // Assert response
         expect(response.status).toBe(500);

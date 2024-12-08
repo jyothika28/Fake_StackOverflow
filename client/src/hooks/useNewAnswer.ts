@@ -2,6 +2,7 @@ import { useState } from "react";
 import { validateHyperlink } from "../tool";
 import { addAnswer } from "../services/answerService";
 import { QuestionIdFunctionType } from "../types/functionTypes";
+import { CommentType } from "../types/entityTypes";
 
 export const useNewAnswer = (
   qid: string,
@@ -39,6 +40,7 @@ export const useNewAnswer = (
       text: text,
       ans_by: usrn,
       ans_date_time: new Date(),
+      comments: [] as CommentType[],
     };
 
     const res = await addAnswer(qid, answer);

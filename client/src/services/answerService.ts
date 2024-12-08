@@ -21,4 +21,38 @@ const addAnswer = async (
   }
 };
 
-export { addAnswer };
+const addComment = async (
+    answerId: string,
+    comment: { text: string; commented_by: string }
+) => {
+  try {
+    const res = await api.post(`${ANSWER_API_URL}/${answerId}/comment`, comment);
+    if (res.status !== 200) {
+      throw new Error("Error while creating a new comment");
+    }
+    return res.data;
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    throw error;
+  }
+};
+
+const addReply = async (
+    commentId: string,
+    reply: { text: string; commented_by: string }
+) => {
+  try {
+    const res = await api.post(`${ANSWER_API_URL}/comment/${commentId}/reply`, reply);
+    if (res.status !== 200) {
+      throw new Error("Error while creating a new reply");
+    }
+    return res.data;
+  } catch (error) {
+    console.error("Error adding reply:", error);
+    throw error;
+  }
+};
+
+
+
+export { addAnswer, addComment, addReply };

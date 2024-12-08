@@ -56,23 +56,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // middleware to create a session with secure configuration
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'default_secret',
-    store: MongoStore.create({
-      mongoUrl: MONGO_URL,
-      collectionName: 'MySessions'
-    }),
-    cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Set secure to true in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Set sameSite to 'none' in production
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
-    },
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+if (process.env.NODE_ENV !== 'test') {
+    app.use(
+        session({
+            secret: process.env.SESSION_SECRET || 'default_secret',
+            store: MongoStore.create({
+                mongoUrl: MONGO_URL,
+                collectionName: 'MySessions'
+            }),
+            cookie: {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Set secure to true in production
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Set sameSite to 'none' in production
+                maxAge: 24 * 60 * 60 * 1000 // 1 day
+            },
+            resave: false,
+            saveUninitialized: false,
+        })
+    );
+}
 
 app.get('/', (req, res) => {
   console.log(req.session);

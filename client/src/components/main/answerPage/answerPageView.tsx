@@ -39,15 +39,18 @@ const AnswerPage = ({
         askby={question.asked_by}
         meta={getMetaData(new Date(question.ask_date_time))}
       />
-      {question.answers.map((a, idx) => (
-        <Answer
-          key={idx}
-          text={a.text}
-          ansBy={a.ans_by}
-          meta={getMetaData(new Date(a.ans_date_time))}
-        />
-      ))}
-      {/* <button
+
+        {question.answers.map((a) => (
+            <Answer
+                text={a.text}
+                ansBy={a.ans_by}
+                meta={getMetaData(new Date(a.ans_date_time))}
+                answerId={a._id!}
+                comments={a.comments || []}
+            />
+        ))}
+
+        {/* <button
         className="bluebtn ansButton"
         onClick={() => {
           handleNewAnswer();

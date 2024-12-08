@@ -5,13 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/main/comment/commentFormView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/main/comment/commentListView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/questionPage/questionPageView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/questionPage/questionPageView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/hooks/useNewAnswer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/hooks/useNewAnswer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/answerService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/answerService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/types/entityTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/entityTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/application.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/application.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/newUser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newUser.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -20,10 +40,16 @@
     <dismissed value="$PROJECT_DIR$/client/package.json" />
     <dismissed value="$PROJECT_DIR$/server/package.json" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2ozm3P9bhdwMm1kaPqQeXWfpLAE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -159,7 +185,8 @@
       <workItem from="1733444573378" duration="5218000" />
       <workItem from="1733451453515" duration="18348000" />
       <workItem from="1733539300971" duration="3028000" />
-      <workItem from="1733599246725" duration="4517000" />
+      <workItem from="1733599246725" duration="5590000" />
+      <workItem from="1733615961678" duration="7496000" />
     </task>
     <servers />
   </component>
