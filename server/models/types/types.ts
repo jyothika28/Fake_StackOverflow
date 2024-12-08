@@ -109,7 +109,6 @@ export interface IComment {
   comment_date_time: Date;
   upvotes: number;
   downvotes: number;
-  replies: IComment[];
   flagged?: boolean;
 }
 

@@ -34,7 +34,6 @@ describe("POST /comment/answer/:answerId/comment", () => {
                     comment_date_time: new Date(),
                     upvotes: 0,
                     downvotes: 0,
-                    replies: [],
                 },
             ],
             save: jest.fn().mockResolvedValue(true),

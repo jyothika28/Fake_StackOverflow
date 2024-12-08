@@ -22,7 +22,6 @@ const CommentSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        replies: [this],
         flagged: {
             type: Boolean,
             default: false,
