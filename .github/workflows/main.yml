@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
+  
   "run-jest-tests":
     runs-on: cs5500-self-hosted
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-     
-     
+        
       - name: Install Dependencies
         working-directory: server
         run: npm install
@@ -28,3 +28,7 @@ jobs:
       - name: Run Tests
         working-directory: server
         run: npm run test
+
+        
+  
+  
