@@ -11,7 +11,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+       # Step 6: Install dependencies in the client folder
+      - name: Install Client Dependencies
+        working-directory: client
+        run: npm install
 
+      # Step 7: Run Cypress tests
+      - name: Run Cypress Tests
+        working-directory: client
+        run: npx cypress run --spec "cypress/e2e/**/*.cy.js"
       - name: Install Dependencies
         working-directory: server
         run: npm install
