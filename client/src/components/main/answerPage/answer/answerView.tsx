@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import FlagIcon from "@mui/icons-material/Flag";
 import Box from "@mui/material/Box";
+import {voteAnswer} from "../../../../services/answerService";
 
 interface AnswerProps {
     text: string;
@@ -13,10 +14,23 @@ interface AnswerProps {
     answerId: string; // Add answerId prop
     isFlagged: boolean; // Whether the answer is already flagged
     onFlag: (questionId: string, answerId: string) => void; // Function to handle flagging
+    votes: number;
 }
 
-const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag }: AnswerProps) => {
+const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag, votes }: AnswerProps) => {
     const [flagged, setFlagged] = useState(isFlagged); // Local state to track if flagged
+    const [voteCount, setVoteCount] = useState<number>(votes);
+
+    const handleVote = async (voteType: "upvote" | "downvote") => {
+        try {
+            const updatedAnswer = await voteAnswer(questionId, answerId, voteType);
+            console.log("Updated Answer:", updatedAnswer);
+            setVoteCount(updatedAnswer.votes); // Update vote count in state
+            console.log("Vote count updated:", voteCount);
+        } catch (error) {
+            console.error(`Error voting on answer (${voteType}):`, error);
+        }
+    };
 
     const handleFlag = () => {
         if (!flagged) {
@@ -53,6 +67,32 @@ const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag }: 
                 >
                     {flagged ? "Flagged" : "Flag"}
                 </Button>
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginTop: 2,
+                }}
+            >
+                <div>
+                    <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => handleVote("upvote")}
+                    >
+                        Upvote
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleVote("downvote")}
+                    >
+                        Downvote
+                    </Button>
+                </div>
+                <div className="voteCount">Votes: {voteCount || "Refresh"}</div>
             </Box>
         </div>
     );

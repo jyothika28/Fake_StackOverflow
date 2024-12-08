@@ -7,6 +7,7 @@ import {
 } from "../models/types/types";
 import Answer from "../models/answers";
 import Questions from "../models/questions";
+import Question from "../models/questions";
 
 const router = express.Router();
 
@@ -56,7 +57,7 @@ router.post("/flagAnswer/:aid", async (req, res) => {
 
   try {
     const { aid } = req.params;
-    const { qid } = req.body;
+    const { questionId } = req.body;
 
     console.log(`Attempting to flag answer with ID: ${aid}`);
 
@@ -73,11 +74,11 @@ router.post("/flagAnswer/:aid", async (req, res) => {
       return res.status(404).json({ error: "Answer not found" });
     }
 
-    const question = await Questions.findById(qid);
+    const question = await Questions.findById(questionId);
     if (!question || !Array.isArray(question.answers)) return null;
 
-    const updatedAnswers = question.answers.map((answer: any) => {
-      if (answer._id.toString() === aid) {
+    const updatedAnswers = question.answers.map((answer: IAnswer) => {
+      if (answer._id!.toString() === aid) {
         answer.flagged = true;
       }
       return answer;
@@ -101,6 +102,54 @@ router.post("/flagAnswer/:aid", async (req, res) => {
 
     // Internal server error response
     return res.status(500).json({ error: "Error flagging answer" });
+  }
+});
+
+
+router.post("/:answerId/vote", async (req, res) => {
+  const { answerId } = req.params;
+  const { questionId, vote } = req.body;
+  console.log("Vote request:", { answerId, questionId, vote });
+  if (!["upvote", "downvote"].includes(vote)) {
+    return res.status(400).json({ error: "Invalid vote action" });
+  }
+
+  try {
+    // Fetch the question by its ID
+    const question = await Questions.findById(questionId);
+
+    if (!question) {
+      console.warn(`Question with ID ${questionId} not found`);
+      return res.status(404).json({ error: "Question not found" });
+    }
+
+    // Find the answer within the question's answers array
+    const answer = question.answers.find(
+        (ans: IAnswer) => ans._id!.toString() === answerId
+    );
+
+    if (!answer) {
+      console.warn(`Answer with ID ${answerId} not found`);
+      return res.status(404).json({ error: "Answer not found" });
+    }
+
+    // Update the vote count for the answer
+    if (vote === "upvote") {
+      answer.votes = (answer.votes || 0) + 1;
+    } else if (vote === "downvote") {
+      answer.votes = (answer.votes || 0) - 1;
+    }
+
+    // Save the updated question document
+    await question.save();
+
+    res.status(200).json({
+      message: `Answer ${answerId} ${vote}d successfully.`,
+      answer,
+    });
+  } catch (error) {
+    console.error("Error voting on answer:", error);
+    res.status(500).json({ error: "Error voting on answer" });
   }
 });
 

@@ -88,6 +88,7 @@ const AnswerPage = ({
                         answerId={a._id!}
                         isFlagged={a.flagged}
                         onFlag={() => handleFlagAnswer(qid, a._id!)}
+                        votes={a.votes} // Pass votes
                     />
                     {/* Render the comments section for each answer */}
                     <CommentSection

@@ -40,10 +40,10 @@ const addComment = async (
 };
 
 const flagAnswer = async (
-    qid: string,
+    questionId: string,
     answerId: string
 ): Promise<AnswerResponseType> => {
-  const data = { qid: qid };
+  const data = { questionId: questionId };
 
 
   try {
@@ -58,5 +58,24 @@ const flagAnswer = async (
   }
 };
 
+const voteAnswer = async (
+    questionId: string,
+    answerId: string,
+    voteType: "upvote" | "downvote"
+) => {
+  try {
+    console.log("answerService: Voting on answer:", { questionId, answerId, voteType });
+    const response = await api.post(`${ANSWER_API_URL}/${answerId}/vote`, {
+      questionId, vote: voteType,
+    });
+    console.log("answerService: Vote response:", response.data);
 
-export { addAnswer, addComment, flagAnswer };
+    return response.data;
+  } catch (error) {
+    console.error("Error voting on answer:", error);
+    throw error;
+  }
+};
+
+
+export { addAnswer, addComment, flagAnswer, voteAnswer };
