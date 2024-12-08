@@ -15,7 +15,7 @@ import {
   AddQuestionRequest,
   // QuestionAPIResponse,
 } from "../models/types/types";
-import { flagQuestionById } from "../models/questions";
+import Question from "../models/questions";
 
 const router = express.Router();
 
@@ -129,7 +129,15 @@ router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
 
   try {
     const { qid } = req.params;
-    const flaggedQuestion = await flagQuestionById(qid);
+    // Find the question
+    const question = await Question.findById(qid);
+    if (!question) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+
+    // Set flagged to true
+    question.flagged = true;
+    const flaggedQuestion = await question.save();
 
     if (!flaggedQuestion) {
       return res.status(404).json({ error: "Question not found" });

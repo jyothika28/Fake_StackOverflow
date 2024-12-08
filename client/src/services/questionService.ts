@@ -51,4 +51,9 @@ const addQuestion = async (q: QuestionType): Promise<QuestionResponseType> => {
   }
 };
 
-export { getQuestionsByFilter, getQuestionById, addQuestion };
+const flagQuestion = async (questionId: string) => {
+  const response = await api.post(`${QUESTION_API_URL}/flagQuestion/${questionId}`);
+  return response.data;
+};
+
+export { getQuestionsByFilter, getQuestionById, addQuestion, flagQuestion };

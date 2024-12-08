@@ -3,10 +3,10 @@ import Answer from "../models/answers";
 import {
     IComment,
     AddCommentRequest,
-    GetCommentRequest,
+    FlagCommentRequest,
     GetCommentsRequest
 } from "../models/types/types";
-import {addAnswerToQuestion, addCommentToAnswer, saveComment} from "../models/application";
+import {addCommentToAnswer} from "../models/application";
 
 const router = express.Router();
 
@@ -69,28 +69,27 @@ router.get("/answer/:answerId/comments", async (req: GetCommentsRequest, res) =>
     }
 });
 
-router.post("/answer/:answerId/comment/:commentId/flagComment", async (req: GetCommentRequest, res) => {
-    try {
-        const { answerId, commentId } = req.params;
+router.post("/answer/:answerId/comment/:commentId/flagComment", async (req, res) => {
+    console.log("Flag comment API hit with params:", req.params);
+    const { answerId, commentId } = req.params;
+    console.log("Found answer:", req.params);
 
-        const answer = await Answer.findById(answerId);
-        if (!answer) {
-            return res.status(404).json({ error: "Answer not found" });
-        }
-
-        const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
-        if (!comment) {
-            return res.status(404).json({ error: "Comment not found" });
-        }
-
-        comment.flagged = true;
-        await answer.save();
-
-        res.status(200).json({ message: "Comment flagged for moderation", comment });
-    } catch (error) {
-        console.error("Error reporting comment:", error);
-        res.status(500).json({ error: "Error reporting comment" });
+    const answer = await Answer.findById(answerId);
+    if (!answer) {
+        console.error("Answer not found for ID:", answerId);
+        return res.status(404).json({ error: "Answer not found" });
     }
+
+    const comment = answer.comments?.find((c) => c._id?.toString() === commentId);
+    if (!comment) {
+        console.error("Comment not found for ID:", commentId);
+        return res.status(404).json({ error: "Comment not found" });
+    }
+
+    comment.flagged = true;
+    await answer.save();
+
+    res.status(200).json({ message: "Comment flagged for moderation", comment });
 });
 
 

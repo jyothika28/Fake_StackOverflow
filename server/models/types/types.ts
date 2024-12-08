@@ -99,6 +99,8 @@ export interface IQuestion {
   asked_by?: string;
   ask_date_time: Date;
   views: number;
+  upvotes?: number;
+  downvotes?: number;
   flagged?: boolean;
 }
 
@@ -139,13 +141,10 @@ export interface AddCommentRequest extends Request {
   };
 }
 
-export interface DeleteCommentRequest extends Request {
+export interface FlagCommentRequest extends Request {
   params: {
     answerId: string;
     commentId: string;
-  };
-  body: {
-    commented_by: string;
   };
 }
 

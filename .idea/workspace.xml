@@ -5,12 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answerPageView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/questionBody/questionBodyView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/questionBody/questionBodyView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/comment/CommentSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/routing/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/routing/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/hooks/useNewQuestion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/hooks/useNewQuestion.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/commentService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/commentService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/questionService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/questionService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/types/entityTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/entityTypes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/controller/comment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/comment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/application.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/application.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/comments.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/comments.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/question.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/questions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/questions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/schema/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/schema/question.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/types/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +33,7 @@
       <list>
         <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -55,6 +67,7 @@
     "Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor": "Run",
     "Jest.POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined.executor": "Run",
     "Jest.POST /comment/answer/:answerId/comment.should return 500 if there is a server error.executor": "Run",
+    "Jest.POST /comment/answer/:answerId/comment.should return 500 if there is an error adding a comment.executor": "Run",
     "Jest.POST /flagAnswer/:aid.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
@@ -74,6 +87,7 @@
     "git-widget-placeholder": "postmod",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,7 +100,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Jest.POST /comment/answer/:answerId/comment.should return 500 if there is a server error">
+  <component name="RunManager">
     <configuration name="Comment API - Database Error Handling" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
@@ -109,19 +123,6 @@
       <test-names>
         <test-name value="Comment API - Database Error Handling" />
         <test-name value="should return 404 if the answer does not exist" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="POST /answer/:answerId/comment.should add a comment to an existing answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/comment.test.ts" />
-      <test-names>
-        <test-name value="POST /answer/:answerId/comment" />
-        <test-name value="should add a comment to an existing answer" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -151,13 +152,26 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="POST /comment/answer/:answerId/comment.should return 500 if there is an error adding a comment" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/comment.test.ts" />
+      <test-names>
+        <test-name value="POST /comment/answer/:answerId/comment" />
+        <test-name value="should return 500 if there is an error adding a comment" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.POST /comment/answer/:answerId/comment.should return 500 if there is an error adding a comment" />
         <item itemvalue="Jest.POST /comment/answer/:answerId/comment.should return 500 if there is a server error" />
         <item itemvalue="Jest.Comment API - Database Error Handling.should return 404 if the answer does not exist" />
         <item itemvalue="Jest.Comment API - Database Error Handling" />
         <item itemvalue="Jest.POST /comment/answer/:answerId/comment.should initialize comments array if it is undefined" />
-        <item itemvalue="Jest.POST /answer/:answerId/comment.should add a comment to an existing answer" />
       </list>
     </recent_temporary>
   </component>

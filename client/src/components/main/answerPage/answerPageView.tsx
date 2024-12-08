@@ -7,7 +7,9 @@ import { VoidFunctionType } from "../../../types/functionTypes";
 import { useAnswerPage } from "../../../hooks/useAnswerPage";
 import Button from "@mui/material/Button";
 import CreateIcon from "@mui/icons-material/Create";
-import CommentSection from "../comment/CommentSection"; // Import the new component
+import CommentSection from "../comment/CommentSection";
+import {flagComment} from "../../../services/commentService";
+import {flagQuestion} from "../../../services/questionService";
 
 interface AnswerPageProps {
     qid: string;
@@ -26,6 +28,26 @@ const AnswerPage = ({
         return null;
     }
 
+    const handleFlagComment = async (answerId: string, commentId: string) => {
+        try {
+            console.log(`handleFlagComment: Flagging comment ${commentId} for answer ${answerId}`);
+            await flagComment(answerId, commentId);
+            console.log(`Comment ${commentId} flagged successfully.`);
+        } catch (error) {
+            console.error(`Error flagging comment ${commentId}:`, error);
+        }
+    };
+
+    const handleFlagQuestion = async (questionId: string) => {
+        try {
+            console.log(`Flagging question with ID: ${questionId}`);
+            await flagQuestion(questionId); // API call to flag the question
+            console.log(`Question ${questionId} flagged successfully.`);
+        } catch (error) {
+            console.error(`Error flagging question ${questionId}:`, error);
+        }
+    };
+
     return (
         <>
             <AnswerHeader
@@ -38,7 +60,11 @@ const AnswerPage = ({
                 text={question.text}
                 askby={question.asked_by}
                 meta={getMetaData(new Date(question.ask_date_time))}
+                questionId={question._id!}
+                isFlagged={question.flagged}
+                onFlag={handleFlagQuestion}
             />
+
             {question.answers.map((a, idx) => (
                 <>
                     <Answer
@@ -48,7 +74,12 @@ const AnswerPage = ({
                         meta={getMetaData(new Date(a.ans_date_time))}
                     />
                     {/* Render the comments section for each answer */}
-                    <CommentSection answerId={a._id!} comments={a.comments || []} />
+                    <CommentSection
+                        answerId={a._id!}
+                        comments={a.comments || []}
+                        onFlag={(commentId) => handleFlagComment(a._id!, commentId)}
+                    />
+
                 </>
             ))}
             <Button

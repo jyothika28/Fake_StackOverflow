@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { Server } from "http";
 import Question from "../models/questions";
 import { flagQuestionById } from "../models/questions";
+import Answer from "../models/answers";
 
 jest.mock("../models/questions", () => ({
     flagQuestionById: jest.fn(),
@@ -107,6 +108,29 @@ describe("POST /flagQuestion/:qid", () => {
         // Assert response
         expect(response.status).toBe(500);
         expect(response.body.error).toBe("Error flagging question");
+    });
+
+    it("should flag a comment within a specific answer", async () => {
+        const mockAnswer = {
+            _id: "mockAnswerId",
+            comments: [
+                {
+                    _id: "mockCommentId",
+                    text: "Mock comment",
+                    flagged: false,
+                },
+            ],
+            save: jest.fn().mockResolvedValue(true),
+        };
+
+        jest.spyOn(Answer, "findById").mockResolvedValueOnce(mockAnswer);
+
+        const response = await supertest(server)
+            .post("/answer/mockAnswerId/comment/mockCommentId/flagComment");
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Comment flagged for moderation");
+        expect(mockAnswer.comments[0].flagged).toBe(true);
     });
 
 });

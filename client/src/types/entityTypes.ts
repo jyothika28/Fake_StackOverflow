@@ -27,6 +27,7 @@ interface CommentType {
   comment_date_time: Date;
   upvotes: number;
   downvotes: number;
+  flagged: boolean;
 }
 
 interface AnswerType {
@@ -51,6 +52,9 @@ interface QuestionType {
   tags: Tag[];
   asked_by: string;
   ask_date_time: Date;
+  upvotes: number;
+  downvotes: number;
+  flagged: boolean;
 }
 
 interface QuestionResponseType {
@@ -62,6 +66,9 @@ interface QuestionResponseType {
   asked_by: string;
   ask_date_time: string;
   text: string;
+  upvotes: number;
+  downvotes: number;
+  flagged: boolean;
 }
 
 interface Question {
@@ -75,6 +82,9 @@ interface Question {
   text: string;
   asked_by: string;
   ask_date_time: string;
+  upvotes: number;
+  downvotes: number;
+  flagged: boolean;
 }
 
 interface Tag {

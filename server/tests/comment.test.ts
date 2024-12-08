@@ -110,4 +110,27 @@ describe("POST /comment/answer/:answerId/comment", () => {
         expect(response.status).toBe(500);
         expect(response.body.error).toBe("Database error");
     });
+
+    it("should return 500 if there is an error adding a comment", async () => {
+        const mockError = new Error("Database error");
+
+        // Mock Answer.findById to throw an error
+        (Answer.findById as jest.Mock).mockRejectedValueOnce(mockError);
+
+        const response = await supertest(server)
+            .post("/comment/answer/65e9b58910afe6e94fc6e6dc/comment")
+            .send({
+                text: "This is a test comment",
+                commented_by: "dummyUserId",
+            });
+
+        // Assertions
+        expect(response.status).toBe(500);
+        expect(response.body.error).toBe("Error adding comment");
+        expect(console.error).toHaveBeenCalledWith(
+            "Error adding comment:",
+            mockError
+        );
+    });
+
 });
