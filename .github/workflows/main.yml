@@ -12,22 +12,33 @@ on:
 jobs:
   "run-jest-tests":
     runs-on: cs5500-self-hosted
+
     steps:
+      # Step 1: Checkout Repository with Long Paths Enabled
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # Ensures a full clone to handle long file paths
+        run: |
+          git config --global core.longpaths true
 
+      # Step 2: Install dependencies in server folder
       - name: Install Dependencies
         working-directory: server
         run: npm install
         
+      # Step 3: Delete old database
       - name: Delete old database
         working-directory: server
         run: npm run remove_db
 
+      # Step 4: Seed database
       - name: Seed database
         working-directory: server
         run: npm run populate_db
 
+      # Step 5: Run tests
       - name: Run Tests
         working-directory: server
         run: npm run test
