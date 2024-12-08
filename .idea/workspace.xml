@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/serverProject/config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/eslint.config.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/jest.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/server.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/tests/sample.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverProject/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/answerPage/answer/answerView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

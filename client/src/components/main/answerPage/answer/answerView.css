@@ -1,12 +1,14 @@
-/* All the CSS related to answers Page*/
+/* All the CSS related to answers Page */
 .answer {
     display: flex;
     flex-direction: row;
     border-bottom: #000000 1px dashed;
+    padding: 1rem 0; /* Add spacing between answers */
 }
 
 .answerText {
     width: 75%;
+    word-wrap: break-word; /* Ensure long words don't overflow */
 }
 
 .answerAuthor {
@@ -15,4 +17,61 @@
 
 .answer_author {
     color: green;
+}
+
+/* Styles for the comments section */
+.commentSection {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9; /* Light gray background for contrast */
+    border-radius: 5px;
+    border: 1px solid #ddd; /* Subtle border */
+}
+
+.comment {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #ffffff; /* White background for comments */
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Subtle border for separation */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styles for individual replies */
+.replies {
+    margin-left: 2rem; /* Indent replies */
+    padding-left: 1rem;
+    border-left: 2px solid #ddd; /* Left border for hierarchy */
+}
+
+.reply {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f4f4f4; /* Light gray for distinction */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Styles for the "No comments yet" text */
+.noCommentsText {
+    font-style: italic;
+    color: #888; /* Light gray for less emphasis */
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Add spacing and alignment for buttons inside comments */
+.commentForm button {
+    margin-top: 0.5rem;
+    background-color: #3090e2; /* Blue button color */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.commentForm button:hover {
+    background-color: #1c6db7; /* Darker blue on hover */
 }
