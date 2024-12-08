@@ -1,6 +1,6 @@
 import cors from "cors";
 import mongoose from "mongoose";
-import express, { type Express } from "express";
+import express, { type Express,Request,Response } from "express";
 import { Server } from "http"; // Import the Server type from Node.js
 import dotenv from "dotenv";
 import session from "express-session";
@@ -73,16 +73,15 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Set secure to true in production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set sameSite to 'none' in production
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: true,
+      sameSite: "strict",
     },
     resave: false,
     saveUninitialized: false,
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/", (req:Request, res:Response) => {
   console.log(req.session);
   res.send("REST Service for Fake SO");
   res.end();
