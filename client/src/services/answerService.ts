@@ -31,6 +31,7 @@ const addComment = async (
     if (res.status !== 200) {
       throw new Error("Error while creating a new comment");
     }
+    console.log("New comment in UI:", res.data);
     return res.data;
   } catch (error) {
     console.error("Error adding comment:", error);

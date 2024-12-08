@@ -1,11 +1,14 @@
 import Answers from "./answers";
-import { IAnswer, IQuestion,IUser } from "./types/types";
+import {IAnswer, IComment, IQuestion, IUser} from "./types/types";
 import Questions from "./questions";
 import Tags from "./tags";
 import User from "./users";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { Session } from "express-session";
+import CommentSchema from "./schema/comment";
+import Comments from "./comments";
+import Answer from "./answers";
 
 
 export type SortOrder = "active" | "newest" | "unanswered";
@@ -360,6 +363,34 @@ const saveAnswer = async (a: IAnswer): Promise<ErrorWrapped<IAnswer>> => {
 };
 
 /**
+ * saves an comment to the database
+ * @param a comment object to save
+ * @returns the comment object saved to the database
+ * or an object with an error message if the save failed
+ * @throws an error if the comment is invalid
+ */
+const saveComment = async (a: IComment): Promise<ErrorWrapped<IComment>> => {
+  try {
+    if (a._id && !mongoose.Types.ObjectId.isValid(a._id)) {
+      console.warn(
+          `Invalid _id found: ${a._id}. Removing it to let Mongoose generate a valid one.`
+      );
+      delete a._id; // Remove invalid _id to allow Mongoose to generate a new one
+    }
+
+    // Create a new answer document
+    const newComment = new Comments(a);
+
+    // Save the answer to the database
+    const savedComment = await newComment.save();
+    return savedComment;
+  } catch (error) {
+    console.error("Error saving comment:", error);
+    return { error: "Database error" };
+  }
+};
+
+/**
  * retrieves tag ids from the database
  * @param tagNames a list of tag names
  * @returns returns a string array of tag ids
@@ -406,6 +437,33 @@ const addAnswerToQuestion = async (
   } catch (error) {
     console.error("Error adding answer to question:", error);
     return { error: "patabase error" };
+  }
+};
+
+/**
+ * save an comment in the database, add the comment to the answer, and update the answer in the database
+ * @param aid the answer id
+ * @param comment the comment object to be added
+ * @returns the answer object with the added comment or an object with an error message if the operation failed
+ */
+const addCommentToAnswer = async (
+    aid: string,
+    comment: IComment
+): Promise<ErrorWrapped<IQuestion | null>> => {
+  try {
+    const answer = await Answer.findById(aid);
+    if (!answer) return null;
+
+    const newComment = new Comments(comment); // Create a new answer instance
+    await newComment.save();
+
+    answer.comment.push(newComment); // Add the answer to the question
+    await answer.save();
+
+    return answer;
+  } catch (error) {
+    console.error("Error adding comment to answer:", error);
+    return { error: "Database error" };
   }
 };
 
@@ -474,6 +532,8 @@ export {
   saveQuestion,
   getTagIds,
   saveAnswer,
+  saveComment,
   addAnswerToQuestion,
+  addCommentToAnswer,
   getTagCountMap,
 };
