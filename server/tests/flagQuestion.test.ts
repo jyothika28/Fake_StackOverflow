@@ -2,11 +2,9 @@ import supertest from "supertest";
 import mongoose from "mongoose";
 import { Server } from "http";
 import Question from "../models/questions";
-import { flagQuestionById } from "../models/questions";
 import Answer from "../models/answers";
 
 jest.mock("../models/questions", () => ({
-    flagQuestionById: jest.fn(),
     findById: jest.fn(),
 }));
 
@@ -52,13 +50,10 @@ describe("POST /flagQuestion/:qid", () => {
             return Promise.resolve(this);
         });
 
-        // Mock the flagQuestionById function
-        const mockFlaggedQuestion = { ...mockQuestion, flagged: true };
         // Mock the `findById` call to return the mocked question
         (Question.findById as jest.Mock).mockImplementation((id) => {
             return mockQuestion; // or `null` based on test case
         });
-        (flagQuestionById as jest.Mock).mockResolvedValue(mockFlaggedQuestion);
 
         // Making the request
         const response = await supertest(server)
@@ -75,9 +70,6 @@ describe("POST /flagQuestion/:qid", () => {
 
         // Mock `findById` to return null (simulate question not found)
         (Question.findById as jest.Mock).mockResolvedValue(null);
-        (flagQuestionById as jest.Mock).mockImplementation(() => {
-            throw new Error("Question not found");
-        });
 
         // Make the POST request with a non-existent question ID
         const response = await supertest(server)
@@ -94,11 +86,6 @@ describe("POST /flagQuestion/:qid", () => {
 
         // Mock `findById` to throw an error (simulate database issue)
         (Question.findById as jest.Mock).mockRejectedValue(new Error("Database error"));
-
-        // Mock `flagQuestionById` to propagate the error
-        (flagQuestionById as jest.Mock).mockImplementation(() => {
-            throw new Error("Database error");
-        });
 
         // Make the POST request
         const response = await supertest(server)
