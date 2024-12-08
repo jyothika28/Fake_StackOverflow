@@ -10,13 +10,11 @@ export const validateRegisterRequest = (req: RegisterRequest) => {
     errors.firstname = "First name cannot be empty.";
     isValid = false;
   }
-
   // Validate last name
   if (!lastname) {
     errors.lastname = "Last name cannot be empty.";
     isValid = false;
   }
-
   // Validate username
   if (!username) {
     errors.username = "Username cannot be empty.";

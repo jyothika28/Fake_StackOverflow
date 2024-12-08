@@ -21,6 +21,7 @@ jobs:
       - name: Start Server
         working-directory: server
         run: npm start
+
       - name: Install Dependencies in client
         working-directory: client
         run: npm --force install
@@ -31,6 +32,6 @@ jobs:
 
       - name: Run Cypress Tests
         working-directory: client
-        run: npx cypress run --spec "cypress/e2e/**/*.cy.js"
+        run: npx cypress run --spec cypress/e2e/
       
         

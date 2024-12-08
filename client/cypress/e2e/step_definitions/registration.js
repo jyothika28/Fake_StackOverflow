@@ -10,15 +10,7 @@ const user1 = {
     confirmPassword: 'Password@100',
     dob: '1990-01-01'
 }
-const user2 = { 
-    firstname:'Bojack',
-    lastname:'Horseman',
-    username:'bojack',
-    email:'bhorseman@gmail.com',
-    password:'Bojackhorse@900',
-    confirmPassword:'Bojackhorse@900',
-    dob:'1980-09-05'
-}
+
 // 'Rachel', 'Green', 'rachelgreen', 'rach@gmail.com', u1_pwd, new Date('1990-01-20')
 const existingEmail = {  
     firstname:'Rachel',

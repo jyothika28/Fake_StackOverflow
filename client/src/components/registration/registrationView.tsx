@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from "../main/baseComponents/form/formView";
 import Input from "../main/baseComponents/input/inputView";
-import { Button, Typography, Link,TextField } from "@mui/material";
+import { Button, Typography, Link } from "@mui/material";
 import useNewUser from '../../hooks/useNewUser'; 
 import { RegistrationProps } from '../../types/entityTypes';
 import Textarea from '../main/baseComponents/textarea/textAreaView';

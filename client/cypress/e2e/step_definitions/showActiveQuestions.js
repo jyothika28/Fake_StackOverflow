@@ -28,7 +28,7 @@ function createQuestion(title, text, tag, username) {
   cy.get("#formTextInput").type(text);
   cy.get("#formTagInput").type(tag);
   cy.get("#formUsernameInput").type(username);
-  cy.contains("Post Question").click().wait(1000);
+  cy.contains("Post Question").click();
 }
 //createAnswer(Q5_TITLE, "abc3", "Answer Question A");
 function createAnswer(qtitle, username, text) {
