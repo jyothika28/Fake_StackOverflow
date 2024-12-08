@@ -7,12 +7,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "inlineSourceMap": true,
-    "typeRoots": ["node_modules/@types"]
+    "inlineSourceMap": true
   },
- "include": ["*.ts"],
+  "include": [
+    "./**/*.ts"
+  ],
   "exclude": [
-    "node_modules",
-    "dist"
+    "node_modules"
   ]
 }
