@@ -369,21 +369,20 @@ const saveAnswer = async (a: IAnswer): Promise<ErrorWrapped<IAnswer>> => {
  * or an object with an error message if the save failed
  * @throws an error if the comment is invalid
  */
-const saveComment = async (a: IComment): Promise<ErrorWrapped<IComment>> => {
+const saveComment = async (c: IComment): Promise<ErrorWrapped<IComment>> => {
   try {
-    if (a._id && !mongoose.Types.ObjectId.isValid(a._id)) {
+    if (c._id && !mongoose.Types.ObjectId.isValid(c._id)) {
       console.warn(
-          `Invalid _id found: ${a._id}. Removing it to let Mongoose generate a valid one.`
+          `Invalid _id found: ${c._id}. Removing it to let Mongoose generate a valid one.`
       );
-      delete a._id; // Remove invalid _id to allow Mongoose to generate a new one
+      delete c._id; // Remove invalid _id to allow Mongoose to generate a new one
     }
 
+    console.log("Comment:", c);
     // Create a new answer document
-    const newComment = new Comments(a);
-
-    // Save the answer to the database
-    const savedComment = await newComment.save();
-    return savedComment;
+    const newComment = new Comments(c);
+    console.log("New Comment:", newComment);
+    return newComment;
   } catch (error) {
     console.error("Error saving comment:", error);
     return { error: "Database error" };
@@ -452,7 +451,9 @@ const addCommentToAnswer = async (
 ): Promise<ErrorWrapped<IAnswer | null>> => {
   try {
     const answer = await Answer.findById(aid);
-    if (!answer || !answer.comments) return null;
+    if (!answer || !answer.comments){
+      return null;
+    }
 
     const newComment = new Comments(comment); // Create a new answer instance
     await newComment.save();

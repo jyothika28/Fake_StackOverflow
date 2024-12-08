@@ -296,7 +296,7 @@ describe("POST /flagAnswer/:aid", () => {
 });
 
 describe("flagAnswerById", () => {
-  afterEach(() => {
+  afterEach(async () => {
     jest.clearAllMocks();
     await mongoose.disconnect();
   });

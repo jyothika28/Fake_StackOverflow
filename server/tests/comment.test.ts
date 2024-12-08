@@ -104,10 +104,10 @@ describe("POST /comment/answer/:answerId/comment", () => {
             .post("/comment/answer/dummyAnswerId/comment")
             .send({
                 text: "This is a test comment",
-                commented_by: "dummyUserId",
+                commented_by: "dummyUserId"
             });
 
         expect(response.status).toBe(500);
-        expect(response.body.error).toBe("Error adding comment");
+        expect(response.body.error).toBe("Database error");
     });
 });

@@ -36,18 +36,14 @@ router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => 
 
         console.log("Adding comment:", comment);
 
-        const newComment = await saveComment(comment);
-        if (newComment instanceof Error) {
-            console.error("Error saving answer:", newComment);
+        // Attempt to add answer to the corresponding question
+        const updatedComment = await addCommentToAnswer(answerId, comment);
+        if(updatedComment === undefined) {
             return res.status(500).json({ error: "Database error" });
         }
 
-        // Attempt to add answer to the corresponding question
-        const updatedComment = await addCommentToAnswer(answerId, comment);
-        // Check if there was an error updating the question
-        // Here we check if updatedQuestion contains an error message
-        if (updatedComment === undefined) {
-            return res.status(500).json({ error: "Database error" });
+        if (updatedComment == null) {
+            return res.status(404).json({ error: "Answer not found" });
         }
 
         res.status(200).json({ message: "Comment added successfully", comment });
