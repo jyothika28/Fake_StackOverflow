@@ -105,7 +105,7 @@ See grading section in the project implementation description document (link abo
       - Instructions to run the jest and cypress test cases.
     ```
       cd server
-      npm install
+      npm install --force # to install all the dependencies due to discrepancies with the version of eslint
      npx jest --runInBand tests/application.test.ts
      npx jest --runInBand tests/comment.test.ts
       npx jest --runInBand tests/flagQuestion.test.ts

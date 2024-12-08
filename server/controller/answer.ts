@@ -7,7 +7,7 @@ import {
 } from "../models/types/types";
 import Answer from "../models/answers";
 import Questions from "../models/questions";
-import Question from "../models/questions";
+import {rateLimiter} from "../middleware/rateLimiter";
 
 const router = express.Router();
 
@@ -53,7 +53,7 @@ router.post("/addAnswer", async (req: AddAnswerRequest, res: Response) => {
   }
 });
 
-router.post("/flagAnswer/:aid", async (req, res) => {
+router.post("/flagAnswer/:aid", rateLimiter, async (req, res) => {
 
   try {
     const { aid } = req.params;
@@ -106,7 +106,7 @@ router.post("/flagAnswer/:aid", async (req, res) => {
 });
 
 
-router.post("/:answerId/vote", async (req, res) => {
+router.post("/:answerId/vote", rateLimiter, async (req, res) => {
   const { answerId } = req.params;
   const { questionId, vote } = req.body;
   console.log("Vote request:", { answerId, questionId, vote });
