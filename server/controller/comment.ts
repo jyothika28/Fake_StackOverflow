@@ -189,7 +189,6 @@ router.get("/answer/:answerId/comments", async (req: GetCommentsRequest, res) =>
     }
 });
 
-// final-project-jyotikha-ankur/server/controller/comment.ts
 router.post("/answer/:answerId/comment/:commentId/report", async (req: GetCommentRequest, res) => {
     try {
         const { answerId, commentId } = req.params;

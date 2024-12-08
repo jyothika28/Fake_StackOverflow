@@ -8,7 +8,7 @@ interface Comment {
     _id: string;
     text: string;
     commented_by: string;
-    replies: Comment[];
+    replies?: Comment[];
 }
 
 interface AnswerProps {
@@ -16,31 +16,37 @@ interface AnswerProps {
     ansBy: string;
     meta: string;
     answerId: string;
-    comments: Comment[];
+    comments?: Comment[]; // Allow comments to be optional
 }
 
-const Answer = ({ text, ansBy, meta, answerId, comments: initialComments }: AnswerProps) => {
-    const [comments, setComments] = useState<Comment[]>(initialComments);
+const Answer = ({ text, ansBy, meta, answerId, comments: initialComments = [] }: AnswerProps) => {
+    const [comments, setComments] = useState<Comment[]>(initialComments || []);
 
+    // Add a new comment to the answer
     const handleAddComment = async (text: string, commentedBy: string) => {
         try {
             const newComment = await addComment(answerId, { text, commented_by: commentedBy });
-            setComments([...comments, newComment]);
+            setComments((prev) => [...prev, newComment]);
         } catch (error) {
             console.error("Error adding comment:", error);
+            alert("Failed to add comment. Please try again.");
         }
     };
 
+    // Add a reply to an existing comment
     const handleAddReply = async (commentId: string, text: string, commentedBy: string) => {
         try {
-            const updatedComment = await addReply(commentId, { text, commented_by: commentedBy });
+            const updatedReply = await addReply(answerId, commentId, { text, commented_by: commentedBy });
             setComments((prev) =>
                 prev.map((comment) =>
-                    comment._id === commentId ? { ...comment, replies: [...comment.replies, updatedComment] } : comment
+                    comment._id === commentId
+                        ? { ...comment, replies: [...(comment.replies || []), updatedReply] }
+                        : comment
                 )
             );
         } catch (error) {
             console.error("Error adding reply:", error);
+            alert("Failed to add reply. Please try again.");
         }
     };
 
@@ -53,28 +59,35 @@ const Answer = ({ text, ansBy, meta, answerId, comments: initialComments }: Answ
                 <div className="answer_author">{ansBy}</div>
                 <div className="answer_question_meta">{meta}</div>
             </div>
-            <CommentForm onSubmit={handleAddComment} />
+            <CommentForm
+                onSubmit={(text, commentedBy) => handleAddComment(text, commentedBy)}
+                buttonText="Post Comment"
+            />
             <div className="commentSection">
-                {comments.map((comment) => (
-                    <div key={comment._id} className="comment">
-                        <p>
-                            <strong>{comment.commented_by}:</strong> {comment.text}
-                        </p>
-                        <CommentForm
-                            onSubmit={(text, commentedBy) => handleAddReply(comment._id, text, commentedBy)}
-                            buttonText="Reply"
-                        />
-                        {comment.replies.length > 0 && (
-                            <div className="replies">
-                                {comment.replies.map((reply) => (
-                                    <p key={reply._id}>
-                                        <strong>{reply.commented_by}:</strong> {reply.text}
-                                    </p>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                ))}
+                {comments.length > 0 ? (
+                    comments.map((comment) => (
+                        <div key={comment._id} className="comment">
+                            <p>
+                                <strong>{comment.commented_by}:</strong> {comment.text}
+                            </p>
+                            <CommentForm
+                                onSubmit={(text, commentedBy) => handleAddReply(comment._id, text, commentedBy)}
+                                buttonText="Reply"
+                            />
+                            {((comment.replies || []).length || []) > 0 && (
+                                <div className="replies">
+                                    {(comment.replies || []).map((reply) => (
+                                        <p key={reply._id}>
+                                            <strong>{reply.commented_by}:</strong> {reply.text}
+                                        </p>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>No comments yet. Be the first to comment!</p>
+                )}
             </div>
         </div>
     );

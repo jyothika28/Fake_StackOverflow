@@ -2,6 +2,7 @@ import { REACT_APP_API_URL, api } from "./config";
 import { AnswerType, AnswerResponseType } from "../types/entityTypes";
 
 const ANSWER_API_URL = `${REACT_APP_API_URL}/answer`;
+const COMMENT_API_URL = `${REACT_APP_API_URL}/comment`;
 
 // Function to add an answer
 const addAnswer = async (
@@ -26,7 +27,7 @@ const addComment = async (
     comment: { text: string; commented_by: string }
 ) => {
   try {
-    const res = await api.post(`${ANSWER_API_URL}/${answerId}/comment`, comment);
+    const res = await api.post(`${COMMENT_API_URL}/answer/${answerId}/comment`, comment);
     if (res.status !== 200) {
       throw new Error("Error while creating a new comment");
     }
@@ -38,11 +39,12 @@ const addComment = async (
 };
 
 const addReply = async (
+    answerId: string,
     commentId: string,
     reply: { text: string; commented_by: string }
 ) => {
   try {
-    const res = await api.post(`${ANSWER_API_URL}/comment/${commentId}/reply`, reply);
+    const res = await api.post(`${COMMENT_API_URL}/answer/${answerId}/comment/${commentId}/reply`, reply);
     if (res.status !== 200) {
       throw new Error("Error while creating a new reply");
     }
