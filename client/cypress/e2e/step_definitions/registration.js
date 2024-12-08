@@ -21,6 +21,15 @@ const existingEmail = {
     confirmPassword:'Password@100',
     dob:'1990-01-20'
 }
+const invalidEmail={
+    firstname:'Rachel',
+    lastname:'Green',
+    username:'rachelgreen2',
+    email:'rach123gmail.com',
+    password:'Password@100',
+    confirmPassword:'Password@100',
+    dob:'1990-01-20'
+}
 const exisitingUsername = {
         firstname:'Rachel',
         lastname:'Green',
@@ -40,6 +49,16 @@ const weakPassword = {
     confirmPassword: 'password',
     dob: '1990-01-01'
 }
+const differentPasswords = {
+        firstname: 'John',
+        lastname: 'Doe',
+        username: 'johndoe',
+        email: 'john@gmail.com',
+        password: 'Password@100',
+        confirmPassword: 'Password@200',
+        dob: '1990-01-01'
+    }
+
     
 // #  formFirstnameInput
 // #         formLastnameInput
@@ -127,9 +146,7 @@ And('clicks on {string}', (link) => {
     cy.contains(link).click();
 });
 When('the user enters an email address in an invalid format with missing @ or domain', () => {
-    fillRegistrationForm(user1);
-    cy.get('#formEmailInput').clear().type('john123d.com');
-   
+    fillRegistrationForm(invalidEmail);
 });
 And('clicks on Register button', () => {
     cy.get("#registerBtn").contains("Register").click();
@@ -201,8 +218,7 @@ And('clicks on {string}', (link) => {
     cy.contains(link).click();
 });
 When('The user enters a password in the "Password" field and a different password in the "Confirm Password" field', () => {
-    fillRegistrationForm(user1);
-    cy.get('#formConfirmPasswordInput').clear().type('Password@200');
+    fillRegistrationForm(differentPasswords);
 });
 And('clicks on Register button', () => {
     cy.get("#registerBtn").contains("Register").click();
