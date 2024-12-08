@@ -35,6 +35,10 @@ const Answer = ({ text, ansBy, meta, answerId, comments: initialComments = [] }:
 
     // Add a reply to an existing comment
     const handleAddReply = async (commentId: string, text: string, commentedBy: string) => {
+        if (!commentId) {
+            console.error("Comment ID is undefined.");
+            return;
+        }
         try {
             const updatedReply = await addReply(answerId, commentId, { text, commented_by: commentedBy });
             setComments((prev) =>
@@ -74,19 +78,21 @@ const Answer = ({ text, ansBy, meta, answerId, comments: initialComments = [] }:
                                 onSubmit={(text, commentedBy) => handleAddReply(comment._id, text, commentedBy)}
                                 buttonText="Reply"
                             />
-                            {((comment.replies || []).length || []) > 0 && (
+                            {comment.replies && comment.replies.length > 0 && (
                                 <div className="replies">
-                                    {(comment.replies || []).map((reply) => (
-                                        <p key={reply._id}>
-                                            <strong>{reply.commented_by}:</strong> {reply.text}
-                                        </p>
+                                    {comment.replies.map((reply) => (
+                                        <div key={reply._id} className="reply">
+                                            <p>
+                                                <strong>{reply.commented_by}:</strong> {reply.text}
+                                            </p>
+                                        </div>
                                     ))}
                                 </div>
                             )}
                         </div>
                     ))
                 ) : (
-                    <p>No comments yet. Be the first to comment!</p>
+                    <p className="noCommentsText">No comments yet. Be the first to comment!</p>
                 )}
             </div>
         </div>
