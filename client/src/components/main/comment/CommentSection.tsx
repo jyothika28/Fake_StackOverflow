@@ -105,7 +105,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                     ))}
                 </div>
             ) : (
-                <p>No comments yet. Be the first to comment!</p>
+                <p>Please write a comment :)</p>
             )}
         </div>
     );

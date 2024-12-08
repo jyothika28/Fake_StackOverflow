@@ -1,9 +1,9 @@
 import express from "express";
 import Answer from "../models/answers";
+import { rateLimiter } from "../middleware/rateLimiter";
 import {
     IComment,
     AddCommentRequest,
-    FlagCommentRequest,
     GetCommentsRequest
 } from "../models/types/types";
 import {addCommentToAnswer} from "../models/application";
@@ -14,7 +14,7 @@ const router = express.Router();
  * POST /answer/:answerId/comment
  * Adds a comment to an answer.
  */
-router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => {
+router.post("/answer/:answerId/comment", rateLimiter, async (req: AddCommentRequest, res) => {
     try {
         const { answerId } = req.params;
         const { text, commented_by } = req.body;
@@ -68,7 +68,7 @@ router.get("/answer/:answerId/comments", async (req: GetCommentsRequest, res) =>
     }
 });
 
-router.post("/answer/:answerId/comment/:commentId/flagComment", async (req, res) => {
+router.post("/answer/:answerId/comment/:commentId/flagComment", rateLimiter, async (req, res) => {
     console.log("Flag comment API hit with params:", req.params);
     const { answerId, commentId } = req.params;
     console.log("Found answer:", req.params);

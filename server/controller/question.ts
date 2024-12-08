@@ -16,6 +16,7 @@ import {
   // QuestionAPIResponse,
 } from "../models/types/types";
 import Question from "../models/questions";
+import {rateLimiter} from "../middleware/rateLimiter";
 
 const router = express.Router();
 
@@ -125,7 +126,7 @@ router.post("/addQuestion", async (req: AddQuestionRequest, res) => {
   }
 });
 
-router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
+router.post("/flagQuestion/:qid", rateLimiter, async (req: GetQuestionByIdRequest, res) => {
   console.log("Endpoint hit with QID:", req.params.qid);
 
   try {
@@ -161,7 +162,7 @@ router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
   }
 });
 
-router.post("/:questionId/vote", async (req, res) => {
+router.post("/:questionId/vote", rateLimiter, async (req, res) => {
   const { questionId } = req.params;
   const { vote } = req.body;
 
