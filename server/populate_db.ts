@@ -41,14 +41,14 @@ function tagCreate(name: string): Promise<ITag> {
 }
 
 function answerCreate(text: string, ans_by: string, ans_date_time: Date): Promise<IAnswer> {
-  const answerDetail: IAnswer = { text, ans_by, ans_date_time };
+  const answerDetail: IAnswer = { text, ans_by, ans_date_time, votes: 0, flagged: false };
 
   const answer = new Answer(answerDetail);
   return answer.save();
 }
 
 function questionCreate(title: string, text: string, tags: ITag[], answers: IAnswer[], asked_by: string, ask_date_time: Date, views: number): Promise<IQuestion> {
-  const qstnDetail: IQuestion = { title, text, tags, answers, asked_by, ask_date_time, views };
+  const qstnDetail: IQuestion = { title, text, tags, answers, asked_by, ask_date_time, views, votes: 0, flagged: false };
   if (ask_date_time) qstnDetail.ask_date_time = ask_date_time;
   if (views) qstnDetail.views = views;
 

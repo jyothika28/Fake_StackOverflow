@@ -17,19 +17,19 @@ const tags = [
 
 
 // Helper function to validate tag counts
-function tagCount() {
-  cy.get(".tag").each(($el, index) => {
-    cy.wrap($el).should("contain", tags[index].name);
-    cy.wrap($el).should("contain", `${tags[index].count} questions`);
-  });
-}
+// function tagCount() {
+//   cy.get(".tag").each(($el, index) => {
+//     cy.wrap($el).should("contain", tags[index].name);
+//     cy.wrap($el).should("contain", `${tags[index].count} questions`);
+//   });
+// }
 function createQuestion(title, text, tag, username) {
   cy.contains("Ask a Question").click();
   cy.get("#formTitleInput").type(title);
   cy.get("#formTextInput").type(text);
   cy.get("#formTagInput").type(tag);
   cy.get("#formUsernameInput").type(username);
-  cy.contains("Post Question").click().wait(1000);
+  cy.contains("Post Question").click();
 }
 
 // Scenario: View all tags with the number of questions associated
