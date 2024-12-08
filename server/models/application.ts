@@ -449,18 +449,18 @@ const addAnswerToQuestion = async (
 const addCommentToAnswer = async (
     aid: string,
     comment: IComment
-): Promise<ErrorWrapped<IQuestion | null>> => {
+): Promise<ErrorWrapped<IAnswer | null>> => {
   try {
     const answer = await Answer.findById(aid);
-    if (!answer) return null;
+    if (!answer || !answer.comments) return null;
 
     const newComment = new Comments(comment); // Create a new answer instance
     await newComment.save();
 
-    answer.comment.push(newComment); // Add the answer to the question
-    await answer.save();
+    answer.comments.push(newComment); // Add the comment to the answer
+    const newAnswer = await answer.save();
 
-    return answer;
+    return newAnswer;
   } catch (error) {
     console.error("Error adding comment to answer:", error);
     return { error: "Database error" };

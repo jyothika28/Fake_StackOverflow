@@ -22,9 +22,9 @@ const flagQuestionById = async (questionId: string) => {
     console.log("Question found:", question);
 
     question.flagged = true;
-    await question.save();
+    const questionFlagged = await question.save();
     console.log("Question flagged and saved:", question);
-    return question;
+    return questionFlagged;
 };
 
 export { flagQuestionById };

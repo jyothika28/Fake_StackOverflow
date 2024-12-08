@@ -19,8 +19,8 @@ const flagAnswerById = async (answerId: string): Promise<IAnswer | null> => {
             throw new Error("Answer not found");
         }
         answer.flagged = true;
-        await answer.save();
-        return answer;
+        const newAnswer = await answer.save();
+        return newAnswer;
     } catch (error) {
         if (error instanceof Error) {
             console.error(`Error in flagAnswerById: ${error.message}`);
