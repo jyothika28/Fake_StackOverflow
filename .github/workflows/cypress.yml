@@ -8,7 +8,8 @@ on:
 jobs:
   
   "run-cypress-tests":
-  runs-on: cs5500-self-hosted
+   
+    runs-on: cs5500-self-hosted
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
