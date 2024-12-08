@@ -120,8 +120,25 @@ See grading section in the project implementation description document (link abo
       npx jest --runInBand tests/voteAnswer.test.ts
      ```
     Cypress tests:
+     
+      In a new terminal
+       ```
+      cd server
+      npm install
+      npm start
       ```
-      cd ../client
+
+      In a new terminal
+       ```
+      cd client
+      npm --force install
+      npm start
+       ```
+
+      In a new terminal
+       ```
+      cd client
+
       npx cypress run --spec cypress/e2e/
       ```
     Or 
@@ -135,6 +152,19 @@ See grading section in the project implementation description document (link abo
 ```
   - Instructions to generate the CodeQL report for your application's server.
   - Instructions to set environment variables that one may need to run any scripts or tests.
+    
+    ```
+    cd server
+    ```
+    Create a new file ".env"
+
+    Paste the following environment variables
+    ```
+    REACT_APP_MONGODB_URI="mongodb+srv://jyothikajalla032:amMSZ0ELR8AemRhg@fakestackdb.bi9cb.mongodb.net/?retryWrites=true&w=majority&appName=FakeStackDB"
+PORT=8000
+REACT_APP_CLIENT_URL="http://localhost:3000"
+```
+
 - Submit the [peer-evaluation survey](https://forms.gle/HF2Uk7bWwgq4rmXn7).
 - Any additional information (if any) about your implemention that you would like to inform the grader should be documented in **README-misc.md**.
 
