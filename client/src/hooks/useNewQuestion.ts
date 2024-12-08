@@ -71,8 +71,7 @@ export const useNewQuestion = (handleQuestions: VoidFunctionType) => {
       asked_by: usrn,
       ask_date_time: new Date(),
       views: 0,
-      upvotes: 0,
-      downvotes: 0,
+      votes: 0,
       flagged: false,
     };
 

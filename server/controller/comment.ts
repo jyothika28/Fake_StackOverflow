@@ -30,8 +30,7 @@ router.post("/answer/:answerId/comment", async (req: AddCommentRequest, res) => 
             text,
             commented_by,
             comment_date_time: new Date(),
-            upvotes: 0,
-            downvotes: 0,
+            votes: 0,
         };
 
         console.log("Adding comment:", comment);

@@ -20,11 +20,7 @@ const AnswerSchema = new mongoose.Schema(
           type: [CommentSchema],
           default: [], // Ensures comments is always an array
       },
-      upvotes: {
-          type: Number,
-          default: 0,
-      },
-      downvotes: {
+      votes: {
           type: Number,
           default: 0,
       },

@@ -112,6 +112,7 @@ router.post("/addQuestion", async (req: AddQuestionRequest, res) => {
       asked_by,
       ask_date_time: new Date(ask_date_time),
       views: 0,
+      votes: 0,
     };
     const savedQuestion = await saveQuestion(question);
     if ("error" in savedQuestion || saveQuestion === undefined) {
@@ -160,6 +161,33 @@ router.post("/flagQuestion/:qid", async (req: GetQuestionByIdRequest, res) => {
   }
 });
 
+router.post("/:questionId/vote", async (req, res) => {
+  const { questionId } = req.params;
+  const { vote } = req.body;
+
+  if (!["upvote", "downvote"].includes(vote)) {
+    return res.status(400).json({ error: "Invalid vote action" });
+  }
+
+  try {
+    const question = await Question.findById(questionId);
+    if (!question) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+
+    if (vote === "upvote") {
+      question.votes = (question.votes || 0) + 1;
+    } else if (vote === "downvote") {
+      question.votes = (question.votes || 0) - 1;
+    }
+
+    await question.save();
+    res.status(200).json(question);
+  } catch (error) {
+    console.error("Error voting on question:", error);
+    res.status(500).json({ error: "Error voting on question" });
+  }
+});
 
 
 export default router;

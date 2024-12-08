@@ -14,11 +14,7 @@ const CommentSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
-        upvotes: {
-            type: Number,
-            default: 0,
-        },
-        downvotes: {
+        votes: {
             type: Number,
             default: 0,
         },

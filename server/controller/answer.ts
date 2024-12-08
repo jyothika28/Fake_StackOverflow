@@ -74,15 +74,14 @@ router.post("/flagAnswer/:aid", async (req, res) => {
     }
 
     const question = await Questions.findById(qid);
-    if (!question) return null;
+    if (!question || !Array.isArray(question.answers)) return null;
 
-    const updatedAnswers = question.answers.map((answer) => {
-        if (answer._id.toString() === aid) {
-            answer.flagged = true;
-        }
-        return answer;
-    }
-    );
+    const updatedAnswers = question.answers.map((answer: any) => {
+      if (answer._id.toString() === aid) {
+        answer.flagged = true;
+      }
+      return answer;
+    });
 
     question.answers = updatedAnswers;
     await question.save();

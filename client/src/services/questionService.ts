@@ -56,4 +56,19 @@ const flagQuestion = async (questionId: string) => {
   return response.data;
 };
 
-export { getQuestionsByFilter, getQuestionById, addQuestion, flagQuestion };
+const voteQuestion = async (
+    questionId: string,
+    voteType: "upvote" | "downvote"
+) => {
+  try {
+    const response = await api.post(`${QUESTION_API_URL}/${questionId}/vote`, {
+      vote: voteType,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error voting on question:", error);
+    throw error;
+  }
+};
+
+export { getQuestionsByFilter, getQuestionById, addQuestion, flagQuestion, voteQuestion };

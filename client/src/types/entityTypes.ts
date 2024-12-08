@@ -25,8 +25,7 @@ interface CommentType {
   text: string;
   commented_by: string;
   comment_date_time: Date;
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 
@@ -36,8 +35,7 @@ interface AnswerType {
   ans_by: string;
   ans_date_time: Date;
   comments?: CommentType[]; // Add `comments`
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 
@@ -47,8 +45,7 @@ interface AnswerResponseType {
   ans_by: string;
   ans_date_time: string;
   comments?: CommentType[]; // Add `comments`
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 
@@ -58,8 +55,7 @@ interface QuestionType {
   tags: Tag[];
   asked_by: string;
   ask_date_time: Date;
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 
@@ -72,8 +68,7 @@ interface QuestionResponseType {
   asked_by: string;
   ask_date_time: string;
   text: string;
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 
@@ -88,8 +83,7 @@ interface Question {
   text: string;
   asked_by: string;
   ask_date_time: string;
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged: boolean;
 }
 

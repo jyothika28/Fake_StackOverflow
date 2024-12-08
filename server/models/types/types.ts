@@ -74,8 +74,7 @@ export interface IAnswer {
   ans_by: string;
   ans_date_time: Date;
   comments?: IComment[];
-  upvotes?: number;
-  downvotes?: number;
+  votes: number;
   flagged?: boolean;
 }
 
@@ -99,8 +98,7 @@ export interface IQuestion {
   asked_by?: string;
   ask_date_time: Date;
   views: number;
-  upvotes?: number;
-  downvotes?: number;
+  votes: number;
   flagged?: boolean;
 }
 
@@ -109,8 +107,7 @@ export interface IComment {
   text: string;
   commented_by: string;
   comment_date_time: Date;
-  upvotes: number;
-  downvotes: number;
+  votes: number;
   flagged?: boolean;
 }
 

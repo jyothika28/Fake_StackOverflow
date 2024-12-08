@@ -32,8 +32,7 @@ describe("POST /comment/answer/:answerId/comment", () => {
                     text: "This is a mock comment",
                     commented_by: "mockUserId",
                     comment_date_time: new Date(),
-                    upvotes: 0,
-                    downvotes: 0,
+                    votes: 0,
                 },
             ],
             save: jest.fn().mockResolvedValue(true),
@@ -43,8 +42,7 @@ describe("POST /comment/answer/:answerId/comment", () => {
             text: "This is a test comment",
             commented_by: "dummyUserId",
             comment_date_time: expect.any(Date),
-            upvotes: 0,
-            downvotes: 0,
+            votes: 0,
         };
 
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);

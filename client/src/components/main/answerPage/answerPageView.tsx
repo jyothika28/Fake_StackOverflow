@@ -74,6 +74,7 @@ const AnswerPage = ({
                 questionId={question._id!}
                 isFlagged={question.flagged}
                 onFlag={handleFlagQuestion}
+                votes={question.votes} // Pass votes
             />
 
             {question.answers.map((a, idx) => (

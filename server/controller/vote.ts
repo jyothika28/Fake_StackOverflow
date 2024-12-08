@@ -22,14 +22,13 @@ router.post("/answer/:answerId/vote", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        // Ensure upvotes and downvotes are initialized
-        answer.upvotes = answer.upvotes || 0;
-        answer.downvotes = answer.downvotes || 0;
+        // Ensure votes are initialized
+        answer.votes = answer.votes || 0;
 
         if (vote === "upvote") {
-            answer.upvotes++;
+            answer.votes++;
         } else if (vote === "downvote") {
-            answer.downvotes++;
+            answer.votes--;
         }
 
         await answer.save();
@@ -66,9 +65,9 @@ router.post("/answer/:answerId/comment/:commentId/vote", async (req, res) => {
         }
 
         if (vote === "upvote") {
-            comment.upvotes++;
+            comment.votes++;
         } else if (vote === "downvote") {
-            comment.downvotes++;
+            comment.votes--;
         }
 
         await answer.save();
@@ -94,14 +93,13 @@ router.post("/answer/:answerId/undo-vote", async (req, res) => {
             return res.status(404).json({ error: "Answer not found" });
         }
 
-        // Ensure upvotes and downvotes are initialized
-        answer.upvotes = answer.upvotes || 0;
-        answer.downvotes = answer.downvotes || 0;
+        // Ensure votes are initialized
+        answer.votes = answer.votes || 0;
 
-        if (vote === "upvote" && answer.upvotes > 0) {
-            answer.upvotes--;
-        } else if (vote === "downvote" && answer.downvotes > 0) {
-            answer.downvotes--;
+        if (vote === "upvote") {
+            answer.votes--;
+        } else if (vote === "downvote") {
+            answer.votes++;
         } else {
             return res.status(400).json({ error: "No vote to undo" });
         }
@@ -135,10 +133,10 @@ router.post("/answer/:answerId/comment/:commentId/undo-vote", async (req, res) =
             return res.status(404).json({ error: "Comment not found" });
         }
 
-        if (vote === "upvote" && comment.upvotes > 0) {
-            comment.upvotes--;
-        } else if (vote === "downvote" && comment.downvotes > 0) {
-            comment.downvotes--;
+        if (vote === "upvote") {
+            comment.votes--;
+        } else if (vote === "downvote") {
+            comment.votes++;
         } else {
             return res.status(400).json({ error: "No vote to undo" });
         }

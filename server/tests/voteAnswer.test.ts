@@ -18,7 +18,7 @@ describe("POST /vote/answer/:answerId/comment/:commentId/vote", () => {
     });
 
     it("should upvote a comment on an answer", async () => {
-        const mockComment = { _id: "dummyCommentId", upvotes: 0 };
+        const mockComment = { _id: "dummyCommentId", votes: 0 };
         const mockAnswer = { _id: "dummyAnswerId", comments: [mockComment], save: jest.fn() };
 
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
@@ -29,7 +29,7 @@ describe("POST /vote/answer/:answerId/comment/:commentId/vote", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Comment upvoted successfully");
-        expect(mockComment.upvotes).toBe(1);
+        expect(mockComment.votes).toBe(1);
     });
 
     it("should return 404 if the comment does not exist", async () => {

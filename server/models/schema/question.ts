@@ -26,14 +26,7 @@ const QuestionSchema = new mongoose.Schema(
     },
     answers: [AnswerSchema],
     tags: [TagSchema],
-    upvotes: {
-          type: Number,
-          default: 0,
-      },
-    downvotes: {
-          type: Number,
-          default: 0,
-      },
+    votes: { type: Number, default: 0 },
     flagged: { type: Boolean, default: false },
   },
   { collection: "Question" }
