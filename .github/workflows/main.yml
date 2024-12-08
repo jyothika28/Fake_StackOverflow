@@ -14,7 +14,7 @@ jobs:
        # Step 6: Install dependencies in the client folder
       - name: Install Client Dependencies
         working-directory: client
-        run: npm install
+        run: npm force install
 
       # Step 7: Run Cypress tests
       - name: Run Cypress Tests
