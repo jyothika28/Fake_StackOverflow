@@ -1,4 +1,4 @@
-name: Fake Stack CI/CD Pipeline
+name: Fake Stack Cypress
 
 on:
   push:
