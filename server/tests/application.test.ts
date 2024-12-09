@@ -33,28 +33,32 @@ const _ans1: IAnswer = {
   _id: '65e9b58910afe6e94fc6e6dc',
   text: 'ans1',
   ans_by: 'ans_by1',
-  ans_date_time: new Date('2023-11-18T09:24:00')
+  ans_date_time: new Date('2023-11-18T09:24:00'),
+  votes: 5
 };
 
 const _ans2: IAnswer = {
   _id: '65e9b58910afe6e94fc6e6dd',
   text: 'ans2',
   ans_by: 'ans_by2',
-  ans_date_time: new Date('2023-11-20T09:24:00')
+  ans_date_time: new Date('2023-11-20T09:24:00'),
+  votes: 10
 };
 
 const _ans3: IAnswer = {
   _id: '65e9b58910afe6e94fc6e6de',
   text: 'ans3',
   ans_by: 'ans_by3',
-  ans_date_time: new Date('2023-11-19T09:24:00')
+  ans_date_time: new Date('2023-11-19T09:24:00'),
+  votes: 2
 };
 
 const _ans4: IAnswer = {
   _id: '65e9b58910afe6e94fc6e6df',
   text: 'ans4',
   ans_by: 'ans_by4',
-  ans_date_time: new Date('2023-11-19T09:24:00')
+  ans_date_time: new Date('2023-11-19T09:24:00'),
+  votes: 3
 };
 
 const _questions: IQuestion[] = [
@@ -65,7 +69,8 @@ const _questions: IQuestion[] = [
     tags: [_tag3, _tag2],
     answers: [_ans1, _ans2],
     ask_date_time: new Date('2023-11-16T09:24:00'),
-    views: 48
+    views: 48,
+    votes: 0
   },
   {
     _id: '65e9b5a995b6c7045a30d823',
@@ -74,7 +79,8 @@ const _questions: IQuestion[] = [
     tags: [_tag1, _tag2],
     answers: [_ans1, _ans2, _ans3],
     ask_date_time: new Date('2023-11-17T09:24:00'),
-    views: 34
+    views: 34,
+    votes: 0
   },
   {
     _id: '65e9b9b44c052f0a08ecade0',
@@ -83,7 +89,8 @@ const _questions: IQuestion[] = [
     tags: [],
     answers: [_ans1],
     ask_date_time: new Date('2023-11-19T09:24:00'),
-    views: 12
+    views: 12,
+    votes: 0
   },
   {
     _id: '65e9b716ff0e892116b2de09',
@@ -92,7 +99,8 @@ const _questions: IQuestion[] = [
     tags: [],
     answers: [],
     ask_date_time: new Date('2023-11-20T09:24:00'),
-    views: 233
+    views: 233,
+    votes: 0
   },
 ];
 
@@ -299,7 +307,8 @@ describe('application module', () => {
       answers: [],
       ask_date_time: new Date('2023-11-20T09:24:00'),
       asked_by: 'test',
-      views: 0
+      views: 0,
+      votes: 0
     }
     mockingoose(Questions).toReturn(_questions[0], 'create');
     const result = await saveQuestion(currentQuestion);
@@ -317,6 +326,7 @@ describe('application module', () => {
       text: "test",
       ans_by: "test",
       ans_date_time: new Date('2023-11-20T09:24:00'),
+      votes: 0
     }
     const result = await saveAnswer(currentAnswer);
 
@@ -389,6 +399,8 @@ describe('application module', () => {
     mockingoose(User).toReturn(savedUser, 'save'); // Mock save
 
     const result = await insertNewUser(user);
+    console.log("result: ", result);
+    console.log("user: ", user);
     expect(result).toMatchObject(user);
     expect(result.password).not.toBe('Password@100');
     expect(result.password).toBe(savedUser.password);
