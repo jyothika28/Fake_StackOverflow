@@ -37,6 +37,8 @@
   In a new terminal: Start the client
     ```
       cd client
+      npm install 
+      or
       npm install --force
       npm start
     ```
