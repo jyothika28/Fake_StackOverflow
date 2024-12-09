@@ -3,13 +3,11 @@ import mongoose from 'mongoose';
 import { saveAnswer, addAnswerToQuestion } from '../models/application';
 import { Server } from 'http';
 import Answer from "../models/answers";
-import {flagAnswerById} from "../models/answers";
 
 jest.mock('../models/application', () => ({
   saveAnswer: jest.fn(),
   addAnswerToQuestion: jest.fn(),
-  findById: jest.fn(),
-  flagAnswerById: jest.fn()
+  findById: jest.fn()
 }));
 
 
@@ -18,8 +16,7 @@ jest.mock("../models/answers", () => ({
   default: {
     findById: jest.fn(),
     findByIdAndUpdate: jest.fn(),
-  },
-  flagAnswerById: jest.fn(),
+  }
 }));
 
 let server: Server;
@@ -292,31 +289,5 @@ describe("POST /flagAnswer/:aid", () => {
     // Asserting the response
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ error: "Error flagging answer" });
-  });
-});
-
-describe("flagAnswerById", () => {
-  afterEach(async () => {
-    jest.clearAllMocks();
-    await mongoose.disconnect();
-  });
-
-  it("should successfully flag an existing answer", async () => {
-    const mockAnswer = {
-      _id: "12345",
-      flagged: false,
-      set: jest.fn(),
-      save: jest.fn().mockResolvedValue(true),
-    };
-
-    // Mock findById to return the mock answer
-    const findByIdMock = (Answer.findById as jest.Mock).mockResolvedValue(mockAnswer);
-
-    // Call the function
-    const result = await Answer.findById("12345");
-
-    // Assertions
-    expect(Answer.findById).toHaveBeenCalledTimes(1);
-    expect(Answer.findById).toHaveBeenCalledWith("12345");
   });
 });

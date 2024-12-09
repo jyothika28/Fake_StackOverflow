@@ -6,7 +6,6 @@ import User from "./users";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { Session } from "express-session";
-import CommentSchema from "./schema/comment";
 import Comments from "./comments";
 import Answer from "./answers";
 

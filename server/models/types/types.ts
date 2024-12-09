@@ -138,13 +138,6 @@ export interface AddCommentRequest extends Request {
   };
 }
 
-export interface FlagCommentRequest extends Request {
-  params: {
-    answerId: string;
-    commentId: string;
-  };
-}
-
 /**
  * @typedef HTTP Request parameter for adding an answer
  * @property {string} qid.required - Question ID
@@ -172,20 +165,6 @@ export interface AddAnswerResponse extends Response {
 }
 
 /**
- * @typedef HTTP Request parameter for getting questions by search string and order
- * @property {string} order - Order of the questions
- * @property {string} search - Search query
- */
-export interface GetQuestionsByFilterRequest extends Request {
-  query: {
-    order?: string;
-    search?: string;
-  };
-}
-
-
-
-/**
  * @typedef HTTP Request parameter for getting questions by question id
  * @property {string} qid - Question ID
  */
@@ -201,26 +180,4 @@ export interface GetQuestionByIdRequest extends Request {
  */
 export interface AddQuestionRequest extends Request {
   body: IQuestion;
-}
-
-/**
- * @typedef HTTP Response for adding a new question
- * @property {string} _id - Unique identifier of the question
- * @property {string} title - Title of the question
- * @property {string} text - Text of the question
- * @property {ITag[]} tags - Tags of the question
- * @property {IAnswer[]} answers - Answers of the question
- * @property {string} asked_by - Asked by
- * @property {string} ask_date_time - Date and time of the question
- * @property {number} views - Views of the question
- */
-export interface QuestionAPIResponse extends Response {
-  _id: string;
-  title: string;
-  text: string;
-  tags: ITag[];
-  answers: IAnswer[];
-  asked_by: string;
-  ask_date_time: string;
-  views: number;
 }
