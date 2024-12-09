@@ -2,11 +2,33 @@ import supertest from "supertest";
 import mongoose from "mongoose";
 import { Server } from "http";
 import Answer from "../models/answers";
+import {addAnswerToQuestion} from "../models/application";
 
 jest.mock("../models/answers", () => ({
     findById: jest.fn(),
 }));
 
+const mockAnswer = {
+    _id: "65e9b58910afe6e94fc6e6dc",
+    text: "This is a test answer",
+    comments: [
+        {
+            _id: "mockCommentId",
+            text: "This is a mock comment",
+            commented_by: "mockUserId",
+            comment_date_time: new Date(),
+            votes: 0,
+        },
+    ],
+    save: jest.fn().mockResolvedValue(true),
+};
+
+const mockComment = {
+    text: "This is a test comment",
+    commented_by: "dummyUserId",
+    comment_date_time: expect.any(Date),
+    votes: 0,
+};
 
 
 let server: Server;
@@ -23,28 +45,6 @@ describe("POST /comment/answer/:answerId/comment", () => {
     });
 
     it("should add a comment to an existing answer", async () => {
-        const mockAnswer = {
-            _id: "65e9b58910afe6e94fc6e6dc",
-            text: "This is a test answer",
-            comments: [
-                {
-                    _id: "mockCommentId",
-                    text: "This is a mock comment",
-                    commented_by: "mockUserId",
-                    comment_date_time: new Date(),
-                    votes: 0,
-                },
-            ],
-            save: jest.fn().mockResolvedValue(true),
-        };
-
-        const mockComment = {
-            text: "This is a test comment",
-            commented_by: "dummyUserId",
-            comment_date_time: expect.any(Date),
-            votes: 0,
-        };
-
         (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
 
         const response = await supertest(server)
