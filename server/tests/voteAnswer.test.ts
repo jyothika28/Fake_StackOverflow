@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 import { Server } from "http";
 import Answer from "../models/answers";
 
-jest.mock("../models/answers");
+jest.mock("../models/answers", () => ({
+    findById: jest.fn(),
+}));
+
 
 let server: Server;
 

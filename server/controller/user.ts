@@ -121,12 +121,6 @@ router.post(
   ],
   async (req: LoginRequest, res: Response) => {
     //console.log("req.body in login", req.body);
-
-    // Check for validation errors
-    const verrors = validationResult(req);
-    if (!verrors.isEmpty()) {
-      return res.status(400).json({ success: false, errors: verrors.array() });
-    }
     // console.log("In controller/user.ts /login"); 
     // console.log("req.body in login", req.body);
 
@@ -175,6 +169,8 @@ router.post('/logout', async (req: Request, res: Response) => {
    */
   router.get('/check', async (req: Request, res: Response) => {
     console.log("req.session in check", req.session);
+    console.log("req.session.user in check", req.session.user);
+    console.log("req.session.id in check", req.session.id);
     if (req.session.user) {
       res.status(200).json({ success: true, message: 'User is logged in', user: req.session.user });
     } else {

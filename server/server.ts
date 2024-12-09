@@ -1,7 +1,7 @@
 import cors from "cors";
 import mongoose from "mongoose";
 import express, { type Express,Request,Response } from "express";
-import { Server } from "http"; // Import the Server type from Node.js
+import { request, Server } from "http"; // Import the Server type from Node.js
 import dotenv from "dotenv";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -82,7 +82,7 @@ app.use(
 );
 
 app.get("/", (req:Request, res:Response) => {
-  console.log(req.session);
+  // console.log(req.session);
   res.send("REST Service for Fake SO");
   res.end();
 });

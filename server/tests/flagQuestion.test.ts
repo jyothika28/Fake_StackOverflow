@@ -26,6 +26,7 @@ describe("POST /flagQuestion/:qid", () => {
     });
 
     afterEach(async () => {
+        jest.clearAllMocks();
         server.close();
         await mongoose.disconnect();
     });

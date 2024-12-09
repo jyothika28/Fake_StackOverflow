@@ -50,35 +50,29 @@ describe('POST /logout', () => {
       success: true,
       message: 'User logged out successfully',
     });
+  }
+  );
+
+    it('should return 500 if an error occurs during logout', async () => {
+      // Mock session object
+      const mockSession = {
+        destroy: jest.fn((callback) => callback(new Error('Session destruction error'))),
+      };
+
+      // Mock logoutUser to reject
+      (logoutUser as jest.Mock).mockRejectedValueOnce(new Error('Session destruction error'));
+
+      // Making the request
+      const response = await supertest(server)
+        .post('/user/logout')
+        .send()
+        .set('Cookie', `connect.sid=${mockSession}`);
+
+      // Asserting the response
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({
+        success: false,
+        message: 'An error occurred during logout',
+      });
+    });
   });
-
-//   it('should return 500 if an error occurs during logout', async () => {
-//     // Mock session object
-//     const mockSession = {
-//       destroy: jest.fn((callback) => callback(new Error('Session destruction error'))),
-//     };
-
-//     // Mock logoutUser to throw an error
-//     (logoutUser as jest.Mock).mockImplementationOnce((session) => {
-//       return new Promise<void>((_, reject) => {
-//         session.destroy((error: Error) => {
-//           if (error) {
-//             reject(new Error('Session destruction error'));
-//           }
-//         });
-//       });
-//     });
-
-//     // Making the request
-//     const response = await supertest(server)
-//       .post('/user/logout')
-//       .set('Cookie', `connect.sid=${mockSession}`);
-
-//     // Asserting the response
-//     expect(response.status).toBe(500);
-//     expect(response.body).toEqual({
-//       success: false,
-//       message: 'Session destruction error',
-//     });
-//   });
-});
