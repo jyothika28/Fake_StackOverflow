@@ -1,7 +1,6 @@
 import { Given, When, Then, And} from "cypress-cucumber-preprocessor/steps";
 import { fillSignInForm,existingUser } from "./login";
 import '../../support/hooks';
-import { cy } from 'cypress';
 
 
 const Q1_TITLE = "Quick question about storage on android";
