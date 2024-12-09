@@ -10,11 +10,8 @@ jobs:
         runs-on: cs5500-self-hosted
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
-            - name: Populate Database
-              working-directory: server
-              run: npm run populate_db
             
             - name: Install Dependencies for client
               working-directory: client
@@ -23,6 +20,10 @@ jobs:
             - name: Install Dependencies for server
               working-directory: server
               run: npm install
+              
+            - name: Populate Database
+              working-directory: server
+              run: npm run populate_db
 
             - name: Start Client
               working-directory: server
