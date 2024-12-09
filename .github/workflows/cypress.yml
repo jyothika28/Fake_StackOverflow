@@ -11,10 +11,6 @@ jobs:
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3
-            
-            - name: Remove old database
-              working-directory: server
-              run: npm run remove_db
 
             - name: Populate Database
               working-directory: server
