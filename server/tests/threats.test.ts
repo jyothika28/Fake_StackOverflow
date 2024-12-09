@@ -1,5 +1,4 @@
 import supertest from "supertest";
-import mongoose from "mongoose";
 import { Server } from "http";
 
 let server: Server;

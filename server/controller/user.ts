@@ -3,9 +3,7 @@ import { Request, Response } from "express";
 import { getUserByUsername,insertNewUser,authenticateUser,logoutUser } from "../models/application";
 import { LoginRequest,RegisterRequest } from "../models/types/types";
 import { validateRegisterRequest,validateLoginRequest } from "../validators/userValidator";
-import { validationResult, body } from "express-validator";
-// import { saveUser } from "../models/application";
-// import {IUser}  from "../models/types/types";
+import { body } from "express-validator";
 
 const router: express.Router = express.Router();
 

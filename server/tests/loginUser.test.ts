@@ -2,9 +2,8 @@ import supertest from 'supertest';
 import mongoose from 'mongoose';
 import { Server } from 'http';
 import { authenticateUser } from '../models/application'; // Adjust the path as necessary
-import { validateLoginRequest } from '../validators/userValidator'; // Adjust the import path as needed
-import { cookie, validationResult } from 'express-validator';
-import e, { response } from 'express';
+import { validateLoginRequest } from '../validators/userValidator';
+import {LoginRequest} from "../models/types/types"; // Adjust the import path as needed
 
 jest.mock('../models/application', () => ({
   authenticateUser: jest.fn(),
@@ -95,7 +94,7 @@ describe('validateLoginRequest', () => {
       }
     };
 
-    const { isValid, errors } = validateLoginRequest(req as any);
+    const { isValid, errors } = validateLoginRequest(req as LoginRequest);
 
     expect(isValid).toBe(false);
     expect(errors).toEqual(
@@ -113,7 +112,7 @@ describe('validateLoginRequest', () => {
       }
     };
 
-    const { isValid, errors } = validateLoginRequest(req as any);
+    const { isValid, errors } = validateLoginRequest(req as LoginRequest);
 
     expect(isValid).toBe(false);
     expect(errors).toEqual(
@@ -130,7 +129,7 @@ describe('validateLoginRequest', () => {
       }
     };
 
-    const { isValid, errors } = validateLoginRequest(req as any);
+    const { isValid, errors } = validateLoginRequest(req as LoginRequest);
 
     expect(isValid).toBe(true);
     expect(errors).toEqual({});

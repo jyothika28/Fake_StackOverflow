@@ -435,8 +435,8 @@ const addCommentToAnswer = async (
 
     return newAnswer;
   } catch (error) {
-    console.error("Error adding comment to answer:", error);
-    return { error: "Database error" };
+      console.error("Error adding comment to answer:", error);
+      throw new Error("Database error");
   }
 };
 

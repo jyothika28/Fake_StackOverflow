@@ -1,5 +1,10 @@
 {
   "devDependencies": {
-    "ts-node": "^10.9.2"
-  }
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.18.0"
+  },
+  "type": "module"
 }

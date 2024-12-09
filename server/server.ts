@@ -1,7 +1,7 @@
 import cors from "cors";
 import mongoose from "mongoose";
 import express, { type Express,Request,Response } from "express";
-import { request, Server } from "http"; // Import the Server type from Node.js
+import { Server } from "http"; // Import the Server type from Node.js
 import dotenv from "dotenv";
 import session from "express-session";
 import MongoStore from "connect-mongo";
