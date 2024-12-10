@@ -1,10 +1,11 @@
 import supertest from "supertest";
 import mongoose from "mongoose";
-import { insertNewUser } from "../models/application";
+import {getUserByUsername, insertNewUser} from "../models/application";
 import { Server } from "http";
 
 jest.mock("../models/application", () => ({
   insertNewUser: jest.fn(),
+  getUserByUsername: jest.fn(),
 }));
 
 let server: Server;
@@ -287,4 +288,23 @@ describe("POST /register", () => {
     });
   });
 
+});
+
+describe("GET /getUser", () => {
+  beforeEach(() => {
+    server = require("../server");
+  });
+
+  afterEach(async () => {
+    jest.clearAllMocks();
+    server.close();
+    await mongoose.disconnect();
+  });
+
+  it("should return 400 if username is not present in session", async () => {
+    const response = await supertest(server).get("/user/getUser").send();
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: "Username is required" });
+  });
 });
