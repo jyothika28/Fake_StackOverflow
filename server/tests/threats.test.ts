@@ -39,12 +39,12 @@ describe("Rate Limiting", () => {
         const commentData = { text: "Test comment", commented_by: "testUser" };
         (Answer.findById as jest.Mock).mockResolvedValue(mockAnswer);
 
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 16; i++) {
             const res = await supertest(server)
                 .post("/comment/answer/65e9b58910afe6e94fc6e6dc/comment")
                 .send(commentData);
 
-            if (i < 10) {
+            if (i < 15) {
                 expect(res.status).toBe(200); // Requests within the limit
             } else {
                 expect(res.status).toBe(429); // Rate limit exceeded

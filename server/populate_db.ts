@@ -13,8 +13,11 @@ import { ITag, IAnswer, IQuestion, IUser, IComment } from './models/types/types'
 import {
   Q1_DESC, Q1_TXT,
   Q2_DESC, Q2_TXT,
+  Q3_DESC, Q3_TXT,
   A1_TXT, A2_TXT,
   A3_TXT, A4_TXT,
+  A5_TXT, A6_TXT,
+  A7_TXT, A8_TXT
 } from './data/posts_strings';
 import bcrypt from 'bcrypt';
 
@@ -68,6 +71,8 @@ const populate = async () => {
     const t2 = await tagCreate('javascript');
     const t3 = await tagCreate('android-studio');
     const t4 = await tagCreate('shared-preferences');
+    const t5 = await tagCreate('storage');
+    const t6 = await tagCreate('website');
 
     const c1 = await commentCreate('This is a great comment', 'user1', 5, false);
     const c2 = await commentCreate('I disagree with this point', 'user2', 2, false);
@@ -78,9 +83,15 @@ const populate = async () => {
     const a2 = await answerCreate(A2_TXT, 'azad', new Date('2023-11-23T08:24:00'), [c3]);
     const a3 = await answerCreate(A3_TXT, 'abaya', new Date('2023-11-18T09:24:00'), [c4]);
     const a4 = await answerCreate(A4_TXT, 'alia', new Date('2023-11-12T03:30:00'));
+    const a5 = await answerCreate(A5_TXT, 'sana', new Date('2023-11-01T15:24:19'));
+    const a6 = await answerCreate(A6_TXT, 'abhi3241', new Date('2023-02-19T18:20:59'));
+    const a7 = await answerCreate(A7_TXT, 'mackson3332', new Date('2023-02-22T17:19:00'));
+    const a8 = await answerCreate(A8_TXT, 'ihba001', new Date('2023-03-22T21:17:53'));
 
     await questionCreate(Q1_DESC, Q1_TXT, [t1, t2], [a1, a2], 'Joji John', new Date('2022-01-20T03:00:00'), 10);
     await questionCreate(Q2_DESC, Q2_TXT, [t3, t4, t2], [a3, a4], 'saltyPeter', new Date('2023-01-10T11:24:30'), 121);
+    await questionCreate(Q3_DESC, Q3_TXT, [t5, t6], [a6, a7], 'monkeyABC', new Date('2023-02-18T01:02:15'), 200);
+    await questionCreate(Q4_DESC, Q4_TXT, [t3, t4, t5], [a8], 'elephantCDE', new Date('2023-03-10T14:28:01'), 103);
 
     const u1_pwd = await bcrypt.hash('Rachelhomie@123', 10);
     const u2_pwd = await bcrypt.hash('Rosssandwich@123', 10);

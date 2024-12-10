@@ -146,4 +146,45 @@ describe('GET /getQuestionById/:qid', () => {
     // Asserting the response
     expect(response.status).toBe(500);
   });
+
+  it("should fetch and update question views successfully", async () => {
+    const mockQuestion = {
+      _id: "mockQuestionId",
+      title: "Mock Question",
+      text: "This is a mock question",
+      views: 10,
+    };
+
+    (fetchAndIncrementQuestionViewsById as jest.Mock).mockResolvedValueOnce(mockQuestion);
+
+    const response = await supertest(server)
+        .get("/question/getQuestionById/mockQuestionId");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockQuestion);
+  });
+
+  it("should return 500 if there is an error fetching question", async () => {
+    (fetchAndIncrementQuestionViewsById as jest.Mock).mockImplementationOnce(() => {
+      throw new Error("Database error");
+    });
+
+    const response = await supertest(server)
+        .get("/question/getQuestionById/mockQuestionId");
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe("Error when fetching and updating a question");
+  });
+
+  it("should return 500 if fetching question returns an error object", async () => {
+    (fetchAndIncrementQuestionViewsById as jest.Mock).mockResolvedValueOnce({ error: "Error retrieving question" });
+
+    const response = await supertest(server)
+        .get("/question/getQuestionById/mockQuestionId");
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe("Error when fetching and updating a question");
+  });
+
+
 });
