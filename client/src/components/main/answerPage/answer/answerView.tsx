@@ -62,6 +62,7 @@ const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag, vo
                     style={{
                         color: flagged ? "red" : "gray", // Red for flagged, gray otherwise
                     }}
+                    id="flag"
                     onClick={handleFlag}
                     disabled={flagged} // Disable button if already flagged
                 >
@@ -80,6 +81,7 @@ const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag, vo
                     <Button
                         variant="contained"
                         color="success"
+                        id="upvote"
                         onClick={() => handleVote("upvote")}
                     >
                         Upvote
@@ -87,6 +89,7 @@ const Answer = ({ text, ansBy, meta, questionId, answerId, isFlagged, onFlag, vo
                     <Button
                         variant="contained"
                         color="error"
+                        id="downvote"
                         onClick={() => handleVote("downvote")}
                     >
                         Downvote

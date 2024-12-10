@@ -86,13 +86,16 @@ const CommentSection: React.FC<CommentSectionProps> = ({
                 <div className="commentList">
                     {comments.map((comment) => (
                         <div key={comment._id} className="comment">
-                            <p>
+                            <p 
+
+                            >
                                 <strong>{comment.commented_by || "Anonymous"}:</strong>{" "}
                                 {comment.text || "No content"}
                             </p>
                             <Button
                                 variant="text"
                                 startIcon={<FlagIcon />}
+                                id="commentFlagButton"
                                 onClick={() => handleFlag(comment._id)}
                                 disabled={comment.flagged} // Disable button if already flagged
                                 style={{

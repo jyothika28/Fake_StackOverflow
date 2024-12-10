@@ -59,14 +59,6 @@ const differentPasswords = {
         dob: '1990-01-01'
     }
 
-    
-// #  formFirstnameInput
-// #         formLastnameInput
-// #         formUsernameInput
-// #         formEmailInput
-// #         formPasswordInput
-// #         formConfirmPasswordInput
-// #         formDobInput
 
 function fillRegistrationForm(user) {
     if(user.firstname)
