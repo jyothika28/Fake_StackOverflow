@@ -52,7 +52,7 @@ describe("POST /flagQuestion/:qid", () => {
         });
 
         // Mock the `findById` call to return the mocked question
-        (Question.findById as jest.Mock).mockImplementation((id) => {
+        (Question.findById as jest.Mock).mockImplementation(() => {
             return mockQuestion; // or `null` based on test case
         });
 

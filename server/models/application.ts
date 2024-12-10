@@ -362,33 +362,6 @@ const saveAnswer = async (a: IAnswer): Promise<ErrorWrapped<IAnswer>> => {
 };
 
 /**
- * saves an comment to the database
- * @param a comment object to save
- * @returns the comment object saved to the database
- * or an object with an error message if the save failed
- * @throws an error if the comment is invalid
- */
-const saveComment = async (c: IComment): Promise<ErrorWrapped<IComment>> => {
-  try {
-    if (c._id && !mongoose.Types.ObjectId.isValid(c._id)) {
-      console.warn(
-          `Invalid _id found: ${c._id}. Removing it to let Mongoose generate a valid one.`
-      );
-      delete c._id; // Remove invalid _id to allow Mongoose to generate a new one
-    }
-
-    console.log("Comment:", c);
-    // Create a new answer document
-    const newComment = new Comments(c);
-    console.log("New Comment:", newComment);
-    return newComment;
-  } catch (error) {
-    console.error("Error saving comment:", error);
-    return { error: "Database error" };
-  }
-};
-
-/**
  * retrieves tag ids from the database
  * @param tagNames a list of tag names
  * @returns returns a string array of tag ids
@@ -462,8 +435,8 @@ const addCommentToAnswer = async (
 
     return newAnswer;
   } catch (error) {
-    console.error("Error adding comment to answer:", error);
-    return { error: "Database error" };
+      console.error("Error adding comment to answer:", error);
+      throw new Error("Database error");
   }
 };
 
@@ -532,7 +505,6 @@ export {
   saveQuestion,
   getTagIds,
   saveAnswer,
-  saveComment,
   addAnswerToQuestion,
   addCommentToAnswer,
   getTagCountMap,
