@@ -75,7 +75,10 @@ router.post("/flagAnswer/:aid", rateLimiter, async (req, res) => {
     }
 
     const question = await Questions.findById(questionId);
-    if (!question || !Array.isArray(question.answers)) return null;
+    if (!question) {
+      console.warn(`Question with ID ${questionId} not found`);
+      return res.status(404).json({ error: "Question not found" });
+    }
 
     const updatedAnswers = question.answers.map((answer: IAnswer) => {
       if (answer._id!.toString() === aid) {

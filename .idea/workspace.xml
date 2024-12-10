@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-instructions.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newAnswer.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/populate_db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/populate_db.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +18,8 @@
       <list>
         <option value="TypeScript JSX File" />
         <option value="CSS File" />
-        <option value="TypeScript File" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -55,6 +54,7 @@
     "Jest.GET /comment/answer/:answerId/comments.should return 404 if the answer is not found when flagging a comment.executor": "Run",
     "Jest.GET /comment/answer/:answerId/comments.should return 404 if the answer is not found.executor": "Run",
     "Jest.GET /comment/answer/:answerId/comments.should return 500 if there is a server error while retrieving comments.executor": "Run",
+    "Jest.GET /getQuestionById/:qid.should fetch and update question views successfully.executor": "Run",
     "Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor": "Run",
     "Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor": "Run",
     "Jest.POST /comment/answer/:answerId/comment.executor": "Run",
@@ -68,6 +68,10 @@
     "Jest.POST /comment/answer/:answerId/comment.should throttle requests when rate limit is exceeded.executor": "Run",
     "Jest.POST /flagAnswer/:aid.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.should handle unexpected errors during flagging.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.should return 404 if the answer does not exist.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.should return 404 if the question does not exist.executor": "Run",
+    "Jest.POST /flagAnswer/:aid.should successfully flag an answer and update the question.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should flag a comment within a specific answer.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.executor": "Run",
@@ -77,6 +81,7 @@
     "Jest.Rate Limiting (1).executor": "Run",
     "Jest.Rate Limiting.executor": "Run",
     "Jest.Rate Limiting.should throttle requests when rate limit is exceeded.executor": "Run",
+    "Jest.answer.test.ts.executor": "Run",
     "Jest.application module.should return user object.executor": "Run",
     "Jest.application.test.ts.executor": "Run",
     "Jest.comment.test.ts.executor": "Run",
@@ -93,7 +98,7 @@
     "Jest.vote.ts.executor": "Run",
     "Jest.voteAnswer.test.ts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "postmod",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur",
     "list.type.of.created.stylesheet": "CSS",
@@ -109,78 +114,79 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="POST /flagQuestion/:qid.should flag a comment within a specific answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.GET /getQuestionById/:qid.should fetch and update question views successfully">
+    <configuration name="GET /getQuestionById/:qid.should fetch and update question views successfully" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/question.test.ts" />
       <test-names>
-        <test-name value="POST /flagQuestion/:qid" />
-        <test-name value="should flag a comment within a specific answer" />
+        <test-name value="GET /getQuestionById/:qid" />
+        <test-name value="should fetch and update question views successfully" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /vote/answer/:answerId/vote" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" />
-      <test-names>
-        <test-name value="POST /vote/answer/:answerId/vote" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="POST /vote/answer/:answerId/vote.should return 500 if there is a server error during save" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagAnswer/:aid.should handle unexpected errors during flagging" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
       <test-names>
-        <test-name value="POST /vote/answer/:answerId/vote" />
-        <test-name value="should return 500 if there is a server error during save" />
+        <test-name value="POST /flagAnswer/:aid" />
+        <test-name value="should handle unexpected errors during flagging" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /vote/answer/:answerId/vote.should return 500 if there is a server error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagAnswer/:aid.should return 404 if the question does not exist" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
       <test-names>
-        <test-name value="POST /vote/answer/:answerId/vote" />
-        <test-name value="should return 500 if there is a server error" />
+        <test-name value="POST /flagAnswer/:aid" />
+        <test-name value="should return 404 if the question does not exist" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /vote/answer/:answerId/vote.should upvote an answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagAnswer/:aid.should successfully flag an answer and update the question" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
       <test-names>
-        <test-name value="POST /vote/answer/:answerId/vote" />
-        <test-name value="should upvote an answer" />
+        <test-name value="POST /flagAnswer/:aid" />
+        <test-name value="should successfully flag an answer and update the question" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Rate Limiting.should throttle requests when rate limit is exceeded" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/server/tests/threats.test.ts" />
+      <test-names>
+        <test-name value="Rate Limiting" />
+        <test-name value="should throttle requests when rate limit is exceeded" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.POST /flagQuestion/:qid.should flag a comment within a specific answer" />
-        <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error during save" />
-        <item itemvalue="Jest.POST /vote/answer/:answerId/vote" />
-        <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error" />
-        <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should upvote an answer" />
+        <item itemvalue="Jest.GET /getQuestionById/:qid.should fetch and update question views successfully" />
+        <item itemvalue="Jest.Rate Limiting.should throttle requests when rate limit is exceeded" />
+        <item itemvalue="Jest.POST /flagAnswer/:aid.should handle unexpected errors during flagging" />
+        <item itemvalue="Jest.POST /flagAnswer/:aid.should return 404 if the question does not exist" />
+        <item itemvalue="Jest.POST /flagAnswer/:aid.should successfully flag an answer and update the question" />
       </list>
     </recent_temporary>
   </component>

@@ -122,3 +122,6 @@ This error in server eslint is not resolving. We have migrated to eslint.config.
 2. Running Jest tests
 When running all tests individually, they all pass.
 But when we run all togethor, this happens for a few: listen EADDRINUSE: address already in use :::8000
+
+3. Rate limiting
+It is set to 15, so if you 

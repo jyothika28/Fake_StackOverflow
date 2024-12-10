@@ -2,7 +2,6 @@ import supertest from 'supertest';
 import mongoose from 'mongoose';
 import { saveAnswer, addAnswerToQuestion } from '../models/application';
 import { Server } from 'http';
-import Answer from "../models/answers";
 
 jest.mock('../models/application', () => ({
   saveAnswer: jest.fn(),
@@ -15,24 +14,6 @@ jest.mock("../models/answers", () => ({
   findById: jest.fn(),
   findByIdAndUpdate: jest.fn()
 }));
-
-const mockAnswer = {
-  _id: "65e9b58910afe6e94fc6e6dc",
-  text: "This is a test answer",
-  ans_date_time: new Date('2023-11-18T09:24:00'),
-  ans_by: 'ans_by1',
-  comments: [
-    {
-      _id: "mockCommentId",
-      text: "This is a mock comment",
-      commented_by: "mockUserId",
-      comment_date_time: expect.any(Date),
-      votes: 0,
-    },
-  ],
-  flagged: false,
-  save: jest.fn().mockResolvedValue(true),
-};
 
 let server: Server;
 describe("POST /addAnswer", () => {
@@ -218,44 +199,34 @@ describe("POST /addAnswer", () => {
     // Asserting the response
     expect(response.status).toBe(500);
   });
-});
 
-describe("POST /flagAnswer/:aid", () => {
-  beforeEach(() => {
-    server = require("../server");
-  });
-
-  afterEach(async () => {
-    jest.clearAllMocks();
-    server.close();
-    await mongoose.disconnect();
-  });
-
-  it("should return 404 if the answer does not exist", async () => {
-    // Mock findByIdAndUpdate to return null (not found)
-    (Answer.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(null);
-
-    // Making the request
+  it("should return 400 if the request body is invalid", async () => {
     const response = await supertest(server)
-        .post("/answer/flagAnswer/nonexistentAnswerId");
+        .post("/answer/addAnswer")
+        .send({
+          qid: "mockQuestionId",
+          ans: { text: "" }, // Invalid answer data
+        });
 
-    // Asserting the response
-    expect(response.status).toBe(404);
-    expect(response.body).toEqual({ error: "Answer not found" });
+    expect(response.status).toBe(400);
+    expect(response.text).toBe("Invalid answer");
   });
 
-  it("should return 500 if there is a database error", async () => {
-    // Mock findByIdAndUpdate to throw an error
-    (Answer.findByIdAndUpdate as jest.Mock).mockImplementationOnce(() => {
-      throw new Error("Database error");
-    });
+  it("should return 500 if there is a database error when saving the answer", async () => {
+    (saveAnswer as jest.Mock).mockResolvedValueOnce(new Error("Mock database error"));
 
-    // Making the request
     const response = await supertest(server)
-        .post("/answer/flagAnswer/dummyAnswerId");
+        .post("/answer/addAnswer")
+        .send({
+          qid: "mockQuestionId",
+          ans: {
+            ans_by: "mockUserId",
+            ans_date_time: new Date().toISOString(),
+            text: "Mock answer text",
+          },
+        });
 
-    // Asserting the response
     expect(response.status).toBe(500);
-    expect(response.body).toEqual({ error: "Error flagging answer" });
+    expect(response.body).toEqual({ error: "Database error" });
   });
 });
