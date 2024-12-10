@@ -78,3 +78,20 @@
       PORT=8000
       REACT_APP_CLIENT_URL="http://localhost:3000"
       ```
+
+- Any additional information (if any) about your implemention that you would like to inform the grader should be documented in **README-misc.md**.
+
+1. npx eslint server/
+This error in server eslint is not resolving. We have migrated to eslint.config.js from .eslintrc.json but the error still persists. Updated eslint.config.js & package.json multiple times but the error still persists.
+
+     ```
+/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/jest.config.js
+2:1  error  'module' is not defined  no-undef
+
+✖ 1 problem (1 error, 0 warnings)
+
+    ```
+
+2. Running Jest tests
+When running all tests individually, they all pass.
+But when we run all togethor, this happens for a few: listen EADDRINUSE: address already in use :::8000
