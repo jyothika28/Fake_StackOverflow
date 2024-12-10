@@ -1,0 +1,188 @@
+Index: README-instructions.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>- Instructions to test the deployed application on Render \n Render server link - https://final-project-jyotikha-ankur-server.onrender.com\n Render client link - https://final-project-jyotikha-ankur-3.onrender.com\n- Instructions to run the jest tests\n\n  ```\n    cd server\n    npm install\n    npx jest --runInBand tests/answer.test.ts\n    npx jest --runInBand tests/application.test.ts\n    npx jest --runInBand tests/comment.test.ts\n    npx jest --runInBand tests/flagQuestion.test.ts\n    npx jest --runInBand tests/loginUser.test.ts\n    npx jest --runInBand tests/logoutUser.test.ts\n    npx jest --runInBand tests/newAnswer.test.ts\n    npx jest --runInBand tests/newQuestion.test.ts\n    npx jest --runInBand tests/newUser.test.ts\n    npx jest --runInBand tests/question.test.ts\n    npx jest --runInBand tests/questions.test.ts\n    npx jest --runInBand tests/tags.test.ts\n    npx jest --runInBand tests/threats.test.ts\n    npx jest --runInBand tests/voteAnswer.test.ts\n  ```\n- Instructions to run the Cypress test cases.\n  To populate the database in the local mongo db\n\n  ```\n  cd server\n  npm run remove_db\n  npm run populate_db\n  ```\n  In a new terminal: Start the server\n   ```\n      cd server\n      npm install\n      npm start\n    ```\n\n  In a new terminal: Start the client\n    ```\n      cd client\n      npm install \n      or\n      npm install --force\n      npm start\n    ```\n\n  In a new terminal\n    ```\n      cd client\n      npx cypress run --spec cypress/e2e/\n    ```\n\n      Or\n\n    ```\n      npx cypress open\n\n    ```\n\n- Instructions to generate the coverage report for jest tests.\n\n  ```\n      cd server\n      npx jest --coverage tests/\n  ```\n\n- Instructions to generate the CodeQL report for your application's server.\n1. Download the [Code QL bundle](https://github.com/github/codeql-action/releases/tag/codeql-bundle-v2.19.3) for your operating system.\n\n2. Extract the archive to a directory of your choosing. Let's call this directory `<extraction-root>`\n\n3. Verify the installation by running the following command:\n\n    `$ <extraction-root>/codeql/codelql resolve packs`\n\n    If the installation was succesful, in the output for the above command you should be able to see the path to the ql packs for javascript. The location should be within the extracted CodeQL CLI bundle in the directory `<extraction-root>`. If the CodeQL CLI is unable to locate the qlpacks for the expected languages, check that you downloaded the CodeQL bundle and not a standalone copy of the CodeQL CLI.\n\n3. Prepare the code for analysis by running the following command:\n\n    `$ <extract-root>/codeql/codeql database create <database> --language=javascript-typescript`\n\n    `<database>` is the path to the directory of your choosing where you want the CodeQL database of your source code to be stored. Remember CodeQL first creates an intermediate representation of your source code before performing the analysis. This intermediate representation is called [semmle](https://en.wikipedia.org/wiki/Semmle).\n\n4. Analyze the code and generate report using the following command:\n\n    `$ ~/codeql/codeql database analyze <path/to/codeql-database> --format=\"sarif-latest\" --output <path/to/report/report.sarif>`\n\n5. Analyze the report to see potential vulnerabilities in your code and take steps to fix them.\n\n6. You can run the following script to obtain quick stats about the report:\n\n    `$ npx ts-node codeql-quick-stats.ts`\n\n\n- Instructions to set environment variables that one may need to run any scripts or tests.\n\n      ```\n      cd server\n      ```\n      Create a new file \".env\"\n\n      Paste the following environment variables\n      ```\n      REACT_APP_MONGODB_URI=\"mongodb+srv://jyothikajalla032:amMSZ0ELR8AemRhg@fakestackdb.bi9cb.mongodb.net/?retryWrites=true&w=majority&appName=FakeStackDB\"\n\n      PORT=8000\n      REACT_APP_CLIENT_URL=\"http://localhost:3000\"\n      ```\n\n- Any additional information (if any) about your implemention that you would like to inform the grader should be documented in **README-misc.md**.\n\n1. npx eslint server/\nThis error in server eslint is not resolving. We have migrated to eslint.config.js from .eslintrc.json but the error still persists. Updated eslint.config.js & package.json multiple times but the error still persists.\n\n     ```\n/Users/ankurharitosh/Documents/NEU/SWE-Fall-24/Project/final-project-jyotikha-ankur/server/jest.config.js\n2:1  error  'module' is not defined  no-undef\n\n✖ 1 problem (1 error, 0 warnings)\n\n    ```\n\n2. Running Jest tests\nWhen running all tests individually, they all pass.\nBut when we run all togethor, this happens for a few: listen EADDRINUSE: address already in use :::8000\n\n3. Rate limiting\nIt is set to 15, so if you 
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README-instructions.md b/README-instructions.md
+--- a/README-instructions.md	(revision 8debcea1359a8a3c3c61fbd8afd8a1beed3db7bd)
++++ b/README-instructions.md	(date 1733806726244)
+@@ -126,4 +126,27 @@
+ But when we run all togethor, this happens for a few: listen EADDRINUSE: address already in use :::8000
+ 
+ 3. Rate limiting
+-It is set to 15, so if you 
+\ No newline at end of file
++It is set to 15, so if you do upvote Question by 15 times, you will get a rate limit error.
++
++4. Server.ts Test code coverage issue
++Could not replicate in tests:
++Line 42: console.error("Error connecting to MongoDB:", error);
++Lines 113-124:
++```
++   process.on("SIGINT", () => {
++   server.close(() => {
++   console.log("Server closed.");
++   });
++   mongoose
++   .disconnect()
++   .then(() => {
++   console.log("Database instance disconnected.");
++   process.exit(0);
++   })
++   .catch((err) => {
++   console.error("Error during disconnection:", err);
++   process.exit(1);
++   });
++   });
++
++```
+\ No newline at end of file
+Index: server/tests/newUser.test.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import supertest from \"supertest\";\nimport mongoose from \"mongoose\";\nimport { insertNewUser } from \"../models/application\";\nimport { Server } from \"http\";\n\njest.mock(\"../models/application\", () => ({\n  insertNewUser: jest.fn(),\n}));\n\nlet server: Server;\n\ndescribe(\"POST /register\", () => {\n  beforeEach(() => {\n    server = require(\"../server\");\n  });\n\n  afterEach(async () => {\n    jest.resetAllMocks();\n    server.close();\n    await mongoose.disconnect();\n  });\n\n  it(\"should add a new user\", async () => {\n    // Mock request body\n    const mockUser = {\n      firstname: \"New\",\n      lastname: \"User\",\n      username: \"new_user\",\n      email: \"new_user@gmail.com\",\n      password: \"Password@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n    (insertNewUser as jest.Mock).mockResolvedValueOnce(mockUser);\n\n    // Making the request\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(201);\n    expect(response.body).toEqual({\n      success: true,\n      message: \"User registered successfully\",\n      user: mockUser,\n    });\n  });\n  it(\"should return validation errors if First name is empty\", async () => {\n    const mockUser = {\n      firstname: \"\",\n      lastname: \"lastname\",\n      username: \"lastfirst\",\n      email: \"Invalidemail@gmail.com\",\n      password: \"Weakpassword@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        firstname: \"First name cannot be empty.\",\n      },\n    });\n  });\n\n  it(\"should return validation errors if Last name is empty\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"\",\n      username: \"lastfirst\",\n      email: \"Invalidemail@gmail.com\",\n      password: \"Weakpassword@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        lastname: \"Last name cannot be empty.\",\n      },\n    });\n  });\n\n  it(\"should return validation errors if the username is empty\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"lastname\",\n      username: \"\",\n      email: \"Invalidemail@gmail.com\",\n      password: \"Weakpassword@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        username: \"Username cannot be empty.\",\n      },\n    });\n  });\n  it(\"should return validation errors if email address is empty\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"lastname\",\n      username: \"lastfirst\",\n      email: \"\",\n      password: \"Password@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        email: \"Email cannot be empty.\",\n      },\n    });\n  });\n\n  it(\"should return validation errors if password is empty\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"lastname\",\n      username: \"lastfirst\",\n      email: \"EmailPass@gmail.com\",\n      password: \"\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        password: \"Password cannot be empty.\",\n      },\n    });\n  });\n\n\n  it(\"should return validation errors if input data is invalid\", async () => {\n    const mockUser = {\n      firstname: \"\",\n      lastname: \"\",\n      username: \"\",\n      email: \"invalid-email\",\n      password: \"weakpassword\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        firstname: \"First name cannot be empty.\",\n        lastname: \"Last name cannot be empty.\",\n        username: \"Username cannot be empty.\",\n        email: \"Invalid email format. Please enter a valid email address.\",\n        password:\n          \"Password is too weak. Please ensure your password has at least 8 characters, one uppercase letter, and one special character.\",\n      },\n    });\n  });\n  it(\"should return validation errors if Password doesnot meet the strength criteria\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"lastname\",\n      username: \"lastfirst\",\n      email: \"Invalidemail@gmail.com\",\n      password: \"password100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        password:\n          \"Password is too weak. Please ensure your password has at least 8 characters, one uppercase letter, and one special character.\",\n      },\n    });\n  });\n\n  it(\"should return validation errors if email address doesnot meet the criteria\", async () => {\n    const mockUser = {\n      firstname: \"firstname\",\n      lastname: \"lastname\",\n      username: \"lastfirst\",\n      email: \"Invalidemailgmail.com\",\n      password: \"Password@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(400);\n    expect(response.body).toEqual({\n      success: false,\n      errors: {\n        email: \"Invalid email format. Please enter a valid email address.\",\n      },\n    });\n  });\n\n \n  it(\"should add a new user with empty date of birth\", async () => {\n    // Mock request body\n    const mockUser = {\n      firstname: \"New\",\n      lastname: \"User\",\n      username: \"new_user\",\n      email: \"new_user@gmail.com\",\n      password: \"Password@100\",\n    };\n    (insertNewUser as jest.Mock).mockResolvedValueOnce(mockUser);\n\n    // Making the request\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    expect(response.status).toBe(201);\n    expect(response.body).toEqual({\n      success: true,\n      message: \"User registered successfully\",\n      user: mockUser,\n    });\n  });\n  \n  it(\"should return 500 if an error occurs during registration\", async () => {\n    // Mock request body\n    const mockUser = {\n      firstname: \"New\",\n      lastname: \"User\",\n      username: \"new_user\",\n      email: \"new_user@gmail.com\",\n      password: \"Password@100\",\n      dob: new Date(\"2024-06-06\").toISOString(),\n    };\n\n    // Mock insertNewUser to throw an error\n    (insertNewUser as jest.Mock).mockImplementationOnce(() => {\n      throw new Error(\"Database error\");\n    });\n\n    // Making the request\n    const response = await supertest(server)\n      .post(\"/user/register\")\n      .send(mockUser);\n\n    // Asserting the response\n    expect(response.status).toBe(500);\n    expect(response.body).toEqual({\n      success: false,\n      message: \"Database error\",\n    });\n  });\n\n});\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/server/tests/newUser.test.ts b/server/tests/newUser.test.ts
+--- a/server/tests/newUser.test.ts	(revision 8debcea1359a8a3c3c61fbd8afd8a1beed3db7bd)
++++ b/server/tests/newUser.test.ts	(date 1733806726245)
+@@ -1,10 +1,11 @@
+ import supertest from "supertest";
+ import mongoose from "mongoose";
+-import { insertNewUser } from "../models/application";
++import {getUserByUsername, insertNewUser} from "../models/application";
+ import { Server } from "http";
+ 
+ jest.mock("../models/application", () => ({
+   insertNewUser: jest.fn(),
++  getUserByUsername: jest.fn(),
+ }));
+ 
+ let server: Server;
+@@ -288,3 +289,22 @@
+   });
+ 
+ });
++
++describe("GET /getUser", () => {
++  beforeEach(() => {
++    server = require("../server");
++  });
++
++  afterEach(async () => {
++    jest.clearAllMocks();
++    server.close();
++    await mongoose.disconnect();
++  });
++
++  it("should return 400 if username is not present in session", async () => {
++    const response = await supertest(server).get("/user/getUser").send();
++
++    expect(response.status).toBe(400);
++    expect(response.body).toEqual({ error: "Username is required" });
++  });
++});
+Index: server/controller/user.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import express from \"express\";\nimport { Request, Response } from \"express\";\nimport { getUserByUsername,insertNewUser,authenticateUser,logoutUser } from \"../models/application\";\nimport { LoginRequest,RegisterRequest } from \"../models/types/types\";\nimport { validateRegisterRequest,validateLoginRequest } from \"../validators/userValidator\";\nimport { body } from \"express-validator\";\n\nconst router: express.Router = express.Router();\n\n/**\n * Register a new user\n * @route POST /register\n * @group User - Operations about user\n * @param {string} firstname.body.required - First name of the user\n * @param {string} lastname.body.required - Last name of the user\n * @param {string} username.body.required - Username of the user\n * @param {string} email.body.required - Email of the user\n * @param {string} password.body.required - Password of the user\n * @param {Date} dob.body - Date of birth of the user\n */\n//Refactored code for register\n// router.post('/register', async (req: RegisterRequest, res: Response) => {\n//   const { firstname, lastname, username, email, password, dob } = req.body;\n\n//   const { isValid, errors } = validateRegisterRequest(req);\n//   if (!isValid) {\n//     return res.status(400).json({ success: false, errors });\n//   }\n//   console.log('req.body', req.body);\n//   try {\n//     // Insert the new user into the database\n//     const newUser = await insertNewUser({ firstname, lastname, username, email, password, dob });\n//     res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });\n//   } catch (error) {\n//     console.error('Error during registration:', error);\n//     const errorMessage = (error as Error).message;\n//     res.status(500).json({ success: false, message: errorMessage });\n//   }\n// });\n\n// Middleware to sanitize inputs\nrouter.post(\n  '/register',\n  [\n    // Validation and sanitization middleware\n    body('firstname').trim().escape().notEmpty().withMessage('First name is required'),\n    body('lastname').trim().escape().notEmpty().withMessage('Last name is required'),\n    body('username').trim().escape().notEmpty().withMessage('Username must be 3-20 characters long and contain only letters, numbers, or underscores')\n  ],\n  async (req: RegisterRequest, res: Response) => {\n\n    // console.log('unsanitized register', req.body);\n    // Validate the input\n    \n    // Extract sanitized input\n    const { firstname, lastname, username, email, password, dob } = req.body;\n    const { isValid, errors } = validateRegisterRequest(req);\n    if (!isValid) {\n      return res.status(400).json({ success: false, errors });\n    }\n    try {\n      // Insert the new user into the database\n      const newUser = await insertNewUser({ firstname, lastname, username, email, password, dob });\n      res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });\n    } catch (error) {\n      console.error('Error during registration:', error);\n      const errorMessage = (error as Error).message;\n      res.status(500).json({ success: false, message: errorMessage });\n    }\n  }\n);\n\n\n/**\n * Login a user\n * @route POST /user/login\n * @group User - Operations about user\n * @param {string} username.body.required - Username of the user\n * @param {string} password.body.required - Password of the user\n * @returns {object} 200 - User logged in successfully\n * @returns {object} 400 - Invalid username or password\n*/\n\n\n/**\n * Login a user\n * @route POST /login\n * @group User - Operations about user\n * @param {string} username.body.required - Username of the user\n * @param {string} password.body.required - Password of the user\n */\n// Refactored code for login\n// router.post('/login', async (req: LoginRequest, res: Response) => {\n//   console.log(\"req.body in login\", req.body);\n//   const { username, password } = req.body;\n//   const { isValid, errors } = validateLoginRequest(req);\n//   if (!isValid) {\n//     return res.status(400).json({ success: false, errors });\n//   }\n//   try {\n//     // Authenticate the user\n//     const user = await authenticateUser(username, password);\n//     req.session.user = user.username;\n//     res.status(200).json({ success: true, message: 'User logged in successfully' });\n//   } catch (error) {\n//     console.error('Error during login:', error);\n//     const errorMessage = (error as Error).message;\n//     res.status(500).json({ success: false, message: errorMessage });\n//   }\n// });\n\n// Validation middleware to sanitize inputs\nrouter.post(\n  '/login',\n  [\n    // Validation middleware to sanitize inputs\n    body('username').trim().escape().notEmpty().withMessage('Username cannot be empty'),\n    body('password').trim().escape().notEmpty().withMessage('Password cannot be empty'),\n  ],\n  async (req: LoginRequest, res: Response) => {\n    //console.log(\"req.body in login\", req.body);\n    // console.log(\"In controller/user.ts /login\"); \n    // console.log(\"req.body in login\", req.body);\n\n    // Extract sanitized values\n    const { username, password } = req.body;\n    const { isValid, errors } = validateLoginRequest(req);\n    if (!isValid) {\n      return res.status(400).json({ success: false, errors });\n    }\n    try {\n      // Authenticate the user\n      const user = await authenticateUser(username, password);\n      req.session.user = user.username;\n      res.status(200).json({ success: true, message: 'User logged in successfully' });\n    } catch (error) {\n      console.error('Error during login:', error);\n      const errorMessage = (error as Error).message;\n      res.status(500).json({ success: false, message: errorMessage });\n    }\n  }\n);\n\n\n  /**\n * Logout a user\n * @route POST /logout\n * @group User - Operations about user\n */\n// Refactored code for logout\nrouter.post('/logout', async (req: Request, res: Response) => {\n  // console.log(\"In controller/user.ts\");\n  // console.log(\"req.session\", req.session);\n\n  try {\n    await logoutUser(req.session);\n    res.status(200).json({ success: true, message: 'User logged out successfully' });\n    console.log(\"User logged out successfully\");\n  } catch (error) {\n    console.error('Error destroying session:', error);\n    res.status(500).json({ success: false, message: 'An error occurred during logout' });\n  }\n});\n\n  /**\n   * check if user is logged in\n   */\n  router.get('/check', async (req: Request, res: Response) => {\n    console.log(\"req.session in check\", req.session);\n    console.log(\"req.session.user in check\", req.session.user);\n    console.log(\"req.session.id in check\", req.session.id);\n    if (req.session.user) {\n      res.status(200).json({ success: true, message: 'User is logged in', user: req.session.user });\n    } else {\n      res.status(401).json({ success: false, message: 'User is not logged in' });\n    }\n  }\n  );\n  /**\n   * Get user details\n   * @route GET /getUser\n   * @group User - Operations about user\n   * @returns {object} 200 - User details\n   * @returns {object} 400 - Username is required\n   * @returns {object} 404 - User not found\n   * @returns {object} 500 - Error fetching user\n   */\n\n  router.get('/getUser', async (req: Request, res: Response) => {\n    const username = req.session.user;\n    if (!username) {\n      return res.status(400).json({ error: 'Username is required' });\n    }\n    try {\n      const user = await getUserByUsername(username);\n      if (user) {\n        res.status(200).json(user);\n      } else {\n        res.status(404).json({ error: 'User not found' });\n      }\n    } catch (error) {\n      console.error('Error fetching user:', error);\n      res.status(500).json({ error: 'Error fetching user' });\n    }\n  });\nexport default router;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/server/controller/user.ts b/server/controller/user.ts
+--- a/server/controller/user.ts	(revision 8debcea1359a8a3c3c61fbd8afd8a1beed3db7bd)
++++ b/server/controller/user.ts	(date 1733806726244)
+@@ -18,25 +18,6 @@
+  * @param {string} password.body.required - Password of the user
+  * @param {Date} dob.body - Date of birth of the user
+  */
+-//Refactored code for register
+-// router.post('/register', async (req: RegisterRequest, res: Response) => {
+-//   const { firstname, lastname, username, email, password, dob } = req.body;
+-
+-//   const { isValid, errors } = validateRegisterRequest(req);
+-//   if (!isValid) {
+-//     return res.status(400).json({ success: false, errors });
+-//   }
+-//   console.log('req.body', req.body);
+-//   try {
+-//     // Insert the new user into the database
+-//     const newUser = await insertNewUser({ firstname, lastname, username, email, password, dob });
+-//     res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });
+-//   } catch (error) {
+-//     console.error('Error during registration:', error);
+-//     const errorMessage = (error as Error).message;
+-//     res.status(500).json({ success: false, message: errorMessage });
+-//   }
+-// });
+ 
+ // Middleware to sanitize inputs
+ router.post(
+@@ -49,9 +30,6 @@
+   ],
+   async (req: RegisterRequest, res: Response) => {
+ 
+-    // console.log('unsanitized register', req.body);
+-    // Validate the input
+-    
+     // Extract sanitized input
+     const { firstname, lastname, username, email, password, dob } = req.body;
+     const { isValid, errors } = validateRegisterRequest(req);
+@@ -81,34 +59,6 @@
+  * @returns {object} 400 - Invalid username or password
+ */
+ 
+-
+-/**
+- * Login a user
+- * @route POST /login
+- * @group User - Operations about user
+- * @param {string} username.body.required - Username of the user
+- * @param {string} password.body.required - Password of the user
+- */
+-// Refactored code for login
+-// router.post('/login', async (req: LoginRequest, res: Response) => {
+-//   console.log("req.body in login", req.body);
+-//   const { username, password } = req.body;
+-//   const { isValid, errors } = validateLoginRequest(req);
+-//   if (!isValid) {
+-//     return res.status(400).json({ success: false, errors });
+-//   }
+-//   try {
+-//     // Authenticate the user
+-//     const user = await authenticateUser(username, password);
+-//     req.session.user = user.username;
+-//     res.status(200).json({ success: true, message: 'User logged in successfully' });
+-//   } catch (error) {
+-//     console.error('Error during login:', error);
+-//     const errorMessage = (error as Error).message;
+-//     res.status(500).json({ success: false, message: errorMessage });
+-//   }
+-// });
+-
+ // Validation middleware to sanitize inputs
+ router.post(
+   '/login',
+@@ -118,10 +68,6 @@
+     body('password').trim().escape().notEmpty().withMessage('Password cannot be empty'),
+   ],
+   async (req: LoginRequest, res: Response) => {
+-    //console.log("req.body in login", req.body);
+-    // console.log("In controller/user.ts /login"); 
+-    // console.log("req.body in login", req.body);
+-
+     // Extract sanitized values
+     const { username, password } = req.body;
+     const { isValid, errors } = validateLoginRequest(req);
+@@ -149,8 +95,6 @@
+  */
+ // Refactored code for logout
+ router.post('/logout', async (req: Request, res: Response) => {
+-  // console.log("In controller/user.ts");
+-  // console.log("req.session", req.session);
+ 
+   try {
+     await logoutUser(req.session);
