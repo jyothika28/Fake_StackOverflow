@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 export default [
     { files: ["**/*.{js,mjs,cjs,ts}"] },
     { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-    { files: ["jest.config.js"], languageOptions: { sourceType: "commonjs" } }, // Add this line
+    { files: ["jest.config.js"], languageOptions: { sourceType: "commonjs" } },
     { languageOptions: { globals: globals.browser } },
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,
