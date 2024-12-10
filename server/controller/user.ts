@@ -18,25 +18,6 @@ const router: express.Router = express.Router();
  * @param {string} password.body.required - Password of the user
  * @param {Date} dob.body - Date of birth of the user
  */
-//Refactored code for register
-// router.post('/register', async (req: RegisterRequest, res: Response) => {
-//   const { firstname, lastname, username, email, password, dob } = req.body;
-
-//   const { isValid, errors } = validateRegisterRequest(req);
-//   if (!isValid) {
-//     return res.status(400).json({ success: false, errors });
-//   }
-//   console.log('req.body', req.body);
-//   try {
-//     // Insert the new user into the database
-//     const newUser = await insertNewUser({ firstname, lastname, username, email, password, dob });
-//     res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });
-//   } catch (error) {
-//     console.error('Error during registration:', error);
-//     const errorMessage = (error as Error).message;
-//     res.status(500).json({ success: false, message: errorMessage });
-//   }
-// });
 
 // Middleware to sanitize inputs
 router.post(
@@ -49,9 +30,6 @@ router.post(
   ],
   async (req: RegisterRequest, res: Response) => {
 
-    // console.log('unsanitized register', req.body);
-    // Validate the input
-    
     // Extract sanitized input
     const { firstname, lastname, username, email, password, dob } = req.body;
     const { isValid, errors } = validateRegisterRequest(req);
@@ -81,34 +59,6 @@ router.post(
  * @returns {object} 400 - Invalid username or password
 */
 
-
-/**
- * Login a user
- * @route POST /login
- * @group User - Operations about user
- * @param {string} username.body.required - Username of the user
- * @param {string} password.body.required - Password of the user
- */
-// Refactored code for login
-// router.post('/login', async (req: LoginRequest, res: Response) => {
-//   console.log("req.body in login", req.body);
-//   const { username, password } = req.body;
-//   const { isValid, errors } = validateLoginRequest(req);
-//   if (!isValid) {
-//     return res.status(400).json({ success: false, errors });
-//   }
-//   try {
-//     // Authenticate the user
-//     const user = await authenticateUser(username, password);
-//     req.session.user = user.username;
-//     res.status(200).json({ success: true, message: 'User logged in successfully' });
-//   } catch (error) {
-//     console.error('Error during login:', error);
-//     const errorMessage = (error as Error).message;
-//     res.status(500).json({ success: false, message: errorMessage });
-//   }
-// });
-
 // Validation middleware to sanitize inputs
 router.post(
   '/login',
@@ -118,10 +68,6 @@ router.post(
     body('password').trim().escape().notEmpty().withMessage('Password cannot be empty'),
   ],
   async (req: LoginRequest, res: Response) => {
-    //console.log("req.body in login", req.body);
-    // console.log("In controller/user.ts /login"); 
-    // console.log("req.body in login", req.body);
-
     // Extract sanitized values
     const { username, password } = req.body;
     const { isValid, errors } = validateLoginRequest(req);
@@ -149,8 +95,6 @@ router.post(
  */
 // Refactored code for logout
 router.post('/logout', async (req: Request, res: Response) => {
-  // console.log("In controller/user.ts");
-  // console.log("req.session", req.session);
 
   try {
     await logoutUser(req.session);

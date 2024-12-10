@@ -7,10 +7,8 @@
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README-instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-instructions.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controller/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/question.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/application.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/application.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/questions.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/questions.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/newUser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/newUser.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +57,7 @@
     "Jest.GET /comment/answer/:answerId/comments.should return 404 if the answer is not found.executor": "Run",
     "Jest.GET /comment/answer/:answerId/comments.should return 500 if there is a server error while retrieving comments.executor": "Run",
     "Jest.GET /getQuestionById/:qid.should fetch and update question views successfully.executor": "Run",
+    "Jest.GET /getUser.should return 400 if username is not present in session.executor": "Run",
     "Jest.POST /addAnswer.should return database error in response if update question method throws an error.executor": "Run",
     "Jest.POST /answer/:answerId/comment.should add a comment to an existing answer.executor": "Run",
     "Jest.POST /comment/answer/:answerId/comment.executor": "Run",
@@ -124,16 +123,16 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="GET /getQuestionById/:qid.should fetch and update question views successfully" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="GET /getUser.should return 400 if username is not present in session" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/question.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/newUser.test.ts" />
       <test-names>
-        <test-name value="GET /getQuestionById/:qid" />
-        <test-name value="should fetch and update question views successfully" />
+        <test-name value="GET /getUser" />
+        <test-name value="should return 400 if username is not present in session" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -191,11 +190,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.GET /getUser.should return 400 if username is not present in session" />
         <item itemvalue="Jest.POST /flagQuestion/:qid.should log an error if MongoDB connection fails" />
         <item itemvalue="Jest.POST /flagQuestion/:qid.should close the server and disconnect from MongoDB on SIGINT" />
         <item itemvalue="Jest.POST /flagQuestion/:qid.should successfully downvote a question" />
         <item itemvalue="Jest.POST /flagQuestion/:qid.should successfully upvote a question" />
-        <item itemvalue="Jest.GET /getQuestionById/:qid.should fetch and update question views successfully" />
       </list>
     </recent_temporary>
   </component>

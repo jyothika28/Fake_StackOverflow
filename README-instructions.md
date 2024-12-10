@@ -99,4 +99,27 @@ When running all tests individually, they all pass.
 But when we run all togethor, this happens for a few: listen EADDRINUSE: address already in use :::8000
 
 3. Rate limiting
-It is set to 15, so if you 
+It is set to 15, so if you do upvote Question by 15 times, you will get a rate limit error.
+
+4. Server.ts Test code coverage issue
+Could not replicate in tests:
+Line 42: console.error("Error connecting to MongoDB:", error);
+Lines 113-124:
+```
+   process.on("SIGINT", () => {
+   server.close(() => {
+   console.log("Server closed.");
+   });
+   mongoose
+   .disconnect()
+   .then(() => {
+   console.log("Database instance disconnected.");
+   process.exit(0);
+   })
+   .catch((err) => {
+   console.error("Error during disconnection:", err);
+   process.exit(1);
+   });
+   });
+
+```
