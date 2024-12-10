@@ -196,8 +196,6 @@ describe("POST /comment/answer/:answerId/comment", () => {
 });
 
 describe("GET /comment/answer/:answerId/comments", () => {
-    let server: any;
-
     beforeEach(() => {
         server = require("../server");
     });

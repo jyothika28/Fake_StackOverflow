@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controller/vote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/vote.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/eslint.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/populate_db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/populate_db.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/tests/comment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/comment.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/voteAnswer.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +71,7 @@
     "Jest.POST /comment/answer/:answerId/comment.should throttle requests when rate limit is exceeded.executor": "Run",
     "Jest.POST /flagAnswer/:aid.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should flag an existing answer.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should flag a comment within a specific answer.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error during save.executor": "Run",
@@ -110,16 +113,16 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="GET /comment/answer/:answerId/comments.should return 404 if the answer is not found when flagging a comment" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagQuestion/:qid.should flag a comment within a specific answer" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/comment.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
       <test-names>
-        <test-name value="GET /comment/answer/:answerId/comments" />
-        <test-name value="should return 404 if the answer is not found when flagging a comment" />
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should flag a comment within a specific answer" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -176,11 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should flag a comment within a specific answer" />
         <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error during save" />
         <item itemvalue="Jest.POST /vote/answer/:answerId/vote" />
         <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error" />
         <item itemvalue="Jest.POST /vote/answer/:answerId/vote.should upvote an answer" />
-        <item itemvalue="Jest.GET /comment/answer/:answerId/comments.should return 404 if the answer is not found when flagging a comment" />
       </list>
     </recent_temporary>
   </component>
