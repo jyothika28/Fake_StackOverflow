@@ -37,9 +37,6 @@ router.post("/answer/:answerId/comment", rateLimiter, async (req: AddCommentRequ
 
         // Attempt to add answer to the corresponding question
         const updatedComment = await addCommentToAnswer(answerId, comment);
-        if(updatedComment === undefined) {
-            return res.status(500).json({ error: "Database error" });
-        }
 
         if (updatedComment == null) {
             return res.status(404).json({ error: "Answer not found" });
