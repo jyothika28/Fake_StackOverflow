@@ -155,8 +155,6 @@ router.post("/flagQuestion/:qid", rateLimiter, async (req: GetQuestionByIdReques
       if (error.message === "Question not found") {
         return res.status(404).json({ error: error.message });
       }
-    } else {
-      console.error("Unknown error in flagging:", error);
     }
     return res.status(500).json({ error: "Error flagging question" });
   }

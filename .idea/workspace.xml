@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="560d6800-e944-457b-8d69-eb91498f35bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/populate_db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/populate_db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README-instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-instructions.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controller/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controller/question.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/application.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/application.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tests/questions.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/questions.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,8 +76,12 @@
     "Jest.POST /flagAnswer/:aid.should return 404 if the answer does not exist.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should return 404 if the question does not exist.executor": "Run",
     "Jest.POST /flagAnswer/:aid.should successfully flag an answer and update the question.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should close the server and disconnect from MongoDB on SIGINT.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should flag a comment within a specific answer.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should log an error if MongoDB connection fails.executor": "Run",
     "Jest.POST /flagQuestion/:qid.should return 500 if an error occurs during flagging.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should successfully downvote a question.executor": "Run",
+    "Jest.POST /flagQuestion/:qid.should successfully upvote a question.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error during save.executor": "Run",
     "Jest.POST /vote/answer/:answerId/vote.should return 500 if there is a server error.executor": "Run",
@@ -93,12 +101,13 @@
     "Jest.newUser.test.ts.executor": "Run",
     "Jest.question.test.ts.executor": "Run",
     "Jest.questions.test.ts.executor": "Run",
+    "Jest.server.tests.ts.executor": "Run",
     "Jest.tags.test.ts.executor": "Run",
     "Jest.threats.test.ts.executor": "Run",
     "Jest.vote.ts.executor": "Run",
     "Jest.voteAnswer.test.ts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "postmod",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/ankurharitosh/Documents/NEU/SWE Fall 24/Project/final-project-jyotikha-ankur",
     "list.type.of.created.stylesheet": "CSS",
@@ -114,7 +123,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Jest.GET /getQuestionById/:qid.should fetch and update question views successfully">
+  <component name="RunManager">
     <configuration name="GET /getQuestionById/:qid.should fetch and update question views successfully" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
@@ -128,65 +137,65 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /flagAnswer/:aid.should handle unexpected errors during flagging" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagQuestion/:qid.should close the server and disconnect from MongoDB on SIGINT" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
       <test-names>
-        <test-name value="POST /flagAnswer/:aid" />
-        <test-name value="should handle unexpected errors during flagging" />
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should close the server and disconnect from MongoDB on SIGINT" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /flagAnswer/:aid.should return 404 if the question does not exist" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagQuestion/:qid.should log an error if MongoDB connection fails" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
       <test-names>
-        <test-name value="POST /flagAnswer/:aid" />
-        <test-name value="should return 404 if the question does not exist" />
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should log an error if MongoDB connection fails" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="POST /flagAnswer/:aid.should successfully flag an answer and update the question" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagQuestion/:qid.should successfully downvote a question" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/answer.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
       <test-names>
-        <test-name value="POST /flagAnswer/:aid" />
-        <test-name value="should successfully flag an answer and update the question" />
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should successfully downvote a question" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="Rate Limiting.should throttle requests when rate limit is exceeded" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="POST /flagQuestion/:qid.should successfully upvote a question" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$/server" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/tests/threats.test.ts" />
+      <test-file value="$PROJECT_DIR$/server/tests/flagQuestion.test.ts" />
       <test-names>
-        <test-name value="Rate Limiting" />
-        <test-name value="should throttle requests when rate limit is exceeded" />
+        <test-name value="POST /flagQuestion/:qid" />
+        <test-name value="should successfully upvote a question" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should log an error if MongoDB connection fails" />
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should close the server and disconnect from MongoDB on SIGINT" />
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should successfully downvote a question" />
+        <item itemvalue="Jest.POST /flagQuestion/:qid.should successfully upvote a question" />
         <item itemvalue="Jest.GET /getQuestionById/:qid.should fetch and update question views successfully" />
-        <item itemvalue="Jest.Rate Limiting.should throttle requests when rate limit is exceeded" />
-        <item itemvalue="Jest.POST /flagAnswer/:aid.should handle unexpected errors during flagging" />
-        <item itemvalue="Jest.POST /flagAnswer/:aid.should return 404 if the question does not exist" />
-        <item itemvalue="Jest.POST /flagAnswer/:aid.should successfully flag an answer and update the question" />
       </list>
     </recent_temporary>
   </component>

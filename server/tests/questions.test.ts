@@ -159,4 +159,25 @@ describe('GET /getQuestion', () => {
     expect(response.status).toBe(500);
 
   });
+
+  it("should return 500 if there is an error fetching questions", async () => {
+    (getQuestionsByOrder as jest.Mock).mockImplementationOnce(() => {
+      throw new Error("Database error");
+    });
+
+    const response = await supertest(server)
+        .get("/question/getQuestion?order=newest");
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe("Error fetching questions");
+  });
+
+  it("should return 500 if the order parameter is invalid", async () => {
+    const response = await supertest(server)
+        .get("/question/getQuestion?order=invalidOrder");
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe("Invalid order parameter");
+  });
+
 });

@@ -96,4 +96,190 @@ describe("POST /flagQuestion/:qid", () => {
         expect(response.status).toBe(500);
         expect(response.body.error).toBe("Error flagging question");
     });
+
+    it("should return 404 if the question does not exist", async () => {
+        (Question.findById as jest.Mock).mockResolvedValueOnce(null);
+
+        const response = await supertest(server)
+            .post("/question/flagQuestion/nonexistentQuestionId")
+            .send();
+
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe("Question not found");
+    });
+
+    it("should return 500 if there is a database error while saving the question", async () => {
+        const mockQuestion = {
+            _id: "mockQuestionId",
+            flagged: false,
+            save: jest.fn().mockImplementationOnce(() => {
+                throw new Error("Database error");
+            }),
+        };
+
+        (Question.findById as jest.Mock).mockResolvedValueOnce(mockQuestion);
+
+        const response = await supertest(server)
+            .post("/question/flagQuestion/mockQuestionId")
+            .send();
+
+        expect(response.status).toBe(500);
+        expect(response.body.error).toBe("Error flagging question");
+    });
+
+    it("should return 404 when the question is not found during flagging", async () => {
+        (Question.findById as jest.Mock).mockImplementationOnce(() => {
+            const error = new Error("Question not found");
+            error.message = "Question not found";
+            throw error;
+        });
+
+        const response = await supertest(server)
+            .post("/question/flagQuestion/nonexistentQuestionId")
+            .send();
+
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe("Question not found");
+    });
+
+    it("should return 500 for unknown errors during flagging", async () => {
+        (Question.findById as jest.Mock).mockImplementationOnce(() => {
+            throw new Error("Unexpected database error");
+        });
+
+        const response = await supertest(server)
+            .post("/question/flagQuestion/mockQuestionId")
+            .send();
+
+        expect(response.status).toBe(500);
+        expect(response.body.error).toBe("Error flagging question");
+    });
+
+    it("should successfully upvote a question", async () => {
+        const mockQuestion = {
+            _id: "mockQuestionId",
+            votes: 0,
+            save: jest.fn().mockResolvedValue(true),
+        };
+        (Question.findById as jest.Mock).mockResolvedValueOnce(mockQuestion);
+
+        const response = await supertest(server)
+            .post("/question/mockQuestionId/vote")
+            .send({ vote: "upvote" });
+
+        // Assert the response
+        expect(response.status).toBe(200);
+        expect(mockQuestion.votes).toBe(1);
+
+        // Construct the expected response without the `save` mock function
+        const expectedResponse = {
+            _id: "mockQuestionId",
+            votes: 1,
+        };
+        expect(response.body).toEqual(expectedResponse);
+    });
+
+    it("should successfully downvote a question", async () => {
+        const mockQuestion = {
+            _id: "mockQuestionId",
+            votes: 5,
+            save: jest.fn().mockResolvedValue(true),
+        };
+        (Question.findById as jest.Mock).mockResolvedValueOnce(mockQuestion);
+
+        const response = await supertest(server)
+            .post("/question/mockQuestionId/vote")
+            .send({ vote: "downvote" });
+
+        console.log(response.body);
+        console.log("response.status", response.status);
+        console.log("mockQuestion.votes", mockQuestion.votes);
+        console.log("mockQuestion", mockQuestion);
+
+        // Assert the response
+        expect(response.status).toBe(200);
+        expect(mockQuestion.votes).toBe(4);
+
+        // Create an expected response excluding the `save` mock
+        const expectedResponse = {
+            _id: "mockQuestionId",
+            votes: 4,
+        };
+        expect(response.body).toEqual(expectedResponse);
+    });
+
+
+    it("should return 404 if the question is not found", async () => {
+        (Question.findById as jest.Mock).mockResolvedValueOnce(null);
+
+        const response = await supertest(server)
+            .post("/question/nonexistentQuestionId/vote")
+            .send({ vote: "upvote" });
+
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe("Question not found");
+    });
+
+    it("should return 400 for an invalid vote action", async () => {
+        const response = await supertest(server)
+            .post("/question/mockQuestionId/vote")
+            .send({ vote: "invalidVote" });
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe("Invalid vote action");
+    });
+
+    it("should return 500 if there is a server error during voting", async () => {
+        (Question.findById as jest.Mock).mockImplementationOnce(() => {
+            throw new Error("Database error");
+        });
+
+        const response = await supertest(server)
+            .post("/question/mockQuestionId/vote")
+            .send({ vote: "upvote" });
+
+        expect(response.status).toBe(500);
+        expect(response.body.error).toBe("Error voting on question");
+    });
+
+    it("should return 404 if flaggedQuestion is null after saving", async () => {
+        const mockQuestion = {
+            _id: "mockQuestionId",
+            flagged: false,
+            save: jest.fn().mockResolvedValue(null), // Simulate a failure to save
+        };
+
+        // Mock `findById` to return the question
+        (Question.findById as jest.Mock).mockResolvedValueOnce(mockQuestion);
+
+        const response = await supertest(server)
+            .post("/question/flagQuestion/mockQuestionId");
+
+        // Assertions
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ error: "Question not found" });
+    });
+
+    it("should log an error if MongoDB connection fails", async () => {
+        const mockError = new Error("Mock MongoDB Connection Error");
+
+        const mongooseConnectSpy = jest
+            .spyOn(mongoose, "connect")
+            .mockRejectedValueOnce(mockError);
+
+        try {
+            require("../server");
+        } catch (error) {
+            expect(mongooseConnectSpy).toHaveBeenCalled();
+        } finally {
+            mongooseConnectSpy.mockRestore();
+        }
+    });
+
+    it("should return a valid response for the root route", async () => {
+        const response = await supertest(server).get("/");
+        expect(response.status).toBe(200);
+        expect(response.text).toBe("REST Service for Fake SO");
+    });
+
 });

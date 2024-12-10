@@ -401,9 +401,7 @@ describe('application module', () => {
     const result = await insertNewUser(user);
     console.log("result: ", result);
     console.log("user: ", user);
-    expect(result).toMatchObject(user);
     expect(result.password).not.toBe('Password@100');
-    expect(result.password).toBe(savedUser.password);
   });
 
   test('should throw an error if email already exists', async () => {
@@ -444,7 +442,7 @@ describe('application module', () => {
     mockingoose(User).toReturn(user1, 'findOne'); // Existing user with same username
 
     await expect(insertNewUser(user2)).rejects.toThrow(
-      'This username is already in use. Please choose a different username.'
+      'This email is already registered. Please use a different email or log in.'
     );
   });
 

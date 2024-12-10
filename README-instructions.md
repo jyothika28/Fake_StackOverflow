@@ -6,6 +6,7 @@
   ```
     cd server
     npm install
+    npx jest --runInBand tests/answer.test.ts
     npx jest --runInBand tests/application.test.ts
     npx jest --runInBand tests/comment.test.ts
     npx jest --runInBand tests/flagQuestion.test.ts
@@ -17,6 +18,7 @@
     npx jest --runInBand tests/question.test.ts
     npx jest --runInBand tests/questions.test.ts
     npx jest --runInBand tests/tags.test.ts
+    npx jest --runInBand tests/threats.test.ts
     npx jest --runInBand tests/voteAnswer.test.ts
   ```
 - Instructions to run the Cypress test cases.
