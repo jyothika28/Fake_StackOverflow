@@ -31,14 +31,12 @@ jobs:
       - name: Start Server
         working-directory: server
         run: |
-          nohup npm start &
-          sleep 10 # wait for the server to start
+          nohup npm start & sleep 10 # wait for the server to start
 
       - name: Start Client
         working-directory: client
         run: |
-          nohup npm start &
-          sleep 10 # wait for the client to start
+          nohup npm start & sleep 10 # wait for the client to start
 
       - name: Run Cypress Tests
         working-directory: client
