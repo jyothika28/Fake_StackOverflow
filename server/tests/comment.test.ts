@@ -194,3 +194,121 @@ describe("POST /comment/answer/:answerId/comment", () => {
         expect(response.body.error).toBe("Comment not found");
     });
 });
+
+describe("GET /comment/answer/:answerId/comments", () => {
+    let server: any;
+
+    beforeEach(() => {
+        server = require("../server");
+    });
+
+    afterEach(async () => {
+        jest.clearAllMocks();
+        server.close();
+    });
+
+    it("should return 404 if the answer is not found", async () => {
+        // Mock findById to return null
+        (Answer.findById as jest.Mock).mockResolvedValueOnce(null);
+
+        const response = await supertest(server).get("/comment/answer/nonexistentAnswerId/comments");
+
+        console.log("Response body:", response.body);
+
+        // Validate the response
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe("Answer not found");
+    });
+
+    it("should return 500 if there is a server error while retrieving comments", async () => {
+        // Mock Answer.findById to throw an error
+        (Answer.findById as jest.Mock).mockImplementationOnce(() => {
+            throw new Error("Database error");
+        });
+
+        const response = await supertest(server)
+            .get("/comment/answer/mockAnswerId/comments");
+
+        // Assertions
+        expect(response.status).toBe(500); // Ensure the status code is 500
+        expect(response.body.error).toBe("Error retrieving comments"); // Ensure the error message is correct
+    });
+
+    it("should return 404 if the answer is not found when flagging a comment", async () => {
+        // Mock Answer.findById to return null
+        (Answer.findById as jest.Mock).mockResolvedValueOnce(null);
+
+        const response = await supertest(server)
+            .post("/comment/answer/nonexistentAnswerId/comment/mockCommentId/flagComment");
+
+        // Assertions
+        expect(response.status).toBe(404); // Ensure the status code is 404
+        expect(response.body.error).toBe("Answer not found"); // Ensure the error message matches
+    });
+
+    it("should return 200 and the list of comments for the given answer", async () => {
+        // Mock data for an answer with comments
+        const mockAnswer = {
+            _id: "existingAnswerId",
+            comments: [
+                {
+                    _id: "mockCommentId1",
+                    text: "This is the first comment",
+                    commented_by: "user1",
+                    comment_date_time: new Date(),
+                    votes: 5,
+                },
+                {
+                    _id: "mockCommentId2",
+                    text: "This is the second comment",
+                    commented_by: "user2",
+                    comment_date_time: new Date(),
+                    votes: 3,
+                },
+            ],
+        };
+
+        // Mock Answer.findById to return the mock answer
+        (Answer.findById as jest.Mock).mockResolvedValueOnce(mockAnswer);
+
+        // Make the request to the endpoint
+        const response = await supertest(server).get("/comment/answer/existingAnswerId/comments");
+
+        // Assertions
+        expect(response.status).toBe(200); // Ensure status is 200
+        expect(response.body.comments).toEqual(
+            mockAnswer.comments.map((comment) => ({
+                ...comment,
+                comment_date_time: new Date(comment.comment_date_time).toISOString(),
+            }))
+        );
+    });
+
+    it("should return 404 if the comment is not found in the answer", async () => {
+        const mockAnswer = {
+            _id: "existingAnswerId",
+            comments: [
+                {
+                    _id: "mockCommentId1",
+                    text: "This is a comment",
+                    commented_by: "user1",
+                    comment_date_time: new Date().toISOString(),
+                    votes: 3,
+                },
+            ],
+            save: jest.fn(),
+        };
+
+        // Mock Answer.findById to return the mock answer
+        (Answer.findById as jest.Mock).mockResolvedValue(mockAnswer);
+
+        // Make the request to flag a nonexistent comment
+        const response = await supertest(server)
+            .post("/comment/answer/existingAnswerId/comment/nonexistentCommentId/flagComment");
+
+        // Assertions
+        expect(response.status).toBe(404); // Ensure 404 is returned
+        expect(response.body.error).toBe("Comment not found"); // Ensure correct error message
+    });
+
+});
