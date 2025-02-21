@@ -1,3 +1,4 @@
+## Fake Stack Overflow
 Fake Stack Overflow is a MERN stack application that features user authentication, profiles, post moderation, and tag management, with a strong focus on security through STRIDE threat modeling. I implemented Jest and Cypress tests to ensure reliability, achieving 90% code coverage while validating 9 user stories against BDD scenarios. The application is deployed on Render.js with a CI/CD pipeline, streamlining updates and maintenance. I designed a responsive UI using Material UI and integrated CodeQL for automated vulnerability detection, reinforcing security and performance.
 
 Tech Stack
