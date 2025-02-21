@@ -1,0 +1,34 @@
+name: Fake Stack CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  
+  "run-jest-tests":
+    runs-on: cs5500-self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Install Dependencies
+        working-directory: server
+        run: npm install
+        
+      - name: Delete old database
+        working-directory: server
+        run: npm run remove_db
+
+      - name: Seed database
+        working-directory: server
+        run: npm run populate_db
+
+      - name: Run Tests
+        working-directory: server
+        run: npm run test
+
+        
+  
+  
